@@ -20,7 +20,6 @@ namespace Photon.Pun.Demo.Asteroids
         public GameObject CreateRoomPanel;
 
         public InputField RoomNameInputField;
-        public InputField MaxPlayersInputField;
 
         [Header("Join Random Room Panel")]
         public GameObject JoinRandomRoomPanel;
@@ -40,6 +39,8 @@ namespace Photon.Pun.Demo.Asteroids
         private Dictionary<string, RoomInfo> cachedRoomList;
         private Dictionary<string, GameObject> roomListEntries;
         private Dictionary<int, GameObject> playerListEntries;
+
+        private byte maxPlayers = 2;
 
         #region UNITY
 
@@ -98,7 +99,7 @@ namespace Photon.Pun.Demo.Asteroids
         {
             string roomName = "Room " + Random.Range(1000, 10000);
 
-            RoomOptions options = new RoomOptions {MaxPlayers = 8};
+            RoomOptions options = new RoomOptions {MaxPlayers = maxPlayers};
 
             PhotonNetwork.CreateRoom(roomName, options, null);
         }
@@ -221,10 +222,6 @@ namespace Photon.Pun.Demo.Asteroids
             string roomName = RoomNameInputField.text;
             roomName = (roomName.Equals(string.Empty)) ? "Room " + Random.Range(1000, 10000) : roomName;
 
-            byte maxPlayers;
-            byte.TryParse(MaxPlayersInputField.text, out maxPlayers);
-            maxPlayers = (byte) Mathf.Clamp(maxPlayers, 2, 8);
-
             RoomOptions options = new RoomOptions {MaxPlayers = maxPlayers, PlayerTtl = 10000 };
 
             PhotonNetwork.CreateRoom(roomName, options, null);
@@ -272,7 +269,7 @@ namespace Photon.Pun.Demo.Asteroids
             PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.CurrentRoom.IsVisible = false;
 
-            PhotonNetwork.LoadLevel("DemoAsteroids-GameScene");
+            PhotonNetwork.LoadLevel("GameScene");
         }
 
         #endregion
@@ -280,6 +277,11 @@ namespace Photon.Pun.Demo.Asteroids
         private bool CheckPlayersReady()
         {
             if (!PhotonNetwork.IsMasterClient)
+            {
+                return false;
+            }
+
+            if (PhotonNetwork.PlayerList.Length < maxPlayers)
             {
                 return false;
             }
