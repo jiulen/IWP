@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ManualGameManager : MonoBehaviour
+public class ShooterGameManager : MonoBehaviour
 {
     int currentFrame;
 
