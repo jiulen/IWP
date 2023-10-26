@@ -6,12 +6,15 @@ using Photon.Realtime;
 using Photon.Pun;
 using Photon.Pun.UtilityScripts;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
+using TMPro;
 
 public class ShooterGameManager : MonoBehaviourPunCallbacks
 {
     public static ShooterGameManager Instance = null;
 
-    public Text InfoText;
+    public TMP_Text InfoText;
+
+    bool gameStarting = false;
 
     int currentFrame;
 
@@ -23,8 +26,6 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
     public override void OnEnable()
     {
         base.OnEnable();
-
-        CountdownTimer.OnCountdownTimerHasExpired += OnCountdownTimerIsExpired;
     }
 
     public void Start()
@@ -39,8 +40,6 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
     public override void OnDisable()
     {
         base.OnDisable();
-
-        CountdownTimer.OnCountdownTimerHasExpired -= OnCountdownTimerIsExpired;
     }
 
     private IEnumerator EndOfGame(string winner, bool draw = false)
@@ -102,18 +101,16 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
             return;
         }
 
-        // if there was no countdown yet, the master client (this one) waits until everyone loaded the level and sets a timer start
-        int startTimestamp;
-        bool startTimeIsSet = CountdownTimer.TryGetStartTime(out startTimestamp);
+        if (gameStarting)
+        {
+            return;
+        }
 
         if (changedProps.ContainsKey(ShooterGameInfo.PLAYER_LOADED_LEVEL))
         {
             if (CheckAllPlayerLoadedLevel())
             {
-                if (!startTimeIsSet)
-                {
-                    CountdownTimer.SetStartTime();
-                }
+                StartGame();
             }
             else
             {
@@ -124,7 +121,6 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         }
     }
 
-    // called by OnCountdownTimerIsExpired() when the timer ended
     private void StartGame()
     {
         Debug.Log("StartGame!");
@@ -192,11 +188,6 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
             StartCoroutine(EndOfGame(winner, draw));
         }
-    }
-
-    private void OnCountdownTimerIsExpired()
-    {
-        StartGame();
     }
 
     private void FixedUpdate()
