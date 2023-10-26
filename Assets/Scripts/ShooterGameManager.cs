@@ -110,7 +110,8 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         {
             if (CheckAllPlayerLoadedLevel())
             {
-                StartGame();
+                //Rpc
+                //StartGame();
             }
             else
             {
