@@ -51,7 +51,7 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
         cachedRoomList = new Dictionary<string, RoomInfo>();
         roomListEntries = new Dictionary<string, GameObject>();
 
-        PlayerNameInput.text = "Player " + Random.Range(1000, 10000);
+        PlayerNameInput.text = "Guest " + Random.Range(1000, 10000);
     }
 
     #endregion

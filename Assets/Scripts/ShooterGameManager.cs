@@ -111,7 +111,7 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
             if (CheckAllPlayerLoadedLevel())
             {
                 //Rpc
-                StartGame();
+                photonView.RPC("StartGameRpc", RpcTarget.AllViaServer);
             }
             else
             {
@@ -122,7 +122,8 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         }
     }
 
-    private void StartGame()
+    [PunRPC]
+    private void StartGameRpc()
     {
         Debug.Log("StartGame!");
 
@@ -146,6 +147,8 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         {
             playerObj.transform.localScale = new Vector3(-1, 1, 1);
         }
+
+        InfoText.text = "";
 
         if (PhotonNetwork.IsMasterClient)
         {
