@@ -6,14 +6,19 @@ using Photon.Realtime;
 using Photon.Pun;
 using Photon.Pun.UtilityScripts;
 
+using TMPro;
+
 public class ShooterPlayerListEntry : MonoBehaviour
 {
     [Header("UI References")]
-    public Text PlayerNameText;
-
-    public Image PlayerColorImage;
+    public TMP_Text PlayerNameText;
+    public Image PlayerImage;
+    public GameObject PlayerReadyOutline;
     public Button PlayerReadyButton;
-    public Image PlayerReadyImage;
+    public GameObject PlayerReadyText;
+    public GameObject colorToggleGrp;
+
+    [Header ("Player Skins")]
 
     private int ownerId;
     private bool isPlayerReady;
@@ -29,7 +34,9 @@ public class ShooterPlayerListEntry : MonoBehaviour
     {
         if (PhotonNetwork.LocalPlayer.ActorNumber != ownerId)
         {
+            PlayerReadyOutline.SetActive(false);
             PlayerReadyButton.gameObject.SetActive(false);
+            colorToggleGrp.SetActive(false);
         }
         else
         {
@@ -68,18 +75,11 @@ public class ShooterPlayerListEntry : MonoBehaviour
 
     private void OnPlayerNumberingChanged()
     {
-        foreach (Player p in PhotonNetwork.PlayerList)
-        {
-            if (p.ActorNumber == ownerId)
-            {
-                PlayerColorImage.color = ShooterGameInfo.GetColor(p.GetPlayerNumber());
-            }
-        }
     }
 
     public void SetPlayerReady(bool playerReady)
     {
-        PlayerReadyButton.GetComponentInChildren<Text>().text = playerReady ? "Ready!" : "Ready?";
-        PlayerReadyImage.enabled = playerReady;
+        PlayerReadyButton.GetComponentInChildren<TMP_Text>().text = playerReady ? "Ready!" : "Ready?";
+        PlayerReadyText.SetActive(playerReady);
     }
 }

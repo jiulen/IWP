@@ -5,13 +5,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
+using TMPro;
 
 public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
 {
     [Header("Login Panel")]
     public GameObject LoginPanel;
 
-    public InputField PlayerNameInput;
+    public Button playButton;
+    public GameObject playButtonDim;
+    public TMP_InputField PlayerNameInput;
 
     [Header("Selection Panel")]
     public GameObject SelectionPanel;
@@ -32,8 +35,11 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
 
     [Header("Inside Room Panel")]
     public GameObject InsideRoomPanel;
+    public Transform transformP_1;
+    public Transform transformP_2;
 
     public Button StartGameButton;
+    public GameObject StartGameDim;
     public GameObject PlayerListEntryPrefab;
 
     private Dictionary<string, RoomInfo> cachedRoomList;
@@ -117,11 +123,21 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
             playerListEntries = new Dictionary<int, GameObject>();
         }
 
+        int playerNum = 0;
         foreach (Player p in PhotonNetwork.PlayerList)
         {
             GameObject entry = Instantiate(PlayerListEntryPrefab);
-            entry.transform.SetParent(InsideRoomPanel.transform);
+            if (playerNum == 0)
+            {
+                entry.transform.SetParent(transformP_1);
+            }
+            else
+            {
+                entry.transform.SetParent(transformP_2);
+                entry.GetComponent<ShooterPlayerListEntry>().PlayerImage.transform.localScale = new Vector3(-1, 1, 1);
+            }
             entry.transform.localScale = Vector3.one;
+            entry.transform.localPosition = Vector3.zero;
             entry.GetComponent<ShooterPlayerListEntry>().Initialize(p.ActorNumber, p.NickName);
 
             object isPlayerReady;
@@ -131,9 +147,11 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
             }
 
             playerListEntries.Add(p.ActorNumber, entry);
+            ++playerNum;
         }
 
-        StartGameButton.gameObject.SetActive(CheckPlayersReady());
+        StartGameButton.interactable = CheckPlayersReady();
+        StartGameDim.SetActive(!CheckPlayersReady());
 
         Hashtable props = new Hashtable
             {
@@ -158,13 +176,16 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         GameObject entry = Instantiate(PlayerListEntryPrefab);
-        entry.transform.SetParent(InsideRoomPanel.transform);
+        entry.transform.SetParent(transformP_2);
+        entry.GetComponent<ShooterPlayerListEntry>().PlayerImage.transform.localScale = new Vector3(-1, 1, 1);
         entry.transform.localScale = Vector3.one;
+        entry.transform.localPosition = Vector3.zero;
         entry.GetComponent<ShooterPlayerListEntry>().Initialize(newPlayer.ActorNumber, newPlayer.NickName);
 
         playerListEntries.Add(newPlayer.ActorNumber, entry);
 
-        StartGameButton.gameObject.SetActive(CheckPlayersReady());
+        StartGameButton.interactable = CheckPlayersReady();
+        StartGameDim.SetActive(!CheckPlayersReady());
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
@@ -172,14 +193,22 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
         Destroy(playerListEntries[otherPlayer.ActorNumber].gameObject);
         playerListEntries.Remove(otherPlayer.ActorNumber);
 
-        StartGameButton.gameObject.SetActive(CheckPlayersReady());
+        Transform thisPlayerTransform = playerListEntries[PhotonNetwork.LocalPlayer.ActorNumber].transform;
+
+        thisPlayerTransform.SetParent(transformP_1);
+        thisPlayerTransform.GetComponent<ShooterPlayerListEntry>().PlayerImage.transform.localScale = new Vector3(1, 1, 1);
+        thisPlayerTransform.localPosition = Vector3.zero;
+
+        StartGameButton.interactable = CheckPlayersReady();
+        StartGameDim.SetActive(!CheckPlayersReady());
     }
 
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
         if (PhotonNetwork.LocalPlayer.ActorNumber == newMasterClient.ActorNumber)
         {
-            StartGameButton.gameObject.SetActive(CheckPlayersReady());
+            StartGameButton.interactable = CheckPlayersReady();
+            StartGameDim.SetActive(!CheckPlayersReady());
         }
     }
 
@@ -200,7 +229,8 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
             }
         }
 
-        StartGameButton.gameObject.SetActive(CheckPlayersReady());
+        StartGameButton.interactable = CheckPlayersReady();
+        StartGameDim.SetActive(!CheckPlayersReady());
     }
 
     #endregion
@@ -239,19 +269,26 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveRoom();
     }
 
+    public void OnPlayerNameInputFieldChanged()
+    {
+        if (PlayerNameInput.text != "")
+        {
+            playButton.interactable = true;
+            playButtonDim.SetActive(false);
+        }
+        else
+        {
+            playButton.interactable = false;
+            playButtonDim.SetActive(true);
+        }
+    }
+
     public void OnLoginButtonClicked()
     {
         string playerName = PlayerNameInput.text;
 
-        if (!playerName.Equals(""))
-        {
-            PhotonNetwork.LocalPlayer.NickName = playerName;
-            PhotonNetwork.ConnectUsingSettings();
-        }
-        else
-        {
-            Debug.LogError("Player Name is invalid.");
-        }
+        PhotonNetwork.LocalPlayer.NickName = playerName;
+        PhotonNetwork.ConnectUsingSettings();
     }
 
     public void OnRoomListButtonClicked()
@@ -317,7 +354,8 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
 
     public void LocalPlayerPropertiesUpdated()
     {
-        StartGameButton.gameObject.SetActive(CheckPlayersReady());
+        StartGameButton.interactable = CheckPlayersReady();
+        StartGameDim.SetActive(!CheckPlayersReady());
     }
 
     private void SetActivePanel(string activePanel)
