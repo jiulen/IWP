@@ -19,9 +19,6 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
     [Header("Selection Panel")]
     public GameObject SelectionPanel;
 
-    [Header("Create Room Panel")]
-    public GameObject CreateRoomPanel;
-
     public InputField RoomNameInputField;
 
     [Header("Join Random Room Panel")]
@@ -37,10 +34,14 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
     public GameObject InsideRoomPanel;
     public Transform transformP_1;
     public Transform transformP_2;
+    public TMP_Text roomCodeText;
+    public Toggle roomPublicToggle;
 
     public Button StartGameButton;
     public GameObject StartGameDim;
     public GameObject PlayerListEntryPrefab;
+
+    bool roomPublic = false;
 
     private Dictionary<string, RoomInfo> cachedRoomList;
     private Dictionary<string, GameObject> roomListEntries;
@@ -103,9 +104,12 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        string roomName = "Room " + Random.Range(1000, 10000);
+        int roomNum = Random.Range(0, 65536);
+        string roomName = roomNum.ToString("X4");
 
-        RoomOptions options = new RoomOptions { MaxPlayers = maxPlayers };
+        RoomOptions options = new RoomOptions { MaxPlayers = maxPlayers, PlayerTtl = 10000, IsVisible = false };
+        roomPublicToggle.isOn = false;
+        roomPublic = false;
 
         PhotonNetwork.CreateRoom(roomName, options, null);
     }
@@ -115,8 +119,9 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
         // joining (or entering) a room invalidates any cached lobby room list (even if LeaveLobby was not called due to just joining a room)
         cachedRoomList.Clear();
 
-
         SetActivePanel(InsideRoomPanel.name);
+
+        roomCodeText.text = "Room Code : " + PhotonNetwork.CurrentRoom.Name;
 
         if (playerListEntries == null)
         {
@@ -237,6 +242,13 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
 
     #region UI CALLBACKS
 
+    public void OnRoomPublicToggled()
+    {
+        roomPublic = roomPublicToggle.isOn;
+
+        PhotonNetwork.CurrentRoom.IsVisible = roomPublic;
+    }
+
     public void OnBackButtonClicked()
     {
         if (PhotonNetwork.InLobby)
@@ -249,10 +261,12 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
 
     public void OnCreateRoomButtonClicked()
     {
-        string roomName = RoomNameInputField.text;
-        roomName = (roomName.Equals(string.Empty)) ? "Room " + Random.Range(1000, 10000) : roomName;
+        int roomNum = Random.Range(0, 65536);
+        string roomName = roomNum.ToString("X4");
 
-        RoomOptions options = new RoomOptions { MaxPlayers = maxPlayers, PlayerTtl = 10000 };
+        RoomOptions options = new RoomOptions { MaxPlayers = maxPlayers, PlayerTtl = 10000, IsVisible = false };
+        roomPublicToggle.isOn = false;
+        roomPublic = false;
 
         PhotonNetwork.CreateRoom(roomName, options, null);
     }
@@ -362,7 +376,6 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
     {
         LoginPanel.SetActive(activePanel.Equals(LoginPanel.name));
         SelectionPanel.SetActive(activePanel.Equals(SelectionPanel.name));
-        CreateRoomPanel.SetActive(activePanel.Equals(CreateRoomPanel.name));
         JoinRandomRoomPanel.SetActive(activePanel.Equals(JoinRandomRoomPanel.name));
         RoomListPanel.SetActive(activePanel.Equals(RoomListPanel.name));    // UI should call OnRoomListButtonClicked() to activate this
         InsideRoomPanel.SetActive(activePanel.Equals(InsideRoomPanel.name));
