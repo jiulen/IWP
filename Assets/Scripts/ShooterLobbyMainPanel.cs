@@ -18,11 +18,10 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
 
     [Header("Selection Panel")]
     public GameObject SelectionPanel;
-
-    public InputField RoomNameInputField;
-
-    [Header("Join Random Room Panel")]
-    public GameObject JoinRandomRoomPanel;
+    public TMP_Text errorMsg;
+    public TMP_InputField roomNameInputField;
+    public Button joinRoomButton;
+    public GameObject joinRoomDim;
 
     [Header("Room List Panel")]
     public GameObject RoomListPanel;
@@ -95,11 +94,13 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
         SetActivePanel(SelectionPanel.name);
+        errorMsg.text = "Error :\n" + message;
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
         SetActivePanel(SelectionPanel.name);
+        errorMsg.text = "Error :\n" + message;
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
@@ -261,6 +262,8 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
 
     public void OnCreateRoomButtonClicked()
     {
+        errorMsg.text = "";
+
         int roomNum = Random.Range(0, 65536);
         string roomName = roomNum.ToString("X4");
 
@@ -271,11 +274,30 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
         PhotonNetwork.CreateRoom(roomName, options, null);
     }
 
-    public void OnJoinRandomRoomButtonClicked()
+    public void OnRoomCodeInputChanged()
     {
-        SetActivePanel(JoinRandomRoomPanel.name);
+        string roomName = roomNameInputField.text;
+        if (roomName != roomName.ToUpper())
+        {
+            roomNameInputField.text = roomName.ToUpper();
+        }
 
-        PhotonNetwork.JoinRandomRoom();
+        if (roomNameInputField.text != "")
+        {
+            joinRoomButton.interactable = true;
+            joinRoomDim.SetActive(false);
+        }
+        else
+        {
+            joinRoomButton.interactable = false;
+            joinRoomDim.SetActive(true);
+        }
+    }
+
+    public void OnJoinRoomButtonClicked()
+    {
+        errorMsg.text = "";
+        PhotonNetwork.JoinRoom(roomNameInputField.text);
     }
 
     public void OnLeaveGameButtonClicked()
@@ -307,6 +329,8 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
 
     public void OnRoomListButtonClicked()
     {
+        errorMsg.text = "";
+
         if (!PhotonNetwork.InLobby)
         {
             PhotonNetwork.JoinLobby();
@@ -376,9 +400,10 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
     {
         LoginPanel.SetActive(activePanel.Equals(LoginPanel.name));
         SelectionPanel.SetActive(activePanel.Equals(SelectionPanel.name));
-        JoinRandomRoomPanel.SetActive(activePanel.Equals(JoinRandomRoomPanel.name));
         RoomListPanel.SetActive(activePanel.Equals(RoomListPanel.name));    // UI should call OnRoomListButtonClicked() to activate this
         InsideRoomPanel.SetActive(activePanel.Equals(InsideRoomPanel.name));
+
+        errorMsg.text = "";
     }
 
     private void UpdateCachedRoomList(List<RoomInfo> roomList)
