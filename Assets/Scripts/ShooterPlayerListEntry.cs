@@ -17,6 +17,7 @@ public class ShooterPlayerListEntry : MonoBehaviour
     public Button PlayerReadyButton;
     public GameObject PlayerReadyText;
     public GameObject colorToggleGrp;
+    public Image[] colorToggleImgs;
 
     [Header ("Player Skins")]
 
@@ -40,7 +41,7 @@ public class ShooterPlayerListEntry : MonoBehaviour
         }
         else
         {
-            Hashtable initialProps = new Hashtable() { { ShooterGameInfo.PLAYER_READY, isPlayerReady }, { ShooterGameInfo.PLAYER_LIVES, ShooterGameInfo.PLAYER_MAX_LIVES } };
+            Hashtable initialProps = new Hashtable() { { ShooterGameInfo.PLAYER_READY, isPlayerReady }, { ShooterGameInfo.PLAYER_LIVES, ShooterGameInfo.PLAYER_MAX_LIVES }};
             PhotonNetwork.LocalPlayer.SetCustomProperties(initialProps);
             PhotonNetwork.LocalPlayer.SetScore(0);
 
@@ -67,10 +68,15 @@ public class ShooterPlayerListEntry : MonoBehaviour
 
     #endregion
 
-    public void Initialize(int playerId, string playerName)
+    public void Initialize(int playerId, string playerName, int playerNum)
     {
         ownerId = playerId;
         PlayerNameText.text = playerName;
+
+        for (int i = 0; i < colorToggleImgs.Length; ++i)
+        {
+            colorToggleImgs[i].color = ShooterGameInfo.GetColor(i + (playerNum - 1) * 4);
+        }
     }
 
     private void OnPlayerNumberingChanged()
@@ -81,5 +87,10 @@ public class ShooterPlayerListEntry : MonoBehaviour
     {
         PlayerReadyButton.GetComponentInChildren<TMP_Text>().text = playerReady ? "Ready!" : "Ready?";
         PlayerReadyText.SetActive(playerReady);
+    }
+
+    public void SetPlayerSkin(int playerSkinID)
+    {
+
     }
 }

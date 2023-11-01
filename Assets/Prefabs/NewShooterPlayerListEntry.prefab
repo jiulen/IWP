@@ -339,6 +339,11 @@ MonoBehaviour:
   PlayerReadyButton: {fileID: 3701315417806057542}
   PlayerReadyText: {fileID: 155222}
   colorToggleGrp: {fileID: 4757524104773297370}
+  colorToggleImgs:
+  - {fileID: 8563692667498431768}
+  - {fileID: 5997805636682441538}
+  - {fileID: 3988825077864230808}
+  - {fileID: 1706002004235524652}
 --- !u!1 &106274897971889284
 GameObject:
   m_ObjectHideFlags: 0

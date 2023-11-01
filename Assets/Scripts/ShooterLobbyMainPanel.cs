@@ -129,31 +129,87 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
             playerListEntries = new Dictionary<int, GameObject>();
         }
 
-        int playerNum = 0;
+        int thisPlayerNumber = 1;
+        foreach (Player p in PhotonNetwork.PlayerList)
+        {
+            if (p == PhotonNetwork.LocalPlayer)
+                continue;
+
+            if (p.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_NUMBER, out object playerNumber))
+            {
+                switch ((int)playerNumber)
+                {
+                    case 1:
+                        thisPlayerNumber = 2;
+                        break;
+                    case 2:
+                        thisPlayerNumber = 1;
+                        break;
+                    default:
+                        Debug.Log("Wrong player number");
+                        break;
+                }
+            }
+        }
+
         foreach (Player p in PhotonNetwork.PlayerList)
         {
             GameObject entry = Instantiate(PlayerListEntryPrefab);
-            if (playerNum == 0)
+
+            if (p == PhotonNetwork.LocalPlayer)
             {
-                entry.transform.SetParent(transformP_1);
+                switch (thisPlayerNumber)
+                {
+                    case 1:
+                        entry.transform.SetParent(transformP_1);
+                        break;
+                    case 2:
+                        entry.transform.SetParent(transformP_2);
+                        entry.GetComponent<ShooterPlayerListEntry>().PlayerImage.transform.localScale = new Vector3(-1, 1, 1);
+                        break;
+                    default:
+                        break;
+                }
+
+                entry.GetComponent<ShooterPlayerListEntry>().Initialize(p.ActorNumber, p.NickName, thisPlayerNumber);
+
+                Hashtable playerNumProps = new Hashtable() { { ShooterGameInfo.PLAYER_NUMBER, thisPlayerNumber } };
+                PhotonNetwork.LocalPlayer.SetCustomProperties(playerNumProps);
             }
             else
             {
-                entry.transform.SetParent(transformP_2);
-                entry.GetComponent<ShooterPlayerListEntry>().PlayerImage.transform.localScale = new Vector3(-1, 1, 1);
+                if (p.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_NUMBER, out object playerNumber))
+                {
+                    switch ((int)playerNumber)
+                    {
+                        case 1:
+                            entry.transform.SetParent(transformP_1);
+                            break;
+                        case 2:
+                            entry.transform.SetParent(transformP_2);
+                            entry.GetComponent<ShooterPlayerListEntry>().PlayerImage.transform.localScale = new Vector3(-1, 1, 1);
+                            break;
+                        default:
+                            break;
+                    }
+
+                    entry.GetComponent<ShooterPlayerListEntry>().Initialize(p.ActorNumber, p.NickName, (int)playerNumber);
+                }
+                else
+                {
+                    Debug.Log("No player number found for opponent");
+                }
             }
+
             entry.transform.localScale = Vector3.one;
             entry.transform.localPosition = Vector3.zero;
-            entry.GetComponent<ShooterPlayerListEntry>().Initialize(p.ActorNumber, p.NickName);
 
-            object isPlayerReady;
-            if (p.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_READY, out isPlayerReady))
+            if (p.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_READY, out object isPlayerReady))
             {
                 entry.GetComponent<ShooterPlayerListEntry>().SetPlayerReady((bool)isPlayerReady);
             }
 
             playerListEntries.Add(p.ActorNumber, entry);
-            ++playerNum;
         }
 
         StartGameButton.interactable = CheckPlayersReady();
@@ -182,39 +238,69 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         GameObject entry = Instantiate(PlayerListEntryPrefab);
-        entry.transform.SetParent(transformP_2);
-        entry.GetComponent<ShooterPlayerListEntry>().PlayerImage.transform.localScale = new Vector3(-1, 1, 1);
+
+        int newPlayerNumber = 1;
+        if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_NUMBER, out object playerNumber))
+        {
+            switch ((int)playerNumber)
+            {
+                case 1:
+                    newPlayerNumber = 2;
+
+                    entry.transform.SetParent(transformP_2);
+                    entry.GetComponent<ShooterPlayerListEntry>().PlayerImage.transform.localScale = new Vector3(-1, 1, 1);
+                    break;
+                case 2:
+                    newPlayerNumber = 1;
+
+                    entry.transform.SetParent(transformP_1);
+                    break;
+                default:
+                    Debug.Log("Wrong player number");
+                    break;
+            }
+        }
+
+        entry.GetComponent<ShooterPlayerListEntry>().Initialize(newPlayer.ActorNumber, newPlayer.NickName, newPlayerNumber);
         entry.transform.localScale = Vector3.one;
         entry.transform.localPosition = Vector3.zero;
-        entry.GetComponent<ShooterPlayerListEntry>().Initialize(newPlayer.ActorNumber, newPlayer.NickName);
 
         playerListEntries.Add(newPlayer.ActorNumber, entry);
 
-        StartGameButton.interactable = CheckPlayersReady();
-        StartGameDim.SetActive(!CheckPlayersReady());
+        bool playersReady = CheckPlayersReady();
+
+        StartGameButton.interactable = playersReady;
+        StartGameDim.SetActive(!playersReady);
+
+        photonView.RPC("ToggleRoomPublicRPC", RpcTarget.Others, roomPublic);
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        Destroy(playerListEntries[otherPlayer.ActorNumber].gameObject);
-        playerListEntries.Remove(otherPlayer.ActorNumber);
+        if (playerListEntries.ContainsKey(otherPlayer.ActorNumber))
+        {
+            Destroy(playerListEntries[otherPlayer.ActorNumber]);
+            playerListEntries.Remove(otherPlayer.ActorNumber);
+        }
+        else
+        {
+            Debug.Log("Actor number not found as key. Did the player quit the whole app?"); //Found out leaving play mode in unity triggers this once, then timeout triggers another
+        }
 
-        Transform thisPlayerTransform = playerListEntries[PhotonNetwork.LocalPlayer.ActorNumber].transform;
+        bool playersReady = CheckPlayersReady();
 
-        thisPlayerTransform.SetParent(transformP_1);
-        thisPlayerTransform.GetComponent<ShooterPlayerListEntry>().PlayerImage.transform.localScale = new Vector3(1, 1, 1);
-        thisPlayerTransform.localPosition = Vector3.zero;
-
-        StartGameButton.interactable = CheckPlayersReady();
-        StartGameDim.SetActive(!CheckPlayersReady());
+        StartGameButton.interactable = playersReady;
+        StartGameDim.SetActive(!playersReady);
     }
 
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
         if (PhotonNetwork.LocalPlayer.ActorNumber == newMasterClient.ActorNumber)
         {
-            StartGameButton.interactable = CheckPlayersReady();
-            StartGameDim.SetActive(!CheckPlayersReady());
+            bool playersReady = CheckPlayersReady();
+
+            StartGameButton.interactable = playersReady;
+            StartGameDim.SetActive(!playersReady);
         }
     }
 
@@ -228,15 +314,21 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
         GameObject entry;
         if (playerListEntries.TryGetValue(targetPlayer.ActorNumber, out entry))
         {
-            object isPlayerReady;
-            if (changedProps.TryGetValue(ShooterGameInfo.PLAYER_READY, out isPlayerReady))
+            if (changedProps.TryGetValue(ShooterGameInfo.PLAYER_READY, out object isPlayerReady))
             {
                 entry.GetComponent<ShooterPlayerListEntry>().SetPlayerReady((bool)isPlayerReady);
             }
+
+            if (changedProps.TryGetValue(ShooterGameInfo.PLAYER_SKIN, out object playerSkinID))
+            {
+                entry.GetComponent<ShooterPlayerListEntry>().SetPlayerSkin((int)playerSkinID);
+            }
         }
 
-        StartGameButton.interactable = CheckPlayersReady();
-        StartGameDim.SetActive(!CheckPlayersReady());
+        bool playersReady = CheckPlayersReady();
+
+        StartGameButton.interactable = playersReady;
+        StartGameDim.SetActive(!playersReady);
     }
 
     #endregion
@@ -246,8 +338,16 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
     public void OnRoomPublicToggled()
     {
         roomPublic = roomPublicToggle.isOn;
-
         PhotonNetwork.CurrentRoom.IsVisible = roomPublic;
+
+        photonView.RPC("ToggleRoomPublicRPC", RpcTarget.Others, roomPublic);
+    }
+
+    [PunRPC]
+    void ToggleRoomPublicRPC(bool isOn)
+    {
+        roomPublicToggle.isOn = isOn;
+        roomPublic = isOn;
     }
 
     public void OnBackButtonClicked()
@@ -302,7 +402,7 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
 
     public void OnLeaveGameButtonClicked()
     {
-        PhotonNetwork.LeaveRoom();
+        PhotonNetwork.LeaveRoom(false);
     }
 
     public void OnPlayerNameInputFieldChanged()
@@ -363,8 +463,7 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
 
         foreach (Player p in PhotonNetwork.PlayerList)
         {
-            object isPlayerReady;
-            if (p.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_READY, out isPlayerReady))
+            if (p.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_READY, out object isPlayerReady))
             {
                 if (!(bool)isPlayerReady)
                 {

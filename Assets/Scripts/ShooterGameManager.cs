@@ -62,7 +62,7 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
             timer -= Time.deltaTime;
         }
 
-        PhotonNetwork.LeaveRoom();
+        PhotonNetwork.LeaveRoom(false);
     }
 
     public override void OnDisconnected(DisconnectCause cause)
