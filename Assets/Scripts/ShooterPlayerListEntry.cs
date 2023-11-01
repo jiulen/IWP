@@ -18,8 +18,10 @@ public class ShooterPlayerListEntry : MonoBehaviour
     public GameObject PlayerReadyText;
     public GameObject colorToggleGrp;
     public Image[] colorToggleImgs;
+    public Toggle[] colorToggles;
 
-    [Header ("Player Skins")]
+    [Header("Player Skins")]
+    int playerNumber;
 
     private int ownerId;
     private bool isPlayerReady;
@@ -72,11 +74,15 @@ public class ShooterPlayerListEntry : MonoBehaviour
     {
         ownerId = playerId;
         PlayerNameText.text = playerName;
+        playerNumber = playerNum;
 
         for (int i = 0; i < colorToggleImgs.Length; ++i)
         {
             colorToggleImgs[i].color = ShooterGameInfo.GetColor(i + (playerNum - 1) * 4);
         }
+
+        if (PhotonNetwork.LocalPlayer.ActorNumber == ownerId)
+            OnPlayerSkinToggled(0);
     }
 
     private void OnPlayerNumberingChanged()
@@ -91,6 +97,15 @@ public class ShooterPlayerListEntry : MonoBehaviour
 
     public void SetPlayerSkin(int playerSkinID)
     {
+        PlayerImage.material.SetColor("_PlayerColor", ShooterGameInfo.GetColor(playerSkinID));
+    }
 
+    public void OnPlayerSkinToggled(int slotNum)
+    {
+        if (!colorToggles[slotNum].isOn)
+            return;
+
+        Hashtable props = new Hashtable() { { ShooterGameInfo.PLAYER_SKIN, slotNum + (playerNumber - 1) * 4 } };
+        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
     }
 }

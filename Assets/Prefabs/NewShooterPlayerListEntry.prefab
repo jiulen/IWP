@@ -344,6 +344,11 @@ MonoBehaviour:
   - {fileID: 5997805636682441538}
   - {fileID: 3988825077864230808}
   - {fileID: 1706002004235524652}
+  colorToggles:
+  - {fileID: 6943960634141310222}
+  - {fileID: 5888243862671774670}
+  - {fileID: 4044700237600361188}
+  - {fileID: 3455635189959784646}
 --- !u!1 &106274897971889284
 GameObject:
   m_ObjectHideFlags: 0
@@ -429,7 +434,19 @@ MonoBehaviour:
   m_Group: {fileID: 844918364548853398}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 331688619986121361}
+        m_TargetAssemblyTypeName: ShooterPlayerListEntry, Assembly-CSharp
+        m_MethodName: OnPlayerSkinToggled
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!1 &902648624924470221
 GameObject:
@@ -887,7 +904,19 @@ MonoBehaviour:
   m_Group: {fileID: 844918364548853398}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 331688619986121361}
+        m_TargetAssemblyTypeName: ShooterPlayerListEntry, Assembly-CSharp
+        m_MethodName: OnPlayerSkinToggled
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 1
 --- !u!1 &4208538163045746763
 GameObject:
@@ -1354,7 +1383,19 @@ MonoBehaviour:
   m_Group: {fileID: 844918364548853398}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 331688619986121361}
+        m_TargetAssemblyTypeName: ShooterPlayerListEntry, Assembly-CSharp
+        m_MethodName: OnPlayerSkinToggled
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!1 &7652523942026225530
 GameObject:
@@ -1502,6 +1543,7 @@ GameObject:
   - component: {fileID: 4462388965484005609}
   - component: {fileID: 293364205381282260}
   - component: {fileID: 1302890313868542525}
+  - component: {fileID: 7563552973720228258}
   m_Layer: 5
   m_Name: PlayerImage
   m_TagString: Untagged
@@ -1567,6 +1609,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7563552973720228258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7903567261196757495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db4acb3df5f808a49ab6d1e58449ae83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  graphic: {fileID: 1302890313868542525}
 --- !u!1 &8071555645958742924
 GameObject:
   m_ObjectHideFlags: 0
@@ -1652,7 +1707,19 @@ MonoBehaviour:
   m_Group: {fileID: 844918364548853398}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 331688619986121361}
+        m_TargetAssemblyTypeName: ShooterPlayerListEntry, Assembly-CSharp
+        m_MethodName: OnPlayerSkinToggled
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!1 &8164300936529706976
 GameObject:
