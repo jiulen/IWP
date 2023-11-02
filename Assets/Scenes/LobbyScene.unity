@@ -5350,6 +5350,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 874f839458d219349939f684cd0f42f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ConnectingPanel: {fileID: 1513305163}
+  ConnectionStatusText: {fileID: 407612980}
+  dotHolder: {fileID: 370822670}
   LoginPanel: {fileID: 964844637}
   playButton: {fileID: 1848066145}
   playButtonDim: {fileID: 1403095806}
@@ -6025,7 +6028,6 @@ GameObject:
   - component: {fileID: 1513305164}
   - component: {fileID: 1513305165}
   - component: {fileID: 1513305166}
-  - component: {fileID: 1513305167}
   m_Layer: 5
   m_Name: ConnectingPanel
   m_TagString: Untagged
@@ -6093,21 +6095,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1513305167
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1513305163}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59684263ad8206d4ea22d0f105e4f105, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ConnectionStatusText: {fileID: 407612980}
-  dotHolder: {fileID: 370822670}
-  connectingPanel: {fileID: 1513305163}
 --- !u!1 &1573896547
 GameObject:
   m_ObjectHideFlags: 0

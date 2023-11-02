@@ -9,6 +9,11 @@ using TMPro;
 
 public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
 {
+    [Header("Connecting Panel")]
+    public GameObject ConnectingPanel;
+    public TMP_Text ConnectionStatusText;
+    public GameObject dotHolder;
+
     [Header("Login Panel")]
     public GameObject LoginPanel;
 
@@ -66,7 +71,10 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        this.SetActivePanel(SelectionPanel.name);
+        ConnectionStatusText.text = "Connected";
+        dotHolder.SetActive(false);
+
+        SetActivePanel(SelectionPanel.name);
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
@@ -497,6 +505,7 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
 
     private void SetActivePanel(string activePanel)
     {
+        ConnectingPanel.SetActive(activePanel.Equals(ConnectingPanel.name));
         LoginPanel.SetActive(activePanel.Equals(LoginPanel.name));
         SelectionPanel.SetActive(activePanel.Equals(SelectionPanel.name));
         RoomListPanel.SetActive(activePanel.Equals(RoomListPanel.name));    // UI should call OnRoomListButtonClicked() to activate this
