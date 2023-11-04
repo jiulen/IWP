@@ -47,6 +47,8 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
 
     bool roomPublic = false;
 
+    bool canConnect = false;
+
     private Dictionary<string, RoomInfo> cachedRoomList;
     private Dictionary<string, GameObject> roomListEntries;
     private Dictionary<int, GameObject> playerListEntries;
@@ -71,9 +73,6 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        ConnectionStatusText.text = "Connected";
-        dotHolder.SetActive(false);
-
         SetActivePanel(SelectionPanel.name);
     }
 
@@ -552,6 +551,20 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
             entry.GetComponent<ShooterRoomListEntry>().Initialize(info.Name, (byte)info.PlayerCount, (byte)info.MaxPlayers);
 
             roomListEntries.Add(info.Name, entry);
+        }
+    }
+
+    private void Update()
+    {
+        if (!canConnect)
+        {
+            if (PhotonNetwork.NetworkingClient.LoadBalancingPeer.PeerState == PeerStateValue.Disconnected)
+            {
+                canConnect = true;
+                ConnectionStatusText.text = "Connected";
+                dotHolder.SetActive(false);
+                SetActivePanel(SelectionPanel.name);
+            }
         }
     }
 }
