@@ -9,11 +9,6 @@ using TMPro;
 
 public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
 {
-    [Header("Connecting Panel")]
-    public GameObject ConnectingPanel;
-    public TMP_Text ConnectionStatusText;
-    public GameObject dotHolder;
-
     [Header("Login Panel")]
     public GameObject LoginPanel;
 
@@ -46,8 +41,6 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
     public GameObject PlayerListEntryPrefab;
 
     bool roomPublic = false;
-
-    bool canConnect = false;
 
     private Dictionary<string, RoomInfo> cachedRoomList;
     private Dictionary<string, GameObject> roomListEntries;
@@ -504,7 +497,6 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
 
     private void SetActivePanel(string activePanel)
     {
-        ConnectingPanel.SetActive(activePanel.Equals(ConnectingPanel.name));
         LoginPanel.SetActive(activePanel.Equals(LoginPanel.name));
         SelectionPanel.SetActive(activePanel.Equals(SelectionPanel.name));
         RoomListPanel.SetActive(activePanel.Equals(RoomListPanel.name));    // UI should call OnRoomListButtonClicked() to activate this
@@ -556,15 +548,5 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        if (!canConnect)
-        {
-            if (PhotonNetwork.NetworkingClient.LoadBalancingPeer.PeerState == PeerStateValue.Disconnected)
-            {
-                canConnect = true;
-                ConnectionStatusText.text = "Connected";
-                dotHolder.SetActive(false);
-                SetActivePanel(SelectionPanel.name);
-            }
-        }
     }
 }
