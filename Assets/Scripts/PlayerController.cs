@@ -12,6 +12,31 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     SpriteRenderer playerSr;
 
+    enum PlayerActions
+    {
+        //Movement
+
+        WAIT,
+        WALK_LEFT,
+        WALK_RIGHT,
+        ROLL,
+        JUMP,
+        FALL,
+
+        //Attack
+
+
+        //Defense
+        BLOCK,
+        BURST,
+
+        //Others
+        STUNNED,
+        NONE
+    }
+
+    PlayerActions playerCurrentAction = PlayerActions.NONE;
+
     private void Awake()
     {
         photonView = GetComponent<PhotonView>();
