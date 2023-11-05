@@ -57,7 +57,14 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
         cachedRoomList = new Dictionary<string, RoomInfo>();
         roomListEntries = new Dictionary<string, GameObject>();
 
-        PlayerNameInput.text = "Guest " + Random.Range(1000, 10000);
+        if (PlayerPrefs.HasKey("PlayerName"))
+        {
+            PlayerNameInput.text = PlayerPrefs.GetString("PlayerName");
+        }
+        else
+        {
+            PlayerNameInput.text = "Guest " + Random.Range(1000, 10000);
+        }
     }
 
     #endregion
@@ -428,6 +435,8 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
 
         PhotonNetwork.LocalPlayer.NickName = playerName;
         PhotonNetwork.ConnectUsingSettings();
+
+        PlayerPrefs.SetString("PlayerName", playerName);
     }
 
     public void OnRoomListButtonClicked()
