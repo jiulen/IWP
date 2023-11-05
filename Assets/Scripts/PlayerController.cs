@@ -37,6 +37,13 @@ public class PlayerController : MonoBehaviour
 
     PlayerActions playerCurrentAction = PlayerActions.NONE;
 
+    //Player stats
+    public int knockbackMultiplier = 0;
+    public int burstMeterValue = 0;
+    public int burstMeterMax = 100;
+    public int airOptionsAvail = 2;
+    public int airOptionsMax = 2;
+
     private void Awake()
     {
         photonView = GetComponent<PhotonView>();

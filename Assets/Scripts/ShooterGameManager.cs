@@ -112,8 +112,7 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         {
             if (CheckAllPlayerLoadedLevel())
             {
-                //Rpc
-                //photonView.RPC("StartGameRpc", RpcTarget.AllViaServer);
+                //Start game
             }
             else
             {
@@ -127,39 +126,6 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     private void StartGameRpc()
     {
-        Debug.Log("StartGame!");
-
-        // on rejoin, we have to figure out if the spaceship exists or not
-        // if this is a rejoin (the ship is already network instantiated and will be setup via event) we don't need to call PN.Instantiate
-
-        float xPos = 0;
-        PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_NUMBER, out object playerNumber);
-        if ((int)playerNumber == 1)
-        {
-            xPos = -4;
-        }
-        else if ((int)playerNumber == 2)
-        {
-            xPos = 4;
-        }
-        else
-        {
-            Debug.Log("Playernum problem");
-        }
-        Vector3 position = new Vector3(xPos, 1, 0);
-
-        // Spawn player
-        GameObject playerObj = PhotonNetwork.Instantiate("Player", position, Quaternion.identity, 0); // avoid this call on rejoin (ship was network instantiated before)
-        if ((int)playerNumber == 2)
-        {
-            playerObj.transform.localScale = new Vector3(-1, 1, 1);
-        }
-
-        InfoText.text = "";
-
-        if (PhotonNetwork.IsMasterClient)
-        {
-        }
     }
 
     private bool CheckAllPlayerLoadedLevel()

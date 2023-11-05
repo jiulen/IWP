@@ -19,8 +19,8 @@ public class ShooterGameInfo
             case 2: return Color.red;
             case 3: return new Color(1, 0.4f, 0.7f); //pink
             case 4: return new Color(0.2f, 0.8f, 0.2f); //lime green
-            case 5: return Color.cyan;
-            case 6: return Color.blue;
+            case 5: return new Color(0.25f, 0.88f, 0.82f); //turqoise
+            case 6: return Color.cyan;
             case 7: return new Color(0.7f, 0, 0.9f); //purple
         }
 
