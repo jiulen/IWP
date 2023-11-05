@@ -194,6 +194,9 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
                     }
 
                     entry.GetComponent<ShooterPlayerListEntry>().Initialize(p.ActorNumber, p.NickName, (int)playerNumber);
+
+                    p.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_SKIN, out object playerSkinID);
+                    entry.GetComponent<ShooterPlayerListEntry>().SetPlayerSkin((int)playerSkinID);
                 }
                 else
                 {

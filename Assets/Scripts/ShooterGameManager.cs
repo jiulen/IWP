@@ -16,6 +16,8 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
     bool gameStarting = false;
 
+    [SerializeField] PlayerController player1, player2;
+    bool gamePaused = true;
     int currentFrame;
 
     public void Awake()
@@ -42,7 +44,7 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         base.OnDisable();
     }
 
-    private IEnumerator EndOfGame(string winner, bool draw = false)
+    private IEnumerator EndOfGame(string winner, bool draw = false) //TODO
     {
         float timer = 2.0f;
 
@@ -111,7 +113,7 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
             if (CheckAllPlayerLoadedLevel())
             {
                 //Rpc
-                photonView.RPC("StartGameRpc", RpcTarget.AllViaServer);
+                //photonView.RPC("StartGameRpc", RpcTarget.AllViaServer);
             }
             else
             {
@@ -130,20 +132,25 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         // on rejoin, we have to figure out if the spaceship exists or not
         // if this is a rejoin (the ship is already network instantiated and will be setup via event) we don't need to call PN.Instantiate
 
-        float xPos;
-        if (PhotonNetwork.LocalPlayer.GetPlayerNumber() == 0)
+        float xPos = 0;
+        PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_NUMBER, out object playerNumber);
+        if ((int)playerNumber == 1)
         {
             xPos = -4;
         }
-        else
+        else if ((int)playerNumber == 2)
         {
             xPos = 4;
         }
-        Vector3 position = new Vector3(xPos, -2.125f, 0);
+        else
+        {
+            Debug.Log("Playernum problem");
+        }
+        Vector3 position = new Vector3(xPos, 1, 0);
 
         // Spawn player
         GameObject playerObj = PhotonNetwork.Instantiate("Player", position, Quaternion.identity, 0); // avoid this call on rejoin (ship was network instantiated before)
-        if (PhotonNetwork.LocalPlayer.GetPlayerNumber() == 1)
+        if ((int)playerNumber == 2)
         {
             playerObj.transform.localScale = new Vector3(-1, 1, 1);
         }
@@ -209,9 +216,13 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         }
     }
 
+    //Game parts
+
     private void FixedUpdate()
     {
+        if (gamePaused) return;
+
         Physics2D.Simulate(Time.fixedDeltaTime);
-        currentFrame++;
+        ++currentFrame;
     }
 }

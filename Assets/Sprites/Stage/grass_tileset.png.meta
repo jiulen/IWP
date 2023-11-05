@@ -642,7 +642,11 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -3, y: 4}
+        - {x: -3, y: -4}
+        - {x: 4, y: -4}
+        - {x: 4, y: 4}
       tessellationDetail: 0
       bones: []
       spriteID: 383b72089dcdc684f9575f74838b3414
@@ -705,7 +709,11 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -4, y: 4}
+        - {x: -4, y: -4}
+        - {x: 3, y: -4}
+        - {x: 3, y: 4}
       tessellationDetail: 0
       bones: []
       spriteID: 713d4a70c30bef846bf5a3284afccd83
@@ -2512,8 +2520,8 @@ TextureImporter:
       grass_tileset_59: -861809215
       grass_tileset_91: 1821978621
       grass_tileset_47: -1874614686
-      grass_tileset_27: -500252811
       grass_tileset_1: 686569137
+      grass_tileset_27: -500252811
       grass_tileset_32: 1263034402
       grass_tileset_37: -1414916323
       grass_tileset_35: 832035915
