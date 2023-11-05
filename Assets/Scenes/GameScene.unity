@@ -258,7 +258,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: player2
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
   m_sharedMaterial: {fileID: 6242511542146253578, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
@@ -417,7 +417,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 50%
+  m_text: 0%
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
   m_sharedMaterial: {fileID: 6242511542146253578, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
@@ -1872,7 +1872,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: player1
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
   m_sharedMaterial: {fileID: 6242511542146253578, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
@@ -2814,6 +2814,10 @@ PrefabInstance:
       propertyPath: playerNum
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6229377857779737878, guid: b887b57ca02618c42908d77e6cdb00ec, type: 3}
+      propertyPath: playerInfoUI
+      value: 
+      objectReference: {fileID: 1227417855}
     - target: {fileID: 6281997457829084015, guid: b887b57ca02618c42908d77e6cdb00ec, type: 3}
       propertyPath: sceneViewId
       value: 1
@@ -2932,6 +2936,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 276f9dd4c4acff24091f895961fc076a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerController: {fileID: 1158152010}
+  playerUISkins:
+  - {fileID: -1544466333, guid: a8f3a5e752d276f4b9c91421ea1662e4, type: 3}
+  - {fileID: 60903812, guid: a8f3a5e752d276f4b9c91421ea1662e4, type: 3}
+  - {fileID: 1480219898, guid: a8f3a5e752d276f4b9c91421ea1662e4, type: 3}
+  - {fileID: -345763863, guid: a8f3a5e752d276f4b9c91421ea1662e4, type: 3}
+  - {fileID: 496941642, guid: a8f3a5e752d276f4b9c91421ea1662e4, type: 3}
+  - {fileID: -1303578253, guid: a8f3a5e752d276f4b9c91421ea1662e4, type: 3}
+  - {fileID: -1854843982, guid: a8f3a5e752d276f4b9c91421ea1662e4, type: 3}
+  - {fileID: 1720531552, guid: a8f3a5e752d276f4b9c91421ea1662e4, type: 3}
+  playerImage: {fileID: 700152098}
+  burstBgImage: {fileID: 1526272937}
+  burstMeterImage: {fileID: 1926293106}
+  playerNameText: {fileID: 709709217}
+  knockbackText: {fileID: 1618831797}
+  airOption1: {fileID: 1710277462}
+  airOption2: {fileID: 1255679167}
 --- !u!1 &1255679167
 GameObject:
   m_ObjectHideFlags: 0
@@ -2944,7 +2965,7 @@ GameObject:
   - component: {fileID: 1255679170}
   - component: {fileID: 1255679169}
   m_Layer: 5
-  m_Name: AirOption1Fill
+  m_Name: AirOption2Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3023,6 +3044,10 @@ PrefabInstance:
       propertyPath: playerNum
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6229377857779737878, guid: b887b57ca02618c42908d77e6cdb00ec, type: 3}
+      propertyPath: playerInfoUI
+      value: 
+      objectReference: {fileID: 2133479840}
     - target: {fileID: 6281997457829084015, guid: b887b57ca02618c42908d77e6cdb00ec, type: 3}
       propertyPath: sceneViewId
       value: 4
@@ -3267,7 +3292,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 50%
+  m_text: 0%
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
   m_sharedMaterial: {fileID: 6242511542146253578, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
@@ -3356,7 +3381,7 @@ GameObject:
   - component: {fileID: 1710277465}
   - component: {fileID: 1710277464}
   m_Layer: 5
-  m_Name: AirOption2Fill
+  m_Name: AirOption1Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4230,3 +4255,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 276f9dd4c4acff24091f895961fc076a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerController: {fileID: 1431160638}
+  playerUISkins:
+  - {fileID: -1544466333, guid: a8f3a5e752d276f4b9c91421ea1662e4, type: 3}
+  - {fileID: 60903812, guid: a8f3a5e752d276f4b9c91421ea1662e4, type: 3}
+  - {fileID: 1480219898, guid: a8f3a5e752d276f4b9c91421ea1662e4, type: 3}
+  - {fileID: -345763863, guid: a8f3a5e752d276f4b9c91421ea1662e4, type: 3}
+  - {fileID: 496941642, guid: a8f3a5e752d276f4b9c91421ea1662e4, type: 3}
+  - {fileID: -1303578253, guid: a8f3a5e752d276f4b9c91421ea1662e4, type: 3}
+  - {fileID: -1854843982, guid: a8f3a5e752d276f4b9c91421ea1662e4, type: 3}
+  - {fileID: 1720531552, guid: a8f3a5e752d276f4b9c91421ea1662e4, type: 3}
+  playerImage: {fileID: 1826881544}
+  burstBgImage: {fileID: 1102470212}
+  burstMeterImage: {fileID: 792534449}
+  playerNameText: {fileID: 101703000}
+  knockbackText: {fileID: 220108891}
+  airOption1: {fileID: 825034282}
+  airOption2: {fileID: 597028033}

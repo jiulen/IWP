@@ -6,6 +6,8 @@ using Photon.Realtime;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] PlayerInfoUI playerInfoUI;
+
     PhotonView photonView;
     public int playerNum;
 
@@ -39,8 +41,7 @@ public class PlayerController : MonoBehaviour
 
     //Player stats
     public int knockbackMultiplier = 0;
-    public int burstMeterValue = 0;
-    public int burstMeterMax = 100;
+    public float burstMeterValue = 0;
     public int airOptionsAvail = 2;
     public int airOptionsMax = 2;
 
@@ -48,7 +49,7 @@ public class PlayerController : MonoBehaviour
     {
         photonView = GetComponent<PhotonView>();
 
-        SetPlayerSkin();
+        SetPlayerInfo();
     }
 
     // Start is called before the first frame update
@@ -63,7 +64,7 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    void SetPlayerSkin()
+    void SetPlayerInfo()
     {
         foreach (Player p in PhotonNetwork.PlayerList)
         {
@@ -71,12 +72,16 @@ public class PlayerController : MonoBehaviour
             {
                 if ((int)playerNumber == playerNum)
                 {
+                    playerInfoUI.SetPlayerName(p.NickName);
+
                     if (p.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_SKIN, out object playerSkinID))
                     {
                         playerSr.material.SetColor("_PlayerColor", ShooterGameInfo.GetColor((int)playerSkinID));
 
-                        return;
+                        playerInfoUI.SetUISkin((int)playerSkinID);
                     }
+
+                    return;
                 }
 
             }
