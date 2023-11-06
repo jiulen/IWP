@@ -4,11 +4,15 @@ public class ShooterGameInfo
 {
     public const int PLAYER_MAX_LIVES = 1;
 
-    public const string PLAYER_LIVES = "PlayerLives";
+    //lobby
     public const string PLAYER_READY = "IsPlayerReady";
-    public const string PLAYER_LOADED_LEVEL = "PlayerLoadedLevel";
     public const string PLAYER_SKIN = "PlayerSkin";
     public const string PLAYER_NUMBER = "PlayerNumber";
+
+    //game
+    public const string PLAYER_LOADED_LEVEL = "PlayerLoadedLevel";
+    public const string PLAYER_LIVES = "PlayerLives";
+    public const string PLAYER_ACTION = "PlayerAction";
 
     public static Color GetColor(int colorChoice)
     {

@@ -186,9 +186,29 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
     private void FixedUpdate()
     {
-        if (gamePaused) return;
+        if (!gamePaused)
+        {
+            Physics2D.Simulate(Time.fixedDeltaTime);
 
-        Physics2D.Simulate(Time.fixedDeltaTime);
-        ++currentFrame;
+            player1.UpdatePlayerInfoUI();
+            player2.UpdatePlayerInfoUI();
+
+            ++currentFrame;
+
+            if (player1.playerCurrentAction == PlayerController.PlayerActions.NONE || player2.playerCurrentAction == PlayerController.PlayerActions.NONE)
+            {
+                OnPauseGame();
+            }
+        }
+        else
+        {
+
+        }
+    }
+
+    private void OnPauseGame()
+    {
+        //pause game
+        gamePaused = true;
     }
 }

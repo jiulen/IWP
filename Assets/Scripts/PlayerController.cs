@@ -8,13 +8,12 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] PlayerInfoUI playerInfoUI;
 
-    PhotonView photonView;
     public int playerNum;
 
     [SerializeField]
     SpriteRenderer playerSr;
 
-    enum PlayerActions
+    public enum PlayerActions
     {
         //Movement
 
@@ -25,19 +24,19 @@ public class PlayerController : MonoBehaviour
         JUMP,
         FALL,
 
-        //Attack
-
-
         //Defense
         BLOCK,
         BURST,
+
+        //Attack
+
 
         //Others
         STUNNED,
         NONE
     }
 
-    PlayerActions playerCurrentAction = PlayerActions.NONE;
+    public PlayerActions playerCurrentAction = PlayerActions.NONE;
 
     //Player stats
     public int knockbackMultiplier = 0;
@@ -47,8 +46,6 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        photonView = GetComponent<PhotonView>();
-
         SetPlayerInfo();
     }
 
@@ -86,5 +83,10 @@ public class PlayerController : MonoBehaviour
 
             }
         }
+    }
+
+    public void UpdatePlayerInfoUI()
+    {
+        playerInfoUI.UpdatePlayerInfo(burstMeterValue, knockbackMultiplier, airOptionsAvail);
     }
 }
