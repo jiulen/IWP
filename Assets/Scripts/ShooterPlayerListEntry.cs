@@ -105,7 +105,9 @@ public class ShooterPlayerListEntry : MonoBehaviour
         if (!colorToggles[slotNum].isOn)
             return;
 
-        Hashtable props = new Hashtable() { { ShooterGameInfo.PLAYER_SKIN, slotNum + (playerNumber - 1) * 4 } };
+        isPlayerReady = false;
+
+        Hashtable props = new Hashtable() { { ShooterGameInfo.PLAYER_SKIN, slotNum + (playerNumber - 1) * 4 }, { ShooterGameInfo.PLAYER_READY, isPlayerReady } }; //unready when change skin
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
     }
 }
