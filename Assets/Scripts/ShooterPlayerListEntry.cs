@@ -43,7 +43,7 @@ public class ShooterPlayerListEntry : MonoBehaviour
         }
         else
         {
-            Hashtable initialProps = new Hashtable() { { ShooterGameInfo.PLAYER_READY, isPlayerReady }, { ShooterGameInfo.PLAYER_LIVES, ShooterGameInfo.PLAYER_MAX_LIVES }};
+            Hashtable initialProps = new Hashtable() { { ShooterGameInfo.PLAYER_READY, isPlayerReady }};
             PhotonNetwork.LocalPlayer.SetCustomProperties(initialProps);
             PhotonNetwork.LocalPlayer.SetScore(0);
 

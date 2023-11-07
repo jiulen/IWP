@@ -14,9 +14,10 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
     public TMP_Text InfoText;
 
-    bool gameStarting = false;
-
     [SerializeField] PlayerController player1, player2;
+    PlayerController localPlayerController, otherPlayerController;
+
+    bool gameStarted = false;
     bool gamePaused = true;
     int currentFrame;
 
@@ -32,11 +33,28 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
     public void Start()
     {
-        Hashtable props = new Hashtable
-            {
-                {ShooterGameInfo.PLAYER_LOADED_LEVEL, true}
-            };
+        //Notify ready
+        Hashtable props = new()
+        {
+            {ShooterGameInfo.PLAYER_LOADED_LEVEL, true}
+        };
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+
+        //Set local controller for easier access
+        if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_NUMBER, out object playerNumber))
+        {
+            switch (playerNumber)
+            {
+                case 1:
+                    localPlayerController = player1;
+                    otherPlayerController = player2;
+                    break;
+                case 2:
+                    localPlayerController = player2;
+                    otherPlayerController = player1;
+                    break;
+            }
+        }
     }
 
     public override void OnDisable()
@@ -92,10 +110,33 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
-        if (changedProps.ContainsKey(ShooterGameInfo.PLAYER_LIVES))
+        //update player ui (might move this to only run on non-host)
+        if (changedProps.ContainsKey(ShooterGameInfo.PLAYER_BURST) || 
+            changedProps.ContainsKey(ShooterGameInfo.PLAYER_KNOCKBACK) || 
+            changedProps.ContainsKey(ShooterGameInfo.PLAYER_AIR))
         {
-            CheckEndOfGame();
-            return;
+            //get stats
+            targetPlayer.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_BURST, out object playerBurst);
+            targetPlayer.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_KNOCKBACK, out object playerKnockback);
+            targetPlayer.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_AIR, out object playerAir);
+
+            //check which player
+            PlayerController controllerToChange = null;
+
+            if (targetPlayer.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_NUMBER, out object playerNumber))
+            {
+                switch (playerNumber)
+                {
+                    case 1:
+                        controllerToChange = player1;
+                        break;
+                    case 2:
+                        controllerToChange = player2;
+                        break;
+                }
+            }
+
+            controllerToChange.UpdateInfoUIManual((float)playerBurst, (int)playerKnockback, (int)playerAir);
         }
 
         if (!PhotonNetwork.IsMasterClient)
@@ -103,33 +144,39 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
             return;
         }
 
-        if (gameStarting)
-        {
-            return;
-        }
-
+        //check when to start
         if (changedProps.ContainsKey(ShooterGameInfo.PLAYER_LOADED_LEVEL))
         {
             if (CheckAllPlayerLoadedLevel())
             {
-                //Start game
-            }
-            else
-            {
-                // not all players loaded yet. wait:
-                Debug.Log("setting text waiting for players! ", this.InfoText);
-                InfoText.text = "Waiting for other player...";
+                Hashtable actionProps = new Hashtable
+                {
+                    //init player stats
+                    { ShooterGameInfo.PLAYER_BURST, 0},
+                    { ShooterGameInfo.PLAYER_KNOCKBACK, 0},
+                    { ShooterGameInfo.PLAYER_AIR, 2}
+                };
+                foreach (Player p in PhotonNetwork.PlayerList)
+                {
+                    p.SetCustomProperties(actionProps);
+                }
+
+                localPlayerController.playerCurrentAction = PlayerController.PlayerActions.NONE;
+                otherPlayerController.playerCurrentAction = PlayerController.PlayerActions.NONE;
+
+                gameStarted = true;
+                gamePaused = true;
             }
         }
     }
 
-    [PunRPC]
-    private void StartGameRpc()
-    {
-    }
-
     private bool CheckAllPlayerLoadedLevel()
     {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            return false;
+        }
+
         foreach (Player p in PhotonNetwork.PlayerList)
         {
             object playerLoadedLevel;
@@ -148,28 +195,11 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         return true;
     }
 
-    private void CheckEndOfGame()
+    private void CheckEndOfGame() //TODO
     {
         bool playerDead = false;
         string winner = "";
         bool draw = true;
-
-        foreach (Player p in PhotonNetwork.PlayerList)
-        {
-            object lives;
-            if (p.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_LIVES, out lives))
-            {
-                if ((int)lives <= 0)
-                {
-                    playerDead = true;
-                }
-                else
-                {
-                    winner = p.NickName;
-                    draw = false;
-                }
-            }
-        }
 
         if (playerDead)
         {
@@ -186,23 +216,41 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
     private void FixedUpdate()
     {
+        if (!gameStarted)
+            return;
+
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+
         if (!gamePaused)
         {
             Physics2D.Simulate(Time.fixedDeltaTime);
 
-            player1.UpdatePlayerInfoUI();
-            player2.UpdatePlayerInfoUI();
+            //might have to update ui host and client side separately
+            //localPlayerController.UpdateInfoUIAuto();
+            //otherPlayerController.UpdateInfoUIAuto();
 
             ++currentFrame;
 
-            if (player1.playerCurrentAction == PlayerController.PlayerActions.NONE || player2.playerCurrentAction == PlayerController.PlayerActions.NONE)
+            if (localPlayerController.playerCurrentAction == PlayerController.PlayerActions.NONE || 
+                otherPlayerController.playerCurrentAction == PlayerController.PlayerActions.NONE)
             {
                 OnPauseGame();
             }
         }
         else
         {
+            //check if available players made their move
+            if (localPlayerController.playerCurrentAction == PlayerController.PlayerActions.NONE && localPlayerController.allowMove)
+                return;
+            if (otherPlayerController.playerCurrentAction == PlayerController.PlayerActions.NONE && otherPlayerController.allowMove)
+                return;
 
+            //prepare to continue game
+            localPlayerController.allowMove = false;
+            otherPlayerController.allowMove = false;
+
+            gamePaused = false;
         }
     }
 
@@ -210,5 +258,24 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
     {
         //pause game
         gamePaused = true;
+
+        //do localplayer
+
+        //check can move
+        if (localPlayerController.playerCurrentAction == PlayerController.PlayerActions.NONE)
+        {
+            //get list of unavailable/available moves
+            List<int> unavailMoveList = new();
+
+            localPlayerController.allowMove = true;
+        }
+        else
+        {
+            localPlayerController.allowMove = false;
+        }
+
+        //do otherplayer
+
+            
     }
 }

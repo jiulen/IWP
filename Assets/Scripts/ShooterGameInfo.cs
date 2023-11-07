@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class ShooterGameInfo
 {
-    public const int PLAYER_MAX_LIVES = 1;
-
     //lobby
     public const string PLAYER_READY = "IsPlayerReady";
     public const string PLAYER_SKIN = "PlayerSkin";
@@ -11,8 +9,11 @@ public class ShooterGameInfo
 
     //game
     public const string PLAYER_LOADED_LEVEL = "PlayerLoadedLevel";
-    public const string PLAYER_LIVES = "PlayerLives";
-    public const string PLAYER_ACTION = "PlayerAction";
+
+    //player stats (for syncing with other player)
+    public const string PLAYER_BURST = "PlayerBurst";
+    public const string PLAYER_KNOCKBACK = "PlayerKnockback";
+    public const string PLAYER_AIR = "PlayerAir";
 
     public static Color GetColor(int colorChoice)
     {

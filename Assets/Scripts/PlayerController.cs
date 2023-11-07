@@ -16,11 +16,11 @@ public class PlayerController : MonoBehaviour
     public enum PlayerActions
     {
         //Movement
-
         WAIT,
         WALK_LEFT,
         WALK_RIGHT,
-        ROLL,
+        ROLL_LEFT,
+        ROLL_RIGHT,
         JUMP,
         FALL,
 
@@ -29,7 +29,23 @@ public class PlayerController : MonoBehaviour
         BURST,
 
         //Attack
+        EXPLOSION_NEUTRAL,
+        EXPLOSION_LEFT,
+        EXPLOSION_RIGHT,
+        EXPLOSION_UP,
+        EXPLOSION_DOWN,
 
+        GEYSER_LEFT,
+        GEYSER_RIGHT,
+        GEYSER_UP,
+        GEYSER_DOWN,
+
+        STONEFIST_LEFT,
+        STONEFIST_RIGHT,
+        STONEFIST_UP,
+        STONEFIST_DOWN,
+
+        WHIRLWIND,
 
         //Others
         STUNNED,
@@ -42,7 +58,9 @@ public class PlayerController : MonoBehaviour
     public int knockbackMultiplier = 0;
     public float burstMeterValue = 0;
     public int airOptionsAvail = 2;
-    public int airOptionsMax = 2;
+    public const int airOptionsMax = 2;
+
+    public bool allowMove = false;
 
     private void Awake()
     {
@@ -85,7 +103,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void UpdatePlayerInfoUI()
+    public void UpdateInfoUIManual(float playerBurstMeterVal, int playerKnockbackMulti, int playerAirOptions)
+    {
+        playerInfoUI.UpdatePlayerInfo(playerBurstMeterVal, playerKnockbackMulti, playerAirOptions);
+    }
+
+    public void UpdateInfoUIAuto()
     {
         playerInfoUI.UpdatePlayerInfo(burstMeterValue, knockbackMultiplier, airOptionsAvail);
     }
