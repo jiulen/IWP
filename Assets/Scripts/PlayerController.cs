@@ -23,8 +23,7 @@ public class PlayerController : MonoBehaviour
         WAIT,
         WALK_LEFT,
         WALK_RIGHT,
-        ROLL_LEFT,
-        ROLL_RIGHT,
+        ROLL,
         JUMP,
         FALL,
 
@@ -49,7 +48,11 @@ public class PlayerController : MonoBehaviour
         STONEFIST_UP,
         STONEFIST_DOWN,
 
-        WHIRLWIND,
+        WHIRLWIND_NEUTRAL,
+        WHIRLWIND_LEFT,
+        WHIRLWIND_RIGHT,
+        WHIRLWIND_UP,
+        WHIRLWIND_DOWN,
 
         //Others
         STUNNED,
@@ -129,8 +132,7 @@ public class PlayerController : MonoBehaviour
 
             if (airOptionsAvail <= 0)
             {
-                unavailableActions.Add(PlayerActions.ROLL_LEFT);
-                unavailableActions.Add(PlayerActions.ROLL_RIGHT);
+                unavailableActions.Add(PlayerActions.ROLL);
 
                 unavailableActions.Add(PlayerActions.JUMP);
             }
