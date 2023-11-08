@@ -1622,6 +1622,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   graphic: {fileID: 1302890313868542525}
+  sr: {fileID: 0}
 --- !u!1 &8071555645958742924
 GameObject:
   m_ObjectHideFlags: 0
