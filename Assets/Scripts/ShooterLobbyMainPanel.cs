@@ -7,7 +7,7 @@ using Photon.Pun;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using TMPro;
 
-public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
+public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks, IPunObservable
 {
     [Header("Login Panel")]
     public GameObject LoginPanel;
@@ -47,6 +47,26 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
     private Dictionary<int, GameObject> playerListEntries;
 
     private byte maxPlayers = 2;
+
+    #region IPunObservable implementation
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            //own this player, send others data
+            stream.SendNext(roomPublic);
+        }
+        else
+        {
+            //network player, receive data
+            roomPublic = (bool)stream.ReceiveNext();
+            ToggleRoomPublic();
+        }
+    }
+
+    #endregion
+
 
     #region UNITY
 
@@ -281,8 +301,6 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
 
         StartGameButton.interactable = playersReady;
         StartGameDim.SetActive(!playersReady);
-
-        photonView.RPC("ToggleRoomPublicRPC", RpcTarget.Others, roomPublic);
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
@@ -347,17 +365,16 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
 
     public void OnRoomPublicToggled()
     {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+
         roomPublic = roomPublicToggle.isOn;
         PhotonNetwork.CurrentRoom.IsVisible = roomPublic;
-
-        photonView.RPC("ToggleRoomPublicRPC", RpcTarget.Others, roomPublic);
     }
 
-    [PunRPC]
-    void ToggleRoomPublicRPC(bool isOn)
+    void ToggleRoomPublic()
     {
-        roomPublicToggle.isOn = isOn;
-        roomPublic = isOn;
+        roomPublicToggle.isOn = roomPublic;
     }
 
     public void OnBackButtonClicked()

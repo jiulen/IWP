@@ -13,6 +13,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     SpriteRenderer playerSr;
 
+    bool isGrounded = true;
+
+    List<PlayerActions> unavailableActions = new();
+
     public enum PlayerActions
     {
         //Movement
@@ -111,5 +115,38 @@ public class PlayerController : MonoBehaviour
     public void UpdateInfoUIAuto()
     {
         playerInfoUI.UpdatePlayerInfo(burstMeterValue, knockbackMultiplier, airOptionsAvail);
+    }
+
+    public void CheckMoves()
+    {
+        unavailableActions.Clear();
+
+        //Check movement
+        if (!isGrounded)
+        {
+            unavailableActions.Add(PlayerActions.WALK_LEFT);
+            unavailableActions.Add(PlayerActions.WALK_RIGHT);
+
+            if (airOptionsAvail <= 0)
+            {
+                unavailableActions.Add(PlayerActions.ROLL_LEFT);
+                unavailableActions.Add(PlayerActions.ROLL_RIGHT);
+
+                unavailableActions.Add(PlayerActions.JUMP);
+            }
+        }
+        else
+        {
+            if (airOptionsAvail <= 0)
+            {
+                unavailableActions.Add(PlayerActions.FALL);
+            }
+        }
+
+        //Check burst
+        if (burstMeterValue < 1)
+        {
+            unavailableActions.Add(PlayerActions.BURST);
+        }
     }
 }

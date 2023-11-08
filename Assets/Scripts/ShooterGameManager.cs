@@ -152,7 +152,7 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
                 Hashtable actionProps = new Hashtable
                 {
                     //init player stats
-                    { ShooterGameInfo.PLAYER_BURST, 0},
+                    { ShooterGameInfo.PLAYER_BURST, 0f},
                     { ShooterGameInfo.PLAYER_KNOCKBACK, 0},
                     { ShooterGameInfo.PLAYER_AIR, 2}
                 };
@@ -264,8 +264,8 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         //check can move
         if (localPlayerController.playerCurrentAction == PlayerController.PlayerActions.NONE)
         {
-            //get list of unavailable/available moves
-            List<int> unavailMoveList = new();
+            //get list of unavailable moves
+            localPlayerController.CheckMoves();
 
             localPlayerController.allowMove = true;
         }
