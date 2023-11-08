@@ -46,20 +46,10 @@ public class PlayerInfoUI : MonoBehaviour
 
         knockbackText.text = playerKnockbackMulti + "%";
 
-        if (playerAirOptions <= 0)
-        {
-            airOption1.SetActive(true);
-            airOption2.SetActive(true);
-        }
-        else if (playerAirOptions <= 1)
-        {
-            airOption1.SetActive(true);
-            airOption2.SetActive(false);
-        }
-        else
-        {
-            airOption1.SetActive(false);
-            airOption2.SetActive(false);
-        }
+        airOption1.SetActive(false);
+        airOption2.SetActive(false);
+
+        if (playerAirOptions > 0) airOption1.SetActive(true);
+        if (playerAirOptions > 1) airOption2.SetActive(true);
     }
 }
