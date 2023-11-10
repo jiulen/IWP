@@ -32,27 +32,13 @@ public class PlayerController : MonoBehaviour
         BURST,
 
         //Attack
-        EXPLOSION_NEUTRAL,
-        EXPLOSION_LEFT,
-        EXPLOSION_RIGHT,
-        EXPLOSION_UP,
-        EXPLOSION_DOWN,
-
-        GEYSER_LEFT,
-        GEYSER_RIGHT,
-        GEYSER_UP,
-        GEYSER_DOWN,
-
-        STONEFIST_LEFT,
-        STONEFIST_RIGHT,
-        STONEFIST_UP,
-        STONEFIST_DOWN,
-
-        WHIRLWIND_NEUTRAL,
-        WHIRLWIND_LEFT,
-        WHIRLWIND_RIGHT,
-        WHIRLWIND_UP,
-        WHIRLWIND_DOWN,
+        HYDRO_BALL,
+        ICICLE,
+        LINGERING_SPIRIT,
+        EXPLOSION,
+        LIGHTNING,
+        SEISMIC_STRIKE,
+        WHIRLWIND,
 
         //Others
         STUNNED,
