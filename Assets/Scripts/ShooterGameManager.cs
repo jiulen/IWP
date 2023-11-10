@@ -17,6 +17,8 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
     [SerializeField] PlayerController player1, player2;
     PlayerController localPlayerController, otherPlayerController;
 
+    [SerializeField] ControllerUI localControllerUI;
+
     bool gameStarted = false;
     bool gamePaused = true;
     int currentFrame;
@@ -55,6 +57,8 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
                     break;
             }
         }
+
+        localPlayerController.controllerUI = localControllerUI;
     }
 
     public override void OnDisable()
@@ -110,33 +114,20 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
-        //update player ui (might move this to only run on non-host)
-        if (changedProps.ContainsKey(ShooterGameInfo.PLAYER_BURST) || 
-            changedProps.ContainsKey(ShooterGameInfo.PLAYER_KNOCKBACK) || 
-            changedProps.ContainsKey(ShooterGameInfo.PLAYER_AIR))
+        //check when to show controls
+        if (changedProps.ContainsKey(ShooterGameInfo.PLAYER_SHOW_CONTROLS))
         {
-            //get stats
-            targetPlayer.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_BURST, out object playerBurst);
-            targetPlayer.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_KNOCKBACK, out object playerKnockback);
-            targetPlayer.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_AIR, out object playerAir);
-
-            //check which player
-            PlayerController controllerToChange = null;
-
-            if (targetPlayer.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_NUMBER, out object playerNumber))
+            if (changedProps.TryGetValue(ShooterGameInfo.PLAYER_SHOW_CONTROLS, out object showControls))
             {
-                switch (playerNumber)
+                if ((bool)showControls)
                 {
-                    case 1:
-                        controllerToChange = player1;
-                        break;
-                    case 2:
-                        controllerToChange = player2;
-                        break;
+                    //show this player's controls
+                    localPlayerController.ShowControls(true);
+
+                    Hashtable props = new Hashtable() { { ShooterGameInfo.PLAYER_SHOW_CONTROLS, false } };
+                    PhotonNetwork.LocalPlayer.SetCustomProperties(props);
                 }
             }
-
-            controllerToChange.UpdateInfoUIManual((float)playerBurst, (int)playerKnockback, (int)playerAir);
         }
 
         if (!PhotonNetwork.IsMasterClient)
@@ -149,20 +140,16 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         {
             if (CheckAllPlayerLoadedLevel())
             {
-                Hashtable actionProps = new Hashtable
-                {
-                    //init player stats
-                    { ShooterGameInfo.PLAYER_BURST, 0f},
-                    { ShooterGameInfo.PLAYER_KNOCKBACK, 0},
-                    { ShooterGameInfo.PLAYER_AIR, 2}
-                };
-                foreach (Player p in PhotonNetwork.PlayerList)
-                {
-                    p.SetCustomProperties(actionProps);
-                }
-
                 localPlayerController.playerCurrentAction = PlayerController.PlayerActions.NONE;
                 otherPlayerController.playerCurrentAction = PlayerController.PlayerActions.NONE;
+
+                Hashtable playerActionProps = new Hashtable() { { ShooterGameInfo.PLAYER_SELECTED_ACTION, (int)PlayerController.PlayerActions.NONE },
+                                                                { ShooterGameInfo.PLAYER_FLIP, false },
+                                                                { ShooterGameInfo.PLAYER_SHOW_CONTROLS, true } };
+                foreach (Player p in PhotonNetwork.PlayerList)
+                {
+                    p.SetCustomProperties(playerActionProps);
+                }
 
                 gameStarted = true;
                 gamePaused = true;
@@ -219,6 +206,9 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         if (!gameStarted)
             return;
 
+        localPlayerController.UpdateInfoUIAuto();
+        otherPlayerController.UpdateInfoUIAuto();
+
         if (!PhotonNetwork.IsMasterClient)
             return;
 
@@ -226,14 +216,9 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         {
             Physics2D.Simulate(Time.fixedDeltaTime);
 
-            //might have to update ui host and client side separately
-            //localPlayerController.UpdateInfoUIAuto();
-            //otherPlayerController.UpdateInfoUIAuto();
-
             ++currentFrame;
 
-            if (localPlayerController.playerCurrentAction == PlayerController.PlayerActions.NONE || 
-                otherPlayerController.playerCurrentAction == PlayerController.PlayerActions.NONE)
+            if (localPlayerController.IsIdle() || otherPlayerController.IsIdle())
             {
                 OnPauseGame();
             }
@@ -241,9 +226,9 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         else
         {
             //check if available players made their move
-            if (localPlayerController.playerCurrentAction == PlayerController.PlayerActions.NONE && localPlayerController.allowMove)
+            if (localPlayerController.IsIdle() && localPlayerController.allowMove)
                 return;
-            if (otherPlayerController.playerCurrentAction == PlayerController.PlayerActions.NONE && otherPlayerController.allowMove)
+            if (otherPlayerController.IsIdle() && otherPlayerController.allowMove)
                 return;
 
             //prepare to continue game
@@ -262,7 +247,7 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         //do localplayer
 
         //check can move
-        if (localPlayerController.playerCurrentAction == PlayerController.PlayerActions.NONE)
+        if (localPlayerController.IsIdle())
         {
             //get list of unavailable moves
             localPlayerController.CheckMoves();
@@ -271,11 +256,35 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         }
         else
         {
-            localPlayerController.allowMove = false;
+            if (localPlayerController.CanBurst())
+            {
+                localPlayerController.allowMove = true;
+            }
+            else
+            {
+                localPlayerController.allowMove = false;
+            }
         }
 
         //do otherplayer
+        if (otherPlayerController.IsIdle())
+        {
+            //get list of unavailable moves
+            otherPlayerController.CheckMoves();
 
-            
+            otherPlayerController.allowMove = true;
+        }
+        else
+        {
+            if (otherPlayerController.CanBurst())
+            {
+                otherPlayerController.allowMove = true;
+            }
+            else
+            {
+                otherPlayerController.allowMove = false;
+            }
+        }
+
     }
 }

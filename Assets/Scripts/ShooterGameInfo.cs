@@ -9,11 +9,9 @@ public class ShooterGameInfo
 
     //game
     public const string PLAYER_LOADED_LEVEL = "PlayerLoadedLevel";
-
-    //player stats (for syncing with other player)
-    public const string PLAYER_BURST = "PlayerBurst";
-    public const string PLAYER_KNOCKBACK = "PlayerKnockback";
-    public const string PLAYER_AIR = "PlayerAir";
+    public const string PLAYER_SELECTED_ACTION = "PlayerSelectedAction";
+    public const string PLAYER_FLIP = "PlayerFlip";
+    public const string PLAYER_SHOW_CONTROLS = "PlayerShowControls";
 
     public static Color GetColor(int colorChoice)
     {

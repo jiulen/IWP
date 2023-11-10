@@ -245,6 +245,9 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks, IPunObservable
         StartGameButton.interactable = CheckPlayersReady();
         StartGameDim.SetActive(!CheckPlayersReady());
 
+        if (!PhotonNetwork.IsMasterClient) roomPublicToggle.interactable = false;
+        else roomPublicToggle.interactable = true;
+
         Hashtable props = new Hashtable
             {
                 {ShooterGameInfo.PLAYER_LOADED_LEVEL, false}
@@ -301,6 +304,9 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks, IPunObservable
 
         StartGameButton.interactable = playersReady;
         StartGameDim.SetActive(!playersReady);
+
+        if (!PhotonNetwork.IsMasterClient) roomPublicToggle.interactable = false;
+        else roomPublicToggle.interactable = true;
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
@@ -319,6 +325,9 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks, IPunObservable
 
         StartGameButton.interactable = playersReady;
         StartGameDim.SetActive(!playersReady);
+
+        if (!PhotonNetwork.IsMasterClient) roomPublicToggle.interactable = false;
+        else roomPublicToggle.interactable = true;
     }
 
     public override void OnMasterClientSwitched(Player newMasterClient)

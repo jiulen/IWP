@@ -4,9 +4,10 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IPunObservable
 {
     [SerializeField] PlayerInfoUI playerInfoUI;
+    public ControllerUI controllerUI;
 
     public int playerNum;
 
@@ -52,8 +53,70 @@ public class PlayerController : MonoBehaviour
     public float burstMeterValue = 0;
     public int airOptionsAvail = 2;
     public const int airOptionsMax = 2;
+    //Old player stats
+    int oldKnockbackMultiplier = 0;
+    float oldBurstMeterValue = 0;
+    int oldAirOptionsAvail = 2;
 
     public bool allowMove = false;
+
+    #region IPunObservable implementation
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            //own this player, send others data
+            if (burstMeterValue != oldBurstMeterValue)
+            {
+                stream.SendNext(true); //burst meter changed
+                stream.SendNext(burstMeterValue);
+                oldBurstMeterValue = burstMeterValue;
+            }
+            else
+            {
+                stream.SendNext(false); //burst meter no change
+            }
+            if (knockbackMultiplier != oldKnockbackMultiplier)
+            {
+                stream.SendNext(true); //knockback changed
+                stream.SendNext(knockbackMultiplier);
+                oldKnockbackMultiplier = knockbackMultiplier;
+            }
+            else
+            {
+                stream.SendNext(false); //knockback no change
+            }
+            if (airOptionsAvail != oldAirOptionsAvail)
+            {
+                stream.SendNext(true); //air options changed
+                stream.SendNext(airOptionsAvail);
+                oldAirOptionsAvail = airOptionsAvail;
+            }
+            else
+            {
+                stream.SendNext(false); //air options no change
+            }
+        }
+        else
+        {
+            //network player, receive data
+            if ((bool)stream.ReceiveNext())
+            {
+                burstMeterValue = (float)stream.ReceiveNext();
+            }
+            if ((bool)stream.ReceiveNext())
+            {
+                knockbackMultiplier = (int)stream.ReceiveNext();
+            }
+            if ((bool)stream.ReceiveNext())
+            {
+                airOptionsAvail = (int)stream.ReceiveNext();
+            }
+        }
+    }
+
+    #endregion
 
     private void Awake()
     {
@@ -63,7 +126,6 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -132,9 +194,31 @@ public class PlayerController : MonoBehaviour
         }
 
         //Check burst
-        if (burstMeterValue < 1)
+        if (!CanBurst())
         {
             unavailableActions.Add(PlayerActions.BURST);
         }
+    }
+
+    public bool CanBurst()
+    {
+        return burstMeterValue >= 1;
+    }
+
+    public bool IsIdle()
+    {
+        return playerCurrentAction == PlayerActions.NONE;
+    }
+
+    public void ShowControls(bool active)
+    {
+        if (active)
+        {
+            //Set ui first
+            bool forceBurst = !IsIdle() && CanBurst();
+            controllerUI.SetUI(unavailableActions, forceBurst);
+        }
+
+        controllerUI.gameObject.SetActive(active);
     }
 }

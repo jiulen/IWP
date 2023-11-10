@@ -17,18 +17,6 @@ public class PlayerInfoUI : MonoBehaviour
     [SerializeField] TMP_Text knockbackText;
     [SerializeField] GameObject airOption1, airOption2;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void SetUISkin(int skinID)
     {
         playerImage.sprite = playerUISkins[skinID];

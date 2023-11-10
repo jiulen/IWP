@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ControllerAction : MonoBehaviour
 {
-    [SerializeField] PlayerController.PlayerActions toggleAction;
+    public PlayerController.PlayerActions toggleAction;
     [SerializeField] ControllerUI controllerUI;
 
     Toggle thisToggle;
