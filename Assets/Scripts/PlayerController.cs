@@ -212,6 +212,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
     public void ShowControls(bool active)
     {
+        CheckMoves();
+
         if (active)
         {
             //Set ui first

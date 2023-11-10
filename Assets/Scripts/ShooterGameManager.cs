@@ -249,9 +249,6 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         //check can move
         if (localPlayerController.IsIdle())
         {
-            //get list of unavailable moves
-            localPlayerController.CheckMoves();
-
             localPlayerController.allowMove = true;
         }
         else
@@ -269,9 +266,6 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         //do otherplayer
         if (otherPlayerController.IsIdle())
         {
-            //get list of unavailable moves
-            otherPlayerController.CheckMoves();
-
             otherPlayerController.allowMove = true;
         }
         else
