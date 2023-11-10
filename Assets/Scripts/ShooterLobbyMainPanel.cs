@@ -47,6 +47,7 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks, IPunObservable
     private Dictionary<int, GameObject> playerListEntries;
 
     private byte maxPlayers = 2;
+    const int ROOM_CODE_LENGTH = 4;
 
     #region IPunObservable implementation
 
@@ -418,7 +419,7 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks, IPunObservable
             roomNameInputField.text = roomName.ToUpper();
         }
 
-        if (roomNameInputField.text != "")
+        if (roomNameInputField.text.Length == ROOM_CODE_LENGTH)
         {
             joinRoomButton.interactable = true;
             joinRoomDim.SetActive(false);
