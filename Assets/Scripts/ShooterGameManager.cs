@@ -103,7 +103,6 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.LocalPlayer.ActorNumber == newMasterClient.ActorNumber)
         {
-
         }
     }
 
@@ -143,16 +142,64 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
                 localPlayerController.playerCurrentAction = PlayerController.PlayerActions.NONE;
                 otherPlayerController.playerCurrentAction = PlayerController.PlayerActions.NONE;
 
-                Hashtable playerActionProps = new Hashtable() { { ShooterGameInfo.PLAYER_SELECTED_ACTION, (int)PlayerController.PlayerActions.NONE },
+                Hashtable playerInitProps = new Hashtable() { { ShooterGameInfo.PLAYER_SELECTED_ACTION, (int)PlayerController.PlayerActions.NONE },
                                                                 { ShooterGameInfo.PLAYER_FLIP, false },
                                                                 { ShooterGameInfo.PLAYER_SHOW_CONTROLS, true } };
                 foreach (Player p in PhotonNetwork.PlayerList)
                 {
-                    p.SetCustomProperties(playerActionProps);
+                    p.SetCustomProperties(playerInitProps);
                 }
 
                 gameStarted = true;
                 gamePaused = true;
+
+                localPlayerController.allowMove = true;
+                otherPlayerController.allowMove = true;
+            }
+        }
+
+        if (gamePaused)
+        {
+            //check when to continue
+            if (changedProps.ContainsKey(ShooterGameInfo.PLAYER_SELECTED_ACTION))
+            {
+                PlayerController currentController;
+                bool stopPause = true;
+
+                foreach (Player p in PhotonNetwork.PlayerList)
+                {
+                    if (p.IsLocal)
+                    {
+                        currentController = localPlayerController;
+                    }
+                    else
+                    {
+                        currentController = otherPlayerController;
+                    }
+
+                    if (p.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_SELECTED_ACTION, out object playerAction))
+                    {
+                        if ((PlayerController.PlayerActions)(int)playerAction == PlayerController.PlayerActions.NONE && currentController.allowMove)
+                        {
+                            stopPause = false;
+                        }
+                    }
+                    else
+                    {
+                        Debug.Log("Selected action not set");
+                        stopPause = false;
+                    }
+                }
+
+                if (stopPause)
+                {
+                    Debug.Log("Game continue");
+
+                    gamePaused = false;
+
+                    localPlayerController.allowMove = false;
+                    otherPlayerController.allowMove = false;
+                }
             }
         }
     }
@@ -225,60 +272,54 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         }
         else
         {
-            //check if available players made their move
-            if (localPlayerController.IsIdle() && localPlayerController.allowMove)
-                return;
-            if (otherPlayerController.IsIdle() && otherPlayerController.allowMove)
-                return;
-
-            //prepare to continue game
-            localPlayerController.allowMove = false;
-            otherPlayerController.allowMove = false;
-
-            gamePaused = false;
         }
     }
 
     private void OnPauseGame()
     {
+        Debug.Log("Game paused");
+
         //pause game
         gamePaused = true;
 
-        //do localplayer
-
         //check can move
-        if (localPlayerController.IsIdle())
+        if (localPlayerController.IsIdle() || localPlayerController.CanBurst())
         {
             localPlayerController.allowMove = true;
         }
         else
         {
-            if (localPlayerController.CanBurst())
-            {
-                localPlayerController.allowMove = true;
-            }
-            else
-            {
-                localPlayerController.allowMove = false;
-            }
+            localPlayerController.allowMove = false;
         }
 
-        //do otherplayer
-        if (otherPlayerController.IsIdle())
+        if (otherPlayerController.IsIdle() || otherPlayerController.CanBurst())
         {
             otherPlayerController.allowMove = true;
         }
         else
         {
-            if (otherPlayerController.CanBurst())
+            otherPlayerController.allowMove = false;
+        }
+
+        Hashtable playerContinueProps = new Hashtable() { { ShooterGameInfo.PLAYER_SELECTED_ACTION, (int)PlayerController.PlayerActions.NONE },
+                                                          { ShooterGameInfo.PLAYER_SHOW_CONTROLS, true } };
+
+        foreach (Player p in PhotonNetwork.PlayerList)
+        {
+            if (p.IsLocal)
             {
-                otherPlayerController.allowMove = true;
+                if (localPlayerController.allowMove)
+                {
+                    p.SetCustomProperties(playerContinueProps);
+                }
             }
             else
             {
-                otherPlayerController.allowMove = false;
+                if (otherPlayerController.allowMove)
+                {
+                    p.SetCustomProperties(playerContinueProps);
+                }
             }
         }
-
     }
 }
