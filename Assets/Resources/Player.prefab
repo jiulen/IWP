@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6281997457829084008}
   - component: {fileID: 6281997457829084009}
   - component: {fileID: 6229377857779737878}
+  - component: {fileID: 7357678559156546124}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -106,7 +107,8 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 6281997457829084008}
   - {fileID: 6281997457829084009}
-  - {fileID: 0}
+  - {fileID: 6229377857779737878}
+  - {fileID: 7357678559156546124}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -155,13 +157,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInfoUI: {fileID: 0}
-  playerNum: 0
-  playerSr: {fileID: 0}
-  playerCurrentAction: 27
+  controllerUI: {fileID: 0}
+  playerNum: 1
+  playerSr: {fileID: 6281997458381316372}
+  playerCurrentAction: 16
+  currentFrameNum: 0
   knockbackMultiplier: 0
   burstMeterValue: 0
   airOptionsAvail: 2
   allowMove: 0
+--- !u!114 &7357678559156546124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6281997457829084022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cef17a203ae15a4ea3566bd9e82ebbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sr: {fileID: 6281997458381316372}
+  rb: {fileID: 6281997457829084010}
+  animator: {fileID: 371803126}
+  goLeft: 0
+  forwards: 1
+  walkForce: 1
+  walkForwardAnim: WalkForward
+  walkBackwordAnim: WalkBackward
 --- !u!1 &6281997458381316374
 GameObject:
   m_ObjectHideFlags: 0
@@ -173,6 +197,7 @@ GameObject:
   - component: {fileID: 6281997458381316373}
   - component: {fileID: 6281997458381316372}
   - component: {fileID: 371803126}
+  - component: {fileID: 2237047556640367972}
   m_Layer: 0
   m_Name: PlayerSprite
   m_TagString: Untagged
@@ -257,7 +282,7 @@ Animator:
   m_GameObject: {fileID: 6281997458381316374}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5c666c41f5a6db449a5fd9e8f3e3e20c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -267,3 +292,17 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+--- !u!114 &2237047556640367972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6281997458381316374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db4acb3df5f808a49ab6d1e58449ae83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  graphic: {fileID: 0}
+  sr: {fileID: 6281997458381316372}

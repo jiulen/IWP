@@ -47,18 +47,19 @@ public class PlayerController : MonoBehaviour, IPunObservable
     }
 
     public PlayerActions playerCurrentAction = PlayerActions.NONE;
+    public int currentFrameNum = 0;
 
     //Player stats
     public int knockbackMultiplier = 0;
     public float burstMeterValue = 0;
     public int airOptionsAvail = 2;
     public const int airOptionsMax = 2;
-    //Old player stats
-    int oldKnockbackMultiplier = 0;
-    float oldBurstMeterValue = 0;
-    int oldAirOptionsAvail = 2;
 
     public bool allowMove = false;
+
+    //Actions
+    FrameBehaviour currentFrameBehaviour;
+    PlayerWalk playerWalk;
 
     #region IPunObservable implementation
 
@@ -67,52 +68,16 @@ public class PlayerController : MonoBehaviour, IPunObservable
         if (stream.IsWriting)
         {
             //own this player, send others data
-            if (burstMeterValue != oldBurstMeterValue)
-            {
-                stream.SendNext(true); //burst meter changed
-                stream.SendNext(burstMeterValue);
-                oldBurstMeterValue = burstMeterValue;
-            }
-            else
-            {
-                stream.SendNext(false); //burst meter no change
-            }
-            if (knockbackMultiplier != oldKnockbackMultiplier)
-            {
-                stream.SendNext(true); //knockback changed
-                stream.SendNext(knockbackMultiplier);
-                oldKnockbackMultiplier = knockbackMultiplier;
-            }
-            else
-            {
-                stream.SendNext(false); //knockback no change
-            }
-            if (airOptionsAvail != oldAirOptionsAvail)
-            {
-                stream.SendNext(true); //air options changed
-                stream.SendNext(airOptionsAvail);
-                oldAirOptionsAvail = airOptionsAvail;
-            }
-            else
-            {
-                stream.SendNext(false); //air options no change
-            }
+            stream.SendNext(burstMeterValue);
+            stream.SendNext(knockbackMultiplier);
+            stream.SendNext(airOptionsAvail);
         }
         else
         {
             //network player, receive data
-            if ((bool)stream.ReceiveNext())
-            {
-                burstMeterValue = (float)stream.ReceiveNext();
-            }
-            if ((bool)stream.ReceiveNext())
-            {
-                knockbackMultiplier = (int)stream.ReceiveNext();
-            }
-            if ((bool)stream.ReceiveNext())
-            {
-                airOptionsAvail = (int)stream.ReceiveNext();
-            }
+            burstMeterValue = (float)stream.ReceiveNext();
+            knockbackMultiplier = (int)stream.ReceiveNext();
+            airOptionsAvail = (int)stream.ReceiveNext();
         }
     }
 
@@ -121,6 +86,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
     private void Awake()
     {
         SetPlayerInfo();
+
+        playerWalk = GetComponent<PlayerWalk>();
     }
 
     // Start is called before the first frame update
@@ -222,5 +189,31 @@ public class PlayerController : MonoBehaviour, IPunObservable
         }
 
         controllerUI.gameObject.SetActive(active);
+    }
+
+    public void RunFrameBehaviour()
+    {
+        if (currentFrameNum == 0)
+        {
+            switch (playerCurrentAction)
+            {
+                case PlayerActions.WALK_LEFT:
+                    playerWalk.goLeft = true;
+                    playerWalk.forwards = false;
+                    currentFrameBehaviour = playerWalk;
+                    break;
+                case PlayerActions.WALK_RIGHT:
+                    playerWalk.goLeft = false;
+                    playerWalk.forwards = true;
+                    currentFrameBehaviour = playerWalk;
+                    break;
+            }
+
+            currentFrameBehaviour.SetAnimation();
+        }
+
+        //currentFrameBehaviour.frameNum = currentFrameNum;
+        currentFrameBehaviour.AnimatorSetTime();
+        currentFrameBehaviour.GoToFrame();
     }
 }

@@ -179,9 +179,16 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
                     if (p.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_SELECTED_ACTION, out object playerAction))
                     {
-                        if ((PlayerController.PlayerActions)(int)playerAction == PlayerController.PlayerActions.NONE && currentController.allowMove)
+                        PlayerController.PlayerActions selectedAction = (PlayerController.PlayerActions)(int)playerAction;
+
+                        if (selectedAction == PlayerController.PlayerActions.NONE && currentController.allowMove)
                         {
                             stopPause = false;
+                        }
+                        else if (currentController.allowMove)
+                        {
+                            currentController.playerCurrentAction = selectedAction;
+                            currentController.currentFrameNum = 0;
                         }
                     }
                     else
@@ -262,6 +269,12 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         if (!gamePaused)
         {
             Physics2D.Simulate(Time.fixedDeltaTime);
+
+            localPlayerController.RunFrameBehaviour();
+            otherPlayerController.RunFrameBehaviour();
+
+            ++localPlayerController.currentFrameNum;
+            ++otherPlayerController.currentFrameNum;
 
             ++currentFrame;
 
