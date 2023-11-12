@@ -58,14 +58,11 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
     protected void AnimatorChangeAnimation(string animationName)
     {
         animator.PlayInFixedTime(animationName);
-
-        Debug.Log("setting animation");
-        Debug.Log(animationName);
     }
 
     public void AnimatorSetTime()
     {
-        /*if (frameNum == 0)
+        if (frameNum == 0)
         {
             timeInSeconds = 0;
         }
@@ -76,17 +73,11 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
             {
                 timeInSeconds = 1;
             }
-        }*/
-
-        timeInSeconds = frameNum / animator.GetCurrentAnimatorClipInfo(0)[0].clip.frameRate;
-        if (timeInSeconds > 1)
-        {
-            timeInSeconds = 1;
         }
     }
 
     protected void AnimatorSetFrame()
     {
-        animator.PlayInFixedTime(0, sr.sortingLayerID, timeInSeconds);
+        animator.PlayInFixedTime(currentAnimName, sr.sortingLayerID, timeInSeconds);
     }
 }
