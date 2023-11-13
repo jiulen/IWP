@@ -212,14 +212,11 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     currentFrameBehaviour = playerWalk;
                     break;
             }
-
-            currentFrameBehaviour.SetAnimation();
         }
 
         if (currentFrameBehaviour != null)
         {
             currentFrameBehaviour.frameNum = currentFrameNum;
-            currentFrameBehaviour.AnimatorSetTime();
             currentFrameBehaviour.GoToFrame();
 
             if (currentFrameBehaviour.IsAnimationDone())

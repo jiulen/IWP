@@ -15,7 +15,6 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
     protected string oldAnimName = "";
 
     [SerializeField] protected bool loopAnim = false;
-    bool newAnim = false;
     public int lastFrame;
 
     const float animationFPS = 60;
@@ -39,7 +38,6 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
             if (currentAnimName != "")
             {
                 AnimatorChangeAnimation(currentAnimName);
-                AnimatorSetTime();
                 AnimatorSetFrame();
             }
         }
@@ -57,7 +55,7 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
 
     }
 
-    public virtual void GoToFrame()
+    public virtual void GoToFrame() //Handles physics and switching animations + progressing through animations on host side
     {
         AnimatorSetFrame();
     }
@@ -68,26 +66,17 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
         {
             animator.PlayInFixedTime(animationName);
             oldAnimName = animationName;
-
-            newAnim = true;
-        }
-        else
-        {
-            newAnim = false;
         }
     }
 
-    public void AnimatorSetTime()
+    protected void AnimatorSetFrame()
     {
         timeInSeconds = frameNum / animationFPS;
         if (timeInSeconds > 1 && !loopAnim)
         {
             timeInSeconds = 1;
         }
-    }
 
-    protected void AnimatorSetFrame()
-    {
         animator.PlayInFixedTime(currentAnimName, sr.sortingLayerID, timeInSeconds);
     }
 

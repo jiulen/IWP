@@ -15,17 +15,14 @@ public class PlayerWalk : FrameBehaviour
         
     }
 
-    public override void SetAnimation()
-    {
-        currentAnimName = forwards ? walkForwardAnim : walkBackwordAnim;
-        AnimatorChangeAnimation(currentAnimName);
-    }
-
     public override void GoToFrame()
     {
         switch (frameNum)
         {
             case 0:
+                currentAnimName = forwards ? walkForwardAnim : walkBackwordAnim;
+                AnimatorChangeAnimation(currentAnimName);
+
                 Vector2 walkDir = Vector2.right * (goLeft ? -1 : 1);
                 rb.AddForce(walkDir * walkForce, ForceMode2D.Impulse);
                 break;
