@@ -189,6 +189,11 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
                         {
                             currentController.playerCurrentAction = selectedAction;
                             currentController.currentFrameNum = 0;
+
+                            if (p.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_FLIP, out object playerFlip))
+                            {
+                                currentController.toFlip = (bool)playerFlip;
+                            }
                         }
                     }
                     else

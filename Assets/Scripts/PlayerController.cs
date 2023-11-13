@@ -7,7 +7,7 @@ using Photon.Realtime;
 public class PlayerController : MonoBehaviour, IPunObservable
 {
     Rigidbody2D rb;
-    [SerializeField] Transform spriteTransform;
+    Transform spriteTransform;
 
     [SerializeField] float airResistance = 0;
     [SerializeField] float friction = 0;
@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
     bool isGrounded = true;
     [SerializeField] bool facingLeft = false;
+    public bool toFlip = false;
 
     List<PlayerActions> unavailableActions = new();
 
@@ -95,6 +96,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
         SetPlayerInfo();
 
         rb = GetComponent<Rigidbody2D>();
+        spriteTransform = GetComponent<Transform>();
 
         playerWalk = GetComponent<PlayerWalk>();
     }
@@ -191,6 +193,12 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
     public void RunFrameBehaviour()
     {
+        if (toFlip)
+        {
+            toFlip = false;
+            FlipPlayer();
+        }
+
         if (currentFrameNum == 0)
         {
             switch (playerCurrentAction)
