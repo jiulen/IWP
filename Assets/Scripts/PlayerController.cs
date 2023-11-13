@@ -6,7 +6,8 @@ using Photon.Realtime;
 
 public class PlayerController : MonoBehaviour, IPunObservable
 {
-    [SerializeField] Rigidbody2D rb;
+    Rigidbody2D rb;
+    [SerializeField] Transform spriteTransform;
 
     [SerializeField] float airResistance = 0;
     [SerializeField] float friction = 0;
@@ -20,6 +21,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
     SpriteRenderer playerSr;
 
     bool isGrounded = true;
+    [SerializeField] bool facingLeft = false;
 
     List<PlayerActions> unavailableActions = new();
 
@@ -195,12 +197,18 @@ public class PlayerController : MonoBehaviour, IPunObservable
             {
                 case PlayerActions.WALK_LEFT:
                     playerWalk.goLeft = true;
-                    playerWalk.forwards = false;
+
+                    if (facingLeft) playerWalk.forwards = true;
+                    else playerWalk.forwards = false;
+
                     currentFrameBehaviour = playerWalk;
                     break;
                 case PlayerActions.WALK_RIGHT:
                     playerWalk.goLeft = false;
-                    playerWalk.forwards = true;
+
+                    if (facingLeft) playerWalk.forwards = false;
+                    else playerWalk.forwards = true;
+
                     currentFrameBehaviour = playerWalk;
                     break;
             }
@@ -235,5 +243,12 @@ public class PlayerController : MonoBehaviour, IPunObservable
         ApplyAirResistance();
 
         if (isGrounded) ApplyFriction();
+    }
+
+    public void FlipPlayer()
+    {
+        spriteTransform.localScale = new Vector3(spriteTransform.localScale.x * -1, 1, 1);
+
+        facingLeft = !facingLeft;
     }
 }
