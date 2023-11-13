@@ -6,6 +6,11 @@ using Photon.Realtime;
 
 public class PlayerController : MonoBehaviour, IPunObservable
 {
+    [SerializeField] Rigidbody2D rb;
+
+    [SerializeField] float airResistance = 0;
+    [SerializeField] float friction = 0;
+
     [SerializeField] PlayerInfoUI playerInfoUI;
     public ControllerUI controllerUI;
 
@@ -87,18 +92,9 @@ public class PlayerController : MonoBehaviour, IPunObservable
     {
         SetPlayerInfo();
 
+        rb = GetComponent<Rigidbody2D>();
+
         playerWalk = GetComponent<PlayerWalk>();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     void SetPlayerInfo()
@@ -212,8 +208,32 @@ public class PlayerController : MonoBehaviour, IPunObservable
             currentFrameBehaviour.SetAnimation();
         }
 
-        //currentFrameBehaviour.frameNum = currentFrameNum;
-        currentFrameBehaviour.AnimatorSetTime();
-        currentFrameBehaviour.GoToFrame();
+        if (currentFrameBehaviour != null)
+        {
+            currentFrameBehaviour.frameNum = currentFrameNum;
+            currentFrameBehaviour.AnimatorSetTime();
+            currentFrameBehaviour.GoToFrame();
+        }
+    }
+
+    void ApplyAirResistance()
+    {
+        Vector2 resistiveForce = -rb.velocity * airResistance;
+
+        rb.AddForce(resistiveForce, ForceMode2D.Impulse);
+    }
+
+    void ApplyFriction()
+    {
+        Vector2 resistiveForce = -rb.velocity * friction;
+
+        rb.AddForce(resistiveForce, ForceMode2D.Impulse);
+    }
+
+    public void ApplyResistances()
+    {
+        ApplyAirResistance();
+
+        if (isGrounded) ApplyFriction();
     }
 }

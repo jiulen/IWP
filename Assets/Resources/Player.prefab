@@ -156,6 +156,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee2f1e2a3ac5d5d40b9eb34313be815b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
+  airResistance: 0.1
+  friction: 0.05
   playerInfoUI: {fileID: 0}
   controllerUI: {fileID: 0}
   playerNum: 1
@@ -181,9 +184,11 @@ MonoBehaviour:
   sr: {fileID: 6281997458381316372}
   rb: {fileID: 6281997457829084010}
   animator: {fileID: 371803126}
+  frameNum: 0
+  lastFrame: 0
   goLeft: 0
   forwards: 1
-  walkForce: 1
+  walkForce: 25
   walkForwardAnim: WalkForward
   walkBackwordAnim: WalkBackward
 --- !u!1 &6281997458381316374

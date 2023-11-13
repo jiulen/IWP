@@ -10,6 +10,11 @@ public class PlayerWalk : FrameBehaviour
     [SerializeField] float walkForce;
     [SerializeField] string walkForwardAnim, walkBackwordAnim;
 
+    private void Awake()
+    {
+        
+    }
+
     public override void SetAnimation()
     {
         currentAnimName = forwards ? walkForwardAnim : walkBackwordAnim;
@@ -21,14 +26,10 @@ public class PlayerWalk : FrameBehaviour
         switch (frameNum)
         {
             case 0:
-                Vector3 walkDir = Vector3.right * (goLeft ? -1 : 1);
+                Vector2 walkDir = Vector2.right * (goLeft ? -1 : 1);
                 rb.AddForce(walkDir * walkForce, ForceMode2D.Impulse);
                 break;
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
+            case 36: //end
                 break;
         }
 

@@ -13,6 +13,8 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
     protected float timeInSeconds = 0;
     protected string currentAnimName = "";
 
+    public int lastFrame;
+
     #region IPunObservable implementation
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -62,6 +64,8 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
 
     public void AnimatorSetTime()
     {
+        Debug.Log(frameNum);
+
         if (frameNum == 0)
         {
             timeInSeconds = 0;
