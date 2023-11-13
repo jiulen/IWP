@@ -12,8 +12,13 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
     public int frameNum = 0;
     protected float timeInSeconds = 0;
     protected string currentAnimName = "";
+    protected string oldAnimName = "";
 
+    [SerializeField] protected bool loopAnim = false;
+    bool newAnim = false;
     public int lastFrame;
+
+    const float animationFPS = 60;
 
     #region IPunObservable implementation
 
@@ -59,24 +64,25 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
 
     protected void AnimatorChangeAnimation(string animationName)
     {
-        animator.PlayInFixedTime(animationName);
+        if (animationName != oldAnimName)
+        {
+            animator.PlayInFixedTime(animationName);
+            oldAnimName = animationName;
+
+            newAnim = true;
+        }
+        else
+        {
+            newAnim = false;
+        }
     }
 
     public void AnimatorSetTime()
     {
-        Debug.Log(frameNum);
-
-        if (frameNum == 0)
+        timeInSeconds = frameNum / animationFPS;
+        if (timeInSeconds > 1 && !loopAnim)
         {
-            timeInSeconds = 0;
-        }
-        else
-        {
-            timeInSeconds = frameNum / animator.GetCurrentAnimatorClipInfo(0)[0].clip.frameRate;
-            if (timeInSeconds > 1)
-            {
-                timeInSeconds = 1;
-            }
+            timeInSeconds = 1;
         }
     }
 
