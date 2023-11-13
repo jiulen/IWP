@@ -17,16 +17,21 @@ public class ShooterGameInfo
     {
         switch (colorChoice)
         {
-            case 0: return Color.yellow;
-            case 1: return new Color(1, 0.65f, 0); //orange
+            case 0: return NormalizeRGB(253, 183, 62); //mustard yellow
+            case 1: return NormalizeRGB(247, 83, 6); //orange
             case 2: return Color.red;
-            case 3: return new Color(1, 0.4f, 0.7f); //pink
-            case 4: return new Color(0.2f, 0.8f, 0.2f); //lime green
-            case 5: return new Color(0.25f, 0.88f, 0.82f); //turqoise
-            case 6: return Color.cyan;
-            case 7: return new Color(0.7f, 0, 0.9f); //purple
+            case 3: return NormalizeRGB(255, 0, 169); //pink
+            case 4: return NormalizeRGB(0, 153, 0); //green
+            case 5: return NormalizeRGB(0, 150, 180); //turqoise
+            case 6: return NormalizeRGB(0, 0, 225); //blue
+            case 7: return NormalizeRGB(179, 0, 230); //purple
         }
 
         return Color.black;
+    }
+
+    static Color NormalizeRGB(int r, int g, int b)
+    {
+        return new Color(r / 255f, g / 255f, b / 255f);
     }
 }
