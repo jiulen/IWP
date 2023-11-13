@@ -156,7 +156,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee2f1e2a3ac5d5d40b9eb34313be815b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteTransform: {fileID: 6281997458381316373}
   airResistance: 0.1
   friction: 0.05
   playerInfoUI: {fileID: 0}
@@ -164,6 +163,7 @@ MonoBehaviour:
   playerNum: 1
   playerSr: {fileID: 6281997458381316372}
   facingLeft: 0
+  toFlip: 0
   playerCurrentAction: 16
   currentFrameNum: 0
   knockbackMultiplier: 0
@@ -188,6 +188,7 @@ MonoBehaviour:
   frameNum: 0
   loopAnim: 0
   lastFrame: 36
+  enabledBehaviour: 0
   goLeft: 0
   forwards: 1
   walkForce: 25
@@ -205,6 +206,7 @@ GameObject:
   - component: {fileID: 6281997458381316372}
   - component: {fileID: 371803126}
   - component: {fileID: 2237047556640367972}
+  - component: {fileID: 3983320956130112164}
   m_Layer: 0
   m_Name: PlayerSprite
   m_TagString: Untagged
@@ -313,3 +315,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   graphic: {fileID: 0}
   sr: {fileID: 6281997458381316372}
+--- !u!114 &3983320956130112164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6281997458381316374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61d353b2a524d6244926740289690442, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

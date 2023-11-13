@@ -17,6 +17,8 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
     [SerializeField] protected bool loopAnim = false;
     public int lastFrame;
 
+    public bool enabledBehaviour = true;
+
     const float animationFPS = 60;
 
     #region IPunObservable implementation
@@ -32,6 +34,8 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
+        if (!enabledBehaviour) return;
+
         if (stream.IsWriting)
         {
             syncDataFlags = 0;
@@ -75,25 +79,20 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
             {
                 currentAnimName = (string)stream.ReceiveNext();
             }
-
-            if (currentAnimName != "")
-            {
-                AnimatorChangeAnimation(currentAnimName);
-                AnimatorSetFrame();
-            }
         }
     }
 
     #endregion
 
-    private void Awake()
+    private void FixedUpdate()
     {
-        animator.speed = 0;
-    }
+        if (!enabledBehaviour) return;
 
-    public virtual void SetAnimation()
-    {
-
+        if (currentAnimName != "")
+        {
+            AnimatorChangeAnimation(currentAnimName);
+            AnimatorSetFrame();
+        }
     }
 
     public virtual void GoToFrame() //Handles physics and switching animations + progressing through animations on host side
