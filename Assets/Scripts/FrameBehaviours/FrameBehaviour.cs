@@ -21,19 +21,60 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
 
     #region IPunObservable implementation
 
+    //For syncing data via IPunObservable
+    const byte FRAME_NUM_FLAG = 1 << 0;
+    const byte CUREENT_ANIM_FLAG = 1 << 1;
+
+    int syncedFrameNum = 0;
+    string syncedAnimName = "";
+
+    byte syncDataFlags;
+
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting)
         {
-            //own this player, send others data
-            stream.SendNext(frameNum);
-            stream.SendNext(currentAnimName);
+            syncDataFlags = 0;
+
+            //Check which variables have changed
+            if (syncedFrameNum != frameNum)
+            {
+                syncDataFlags |= FRAME_NUM_FLAG;
+            }
+            if (syncedAnimName != currentAnimName)
+            {
+                syncDataFlags |= CUREENT_ANIM_FLAG;
+            }
+
+            //Send data flags
+            stream.SendNext(syncDataFlags);
+
+            //Send variables that changed
+            if ((syncDataFlags & FRAME_NUM_FLAG) != 0)
+            {
+                stream.SendNext(frameNum);
+                syncedFrameNum = frameNum;
+            }
+            if ((syncDataFlags & CUREENT_ANIM_FLAG) != 0)
+            {
+                stream.SendNext(currentAnimName);
+                syncedAnimName = currentAnimName;
+            }
         }
         else
         {
-            //network player, receive data
-            frameNum = (int)stream.ReceiveNext();
-            currentAnimName = (string)stream.ReceiveNext();
+            //Receive data flags
+            syncDataFlags = (byte)stream.ReceiveNext();
+
+            //Receive and update variables based on data flags
+            if ((syncDataFlags & FRAME_NUM_FLAG) != 0)
+            {
+                frameNum = (int)stream.ReceiveNext();
+            }
+            if ((syncDataFlags & CUREENT_ANIM_FLAG) != 0)
+            {
+                currentAnimName = (string)stream.ReceiveNext();
+            }
 
             if (currentAnimName != "")
             {
