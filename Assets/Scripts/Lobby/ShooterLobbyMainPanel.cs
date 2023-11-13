@@ -51,18 +51,46 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks, IPunObservable
 
     #region IPunObservable implementation
 
+    //For syncing data via IPunObservable
+    const byte ROOM_PUBLIC_FLAG = 1 << 0;
+
+    bool syncedRoomPublic = false;
+
+    byte syncDataFlags;
+
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting)
         {
-            //own this player, send others data
-            stream.SendNext(roomPublic);
+            syncDataFlags = 0;
+
+            //Check which variables have changed
+            if (syncedRoomPublic != roomPublic)
+            {
+                syncDataFlags |= ROOM_PUBLIC_FLAG;
+            }
+
+            //Send data flags
+            stream.SendNext(syncDataFlags);
+
+            //Send variables that changed
+            if ((syncDataFlags & ROOM_PUBLIC_FLAG) != 0)
+            {
+                stream.SendNext(roomPublic);
+                syncedRoomPublic = roomPublic;
+            }
         }
         else
         {
-            //network player, receive data
-            roomPublic = (bool)stream.ReceiveNext();
-            ToggleRoomPublic();
+            //Receive data flags
+            syncDataFlags = (byte)stream.ReceiveNext();
+
+            //Receive and update variables based on data flags
+            if ((syncDataFlags & ROOM_PUBLIC_FLAG) != 0)
+            {
+                roomPublic = (bool)stream.ReceiveNext();
+                ToggleRoomPublic();
+            }
         }
     }
 
@@ -385,6 +413,8 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks, IPunObservable
     void ToggleRoomPublic()
     {
         roomPublicToggle.isOn = roomPublic;
+
+        Debug.Log("toggle public");
     }
 
     public void OnBackButtonClicked()
