@@ -30,6 +30,7 @@ public class PlayerWalk : FrameBehaviour
                 rb.AddForce(walkDir * walkForce, ForceMode2D.Impulse);
                 break;
             case 36: //end
+                rb.velocity = Vector2.zero;
                 break;
         }
 

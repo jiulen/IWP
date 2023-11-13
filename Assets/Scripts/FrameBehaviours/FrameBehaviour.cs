@@ -90,4 +90,9 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
     {
         animator.PlayInFixedTime(currentAnimName, sr.sortingLayerID, timeInSeconds);
     }
+
+    public bool IsAnimationDone()
+    {
+        return frameNum >= lastFrame;
+    }
 }

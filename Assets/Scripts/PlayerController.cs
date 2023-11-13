@@ -221,6 +221,13 @@ public class PlayerController : MonoBehaviour, IPunObservable
             currentFrameBehaviour.frameNum = currentFrameNum;
             currentFrameBehaviour.AnimatorSetTime();
             currentFrameBehaviour.GoToFrame();
+
+            if (currentFrameBehaviour.IsAnimationDone())
+            {
+                playerCurrentAction = PlayerActions.NONE;
+
+                currentFrameBehaviour = null;
+            }
         }
     }
 
