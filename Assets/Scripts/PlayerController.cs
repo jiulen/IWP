@@ -58,8 +58,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
     public int currentFrameNum = 0;
 
     //Player stats
-    public int knockbackMultiplier = 0;
     public float burstMeterValue = 0;
+    public int knockbackMultiplier = 0;
     public int airOptionsAvail = 2;
     public const int airOptionsMax = 2;
 
@@ -71,21 +71,75 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
     #region IPunObservable implementation
 
+    //For syncing data via IPunObservable
+    const byte BURST_FLAG = 1 << 0;
+    const byte KNOCKBACK_FLAG = 1 << 1;
+    const byte AIR_FLAG = 1 << 2;
+
+    float syncedBurstMeterValue = 0;
+    int syncedKnockbackMultiplier = 0;
+    int syncedairOptionsAvail = 0;
+
+    byte syncDataFlags;
+
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting)
         {
-            //own this player, send others data
-            stream.SendNext(burstMeterValue);
-            stream.SendNext(knockbackMultiplier);
-            stream.SendNext(airOptionsAvail);
+            syncDataFlags = 0;
+
+            //Check which variables have changed
+            if (syncedBurstMeterValue != burstMeterValue)
+            {
+                syncDataFlags |= BURST_FLAG;
+            }
+            if (syncedKnockbackMultiplier != knockbackMultiplier)
+            {
+                syncDataFlags |= KNOCKBACK_FLAG;
+            }
+            if (syncedairOptionsAvail != airOptionsAvail)
+            {
+                syncDataFlags |= AIR_FLAG;
+            }
+
+            //Send data flags
+            stream.SendNext(syncDataFlags);
+
+            //Send variables that changed
+            if ((syncDataFlags & BURST_FLAG) != 0)
+            {
+                stream.SendNext(burstMeterValue);
+                syncedBurstMeterValue = burstMeterValue;
+            }
+            if ((syncDataFlags & KNOCKBACK_FLAG) != 0)
+            {
+                stream.SendNext(knockbackMultiplier);
+                syncedKnockbackMultiplier = knockbackMultiplier;
+            }
+            if ((syncDataFlags & AIR_FLAG) != 0)
+            {
+                stream.SendNext(airOptionsAvail);
+                syncedairOptionsAvail = airOptionsAvail;
+            }
         }
         else
         {
-            //network player, receive data
-            burstMeterValue = (float)stream.ReceiveNext();
-            knockbackMultiplier = (int)stream.ReceiveNext();
-            airOptionsAvail = (int)stream.ReceiveNext();
+            //Receive data flags
+            syncDataFlags = (byte)stream.ReceiveNext();
+
+            //Receive and update variables based on data flags
+            if ((syncDataFlags & BURST_FLAG) != 0)
+            {
+                burstMeterValue = (float)stream.ReceiveNext();
+            }
+            if ((syncDataFlags & KNOCKBACK_FLAG) != 0)
+            {
+                knockbackMultiplier = (int)stream.ReceiveNext();
+            }
+            if ((syncDataFlags & AIR_FLAG) != 0)
+            {
+                airOptionsAvail = (int)stream.ReceiveNext();
+            }
         }
     }
 
