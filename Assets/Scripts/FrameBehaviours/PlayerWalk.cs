@@ -22,11 +22,17 @@ public class PlayerWalk : FrameBehaviour
                 rb.AddForce(walkDir * walkForce, ForceMode2D.Impulse);
                 break;
             case 35: //end
-                rb.velocity = Vector2.zero;
-                lastFrame = true;
+                EndAnimation();
                 break;
         }
 
         AnimatorSetFrame();
+    }
+
+    protected override void EndAnimation()
+    {
+        base.EndAnimation();
+
+        rb.velocity = Vector2.zero;
     }
 }

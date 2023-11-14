@@ -298,7 +298,6 @@ public class PlayerController : MonoBehaviour, IPunObservable
             {
                 playerCurrentAction = PlayerActions.NONE;
 
-                currentFrameBehaviour.enabledBehaviour = false;
                 currentFrameBehaviour = null;
             }
         }
