@@ -17,8 +17,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
     public int playerNum;
 
-    [SerializeField]
-    SpriteRenderer playerSr;
+    [SerializeField] SpriteRenderer playerSr;
+    public FreezeAnimator freezeAnimator;
 
     bool isGrounded = true;
     [SerializeField] bool facingLeft = false;
@@ -274,6 +274,12 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     currentFrameBehaviour = playerWalk;
                     break;
             }
+
+            if (currentFrameBehaviour != null)
+            {
+                currentFrameBehaviour.enabledBehaviour = true;
+                currentFrameBehaviour.lastFrame = false;
+            }
         }
 
         if (currentFrameBehaviour != null)
@@ -285,6 +291,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
             {
                 playerCurrentAction = PlayerActions.NONE;
 
+                currentFrameBehaviour.enabledBehaviour = false;
                 currentFrameBehaviour = null;
             }
         }

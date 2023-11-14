@@ -209,6 +209,9 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
                     gamePaused = false;
 
+                    //localPlayerController.freezeAnimator.Freeze(false);
+                    //otherPlayerController.freezeAnimator.Freeze(false);
+
                     localPlayerController.allowMove = false;
                     otherPlayerController.allowMove = false;
                 }
@@ -302,6 +305,9 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
         //pause game
         gamePaused = true;
+
+        //localPlayerController.freezeAnimator.Freeze(true);
+        //otherPlayerController.freezeAnimator.Freeze(true);
 
         //check can move
         if (localPlayerController.IsIdle() || localPlayerController.CanBurst())

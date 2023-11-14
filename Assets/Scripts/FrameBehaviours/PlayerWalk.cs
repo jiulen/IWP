@@ -10,11 +10,6 @@ public class PlayerWalk : FrameBehaviour
     [SerializeField] float walkForce;
     [SerializeField] string walkForwardAnim, walkBackwordAnim;
 
-    private void Awake()
-    {
-        
-    }
-
     public override void GoToFrame()
     {
         switch (frameNum)
@@ -28,6 +23,7 @@ public class PlayerWalk : FrameBehaviour
                 break;
             case 36: //end
                 rb.velocity = Vector2.zero;
+                lastFrame = true;
                 break;
         }
 

@@ -4,8 +4,17 @@ using UnityEngine;
 
 public class FreezeAnimator : MonoBehaviour
 {
+    Animator animator;
+
     private void Awake()
     {
-        GetComponent<Animator>().speed = 0;
+        animator = GetComponent<Animator>();
+    }
+
+    public void Freeze(bool freeze)
+    {
+        animator.speed = freeze ? 0 : 1;
+
+        Debug.Log(animator.speed);
     }
 }

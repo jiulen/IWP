@@ -15,7 +15,7 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
     protected string oldAnimName = "";
 
     [SerializeField] protected bool loopAnim = false;
-    public int lastFrame;
+    public bool lastFrame;
 
     public bool enabledBehaviour = true;
 
@@ -24,9 +24,11 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
     #region IPunObservable implementation
 
     //For syncing data via IPunObservable
-    const byte FRAME_NUM_FLAG = 1 << 0;
-    const byte CUREENT_ANIM_FLAG = 1 << 1;
+    const byte ENABLED_FLAG = 1 << 0;
+    const byte FRAME_NUM_FLAG = 1 << 1;
+    const byte CUREENT_ANIM_FLAG = 1 << 2;
 
+    bool syncedEnabledBehaviour = true;
     int syncedFrameNum = 0;
     string syncedAnimName = "";
 
@@ -34,13 +36,17 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        if (!enabledBehaviour) return;
+        //if (!enabledBehaviour) return;
 
         if (stream.IsWriting)
         {
             syncDataFlags = 0;
 
             //Check which variables have changed
+            if (syncedEnabledBehaviour != enabledBehaviour)
+            {
+                syncDataFlags |= ENABLED_FLAG;
+            }
             if (syncedFrameNum != frameNum)
             {
                 syncDataFlags |= FRAME_NUM_FLAG;
@@ -54,15 +60,24 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
             stream.SendNext(syncDataFlags);
 
             //Send variables that changed
-            if ((syncDataFlags & FRAME_NUM_FLAG) != 0)
+            if ((syncDataFlags & ENABLED_FLAG) != 0)
             {
-                stream.SendNext(frameNum);
-                syncedFrameNum = frameNum;
+                stream.SendNext(enabledBehaviour);
+                syncedEnabledBehaviour = enabledBehaviour;
             }
-            if ((syncDataFlags & CUREENT_ANIM_FLAG) != 0)
+
+            if (enabledBehaviour)
             {
-                stream.SendNext(currentAnimName);
-                syncedAnimName = currentAnimName;
+                if ((syncDataFlags & FRAME_NUM_FLAG) != 0)
+                {
+                    stream.SendNext(frameNum);
+                    syncedFrameNum = frameNum;
+                }
+                if ((syncDataFlags & CUREENT_ANIM_FLAG) != 0)
+                {
+                    stream.SendNext(currentAnimName);
+                    syncedAnimName = currentAnimName;
+                }
             }
         }
         else
@@ -71,28 +86,36 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
             syncDataFlags = (byte)stream.ReceiveNext();
 
             //Receive and update variables based on data flags
-            if ((syncDataFlags & FRAME_NUM_FLAG) != 0)
+            if ((syncDataFlags & ENABLED_FLAG) != 0)
             {
-                frameNum = (int)stream.ReceiveNext();
+                enabledBehaviour = (bool)stream.ReceiveNext();
             }
-            if ((syncDataFlags & CUREENT_ANIM_FLAG) != 0)
+
+            if (enabledBehaviour)
             {
-                currentAnimName = (string)stream.ReceiveNext();
+                if ((syncDataFlags & FRAME_NUM_FLAG) != 0)
+                {
+                    frameNum = (int)stream.ReceiveNext();
+                }
+                if ((syncDataFlags & CUREENT_ANIM_FLAG) != 0)
+                {
+                    currentAnimName = (string)stream.ReceiveNext();
+                }
+
+                if (currentAnimName != "")
+                {
+                    AnimatorChangeAnimation(currentAnimName);
+                    AnimatorSetFrame();
+                }
             }
         }
     }
 
     #endregion
 
-    private void FixedUpdate()
+    private void Awake()
     {
-        if (!enabledBehaviour) return;
-
-        if (currentAnimName != "")
-        {
-            AnimatorChangeAnimation(currentAnimName);
-            AnimatorSetFrame();
-        }
+        syncedEnabledBehaviour = enabledBehaviour;
     }
 
     public virtual void GoToFrame() //Handles physics and switching animations + progressing through animations on host side
@@ -122,6 +145,6 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
 
     public bool IsAnimationDone()
     {
-        return frameNum >= lastFrame;
+        return lastFrame;
     }
 }

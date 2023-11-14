@@ -162,12 +162,13 @@ MonoBehaviour:
   controllerUI: {fileID: 0}
   playerNum: 1
   playerSr: {fileID: 6281997458381316372}
+  freezeAnimator: {fileID: 2762747590730954038}
   facingLeft: 0
   toFlip: 0
   playerCurrentAction: 16
   currentFrameNum: 0
-  knockbackMultiplier: 0
   burstMeterValue: 0
+  knockbackMultiplier: 0
   airOptionsAvail: 2
   allowMove: 0
 --- !u!114 &7357678559156546124
@@ -206,7 +207,7 @@ GameObject:
   - component: {fileID: 6281997458381316372}
   - component: {fileID: 371803126}
   - component: {fileID: 2237047556640367972}
-  - component: {fileID: 3983320956130112164}
+  - component: {fileID: 2762747590730954038}
   m_Layer: 0
   m_Name: PlayerSprite
   m_TagString: Untagged
@@ -293,7 +294,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 5c666c41f5a6db449a5fd9e8f3e3e20c, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 1
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
@@ -315,7 +316,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   graphic: {fileID: 0}
   sr: {fileID: 6281997458381316372}
---- !u!114 &3983320956130112164
+--- !u!114 &2762747590730954038
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
