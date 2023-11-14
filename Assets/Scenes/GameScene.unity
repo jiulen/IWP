@@ -2118,7 +2118,7 @@ GameObject:
   - component: {fileID: 400881334}
   - component: {fileID: 400881333}
   - component: {fileID: 400881332}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3220,6 +3220,8 @@ MonoBehaviour:
   player1: {fileID: 1158152010}
   player2: {fileID: 1431160638}
   localControllerUI: {fileID: 2105256069}
+  gameStarted: 0
+  gamePaused: 1
 --- !u!1 &553648729
 GameObject:
   m_ObjectHideFlags: 0
@@ -5645,7 +5647,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1063624053}
   - component: {fileID: 1063624051}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Stage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
