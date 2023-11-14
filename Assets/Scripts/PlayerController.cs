@@ -6,7 +6,7 @@ using Photon.Realtime;
 
 public class PlayerController : MonoBehaviour, IPunObservable
 {
-    Rigidbody2D rb;
+    public Rigidbody2D rb;
     Transform spriteTransform;
 
     [SerializeField] float airResistance = 0;
@@ -17,7 +17,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
     public int playerNum;
 
-    [SerializeField] SpriteRenderer playerSr;
+    public SpriteRenderer playerSr;
+    public Animator animator;
     public FreezeAnimator freezeAnimator;
 
     bool isGrounded = true;
@@ -67,6 +68,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
     //Actions
     FrameBehaviour currentFrameBehaviour;
+    PlayerWait playerWait;
     PlayerWalk playerWalk;
 
     #region IPunObservable implementation
@@ -152,6 +154,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
         rb = GetComponent<Rigidbody2D>();
         spriteTransform = GetComponent<Transform>();
 
+        playerWait = GetComponent<PlayerWait>();
         playerWalk = GetComponent<PlayerWalk>();
     }
 
@@ -257,6 +260,10 @@ public class PlayerController : MonoBehaviour, IPunObservable
         {
             switch (playerCurrentAction)
             {
+                case PlayerActions.WAIT:
+                    currentFrameBehaviour = playerWait;
+                    break;
+
                 case PlayerActions.WALK_LEFT:
                     playerWalk.goLeft = true;
 
@@ -265,6 +272,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
                     currentFrameBehaviour = playerWalk;
                     break;
+
                 case PlayerActions.WALK_RIGHT:
                     playerWalk.goLeft = false;
 
@@ -289,6 +297,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
             if (currentFrameBehaviour.IsAnimationDone())
             {
+                Debug.Log("Done " + gameObject.name);
+
                 playerCurrentAction = PlayerActions.NONE;
 
                 currentFrameBehaviour.enabledBehaviour = false;

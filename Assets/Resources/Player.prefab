@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 6281997457829084009}
   - component: {fileID: 6229377857779737878}
   - component: {fileID: 7357678559156546124}
+  - component: {fileID: 8764503897903537587}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -109,6 +110,7 @@ MonoBehaviour:
   - {fileID: 6281997457829084009}
   - {fileID: 6229377857779737878}
   - {fileID: 7357678559156546124}
+  - {fileID: 8764503897903537587}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -156,12 +158,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee2f1e2a3ac5d5d40b9eb34313be815b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 6281997457829084010}
   airResistance: 0.1
   friction: 0.05
   playerInfoUI: {fileID: 0}
   controllerUI: {fileID: 0}
   playerNum: 1
   playerSr: {fileID: 6281997458381316372}
+  animator: {fileID: 371803126}
   freezeAnimator: {fileID: 2762747590730954038}
   facingLeft: 0
   toFlip: 0
@@ -183,9 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cef17a203ae15a4ea3566bd9e82ebbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sr: {fileID: 6281997458381316372}
-  rb: {fileID: 6281997457829084010}
-  animator: {fileID: 371803126}
+  playerController: {fileID: 6229377857779737878}
   frameNum: 0
   loopAnim: 0
   lastFrame: 36
@@ -195,6 +197,24 @@ MonoBehaviour:
   walkForce: 25
   walkForwardAnim: WalkForward
   walkBackwordAnim: WalkBackward
+--- !u!114 &8764503897903537587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6281997457829084022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d0562379136b249a377214f17f69fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 6229377857779737878}
+  frameNum: 0
+  loopAnim: 0
+  lastFrame: 1
+  enabledBehaviour: 0
+  waitAnim: Wait
 --- !u!1 &6281997458381316374
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,7 +14,5 @@ public class FreezeAnimator : MonoBehaviour
     public void Freeze(bool freeze)
     {
         animator.speed = freeze ? 0 : 1;
-
-        Debug.Log(animator.speed);
     }
 }
