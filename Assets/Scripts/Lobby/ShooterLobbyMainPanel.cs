@@ -7,7 +7,7 @@ using Photon.Pun;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using TMPro;
 
-public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks, IPunObservable
+public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
 {
     [Header("Login Panel")]
     public GameObject LoginPanel;
