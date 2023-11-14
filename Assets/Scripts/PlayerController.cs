@@ -11,7 +11,6 @@ public class PlayerController : MonoBehaviour, IPunObservable
     [SerializeField] Transform playerCenter;
 
     [SerializeField] float airResistance = 0;
-    [SerializeField] float friction = 0;
 
     [SerializeField] PlayerInfoUI playerInfoUI;
     public ControllerUI controllerUI;
@@ -322,18 +321,9 @@ public class PlayerController : MonoBehaviour, IPunObservable
         rb.AddForce(resistiveForce, ForceMode2D.Impulse);
     }
 
-    void ApplyFriction()
-    {
-        Vector2 resistiveForce = -rb.velocity * friction;
-
-        rb.AddForce(resistiveForce, ForceMode2D.Impulse);
-    }
-
     public void ApplyResistances()
     {
-        ApplyAirResistance();
-
-        if (isGrounded) ApplyFriction();
+        if (!isGrounded) ApplyAirResistance();
     }
 
     public void FlipPlayer()
