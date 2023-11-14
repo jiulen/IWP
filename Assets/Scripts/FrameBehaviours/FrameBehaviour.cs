@@ -124,6 +124,21 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
         syncedEnabledBehaviour = enabledBehaviour;
     }
 
+    private void FixedUpdate()
+    {
+        if (ShooterGameManager.Instance.gameStarted && ShooterGameManager.Instance.gamePaused)
+        {
+            if (enabledBehaviour)
+            {
+                if (currentAnimName != "")
+                {
+                    AnimatorChangeAnimation(currentAnimName);
+                    AnimatorSetFrame();
+                }
+            }
+        }
+    }
+
     public virtual void GoToFrame() //Handles physics and switching animations + progressing through animations on host side
     {
         AnimatorSetFrame();
@@ -138,7 +153,7 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
         }
     }
 
-    protected void AnimatorSetFrame()
+    public void AnimatorSetFrame()
     {
         timeInSeconds = frameNum / animationFPS;
         if (timeInSeconds > 1 && !loopAnim)

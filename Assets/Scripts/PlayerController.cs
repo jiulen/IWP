@@ -19,7 +19,6 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
     public SpriteRenderer playerSr;
     public Animator animator;
-    public FreezeAnimator freezeAnimator;
 
     bool isGrounded = true;
     [SerializeField] bool facingLeft = false;
@@ -297,8 +296,6 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
             if (currentFrameBehaviour.IsAnimationDone())
             {
-                Debug.Log("Done " + gameObject.name);
-
                 playerCurrentAction = PlayerActions.NONE;
 
                 currentFrameBehaviour.enabledBehaviour = false;

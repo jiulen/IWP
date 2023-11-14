@@ -19,9 +19,13 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
     [SerializeField] ControllerUI localControllerUI;
 
-    bool gameStarted = false;
-    bool gamePaused = true;
+    public bool gameStarted = false;
+    public bool gamePaused = true;
     int currentFrame;
+
+    //Room properties
+    public const string GAME_STARTED = "GameStarted";
+    public const string GAME_PAUSED = "GamePaused";
 
     public void Awake()
     {
@@ -156,6 +160,9 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
                 gameStarted = true;
                 gamePaused = true;
 
+                Hashtable roomProps = new Hashtable() { { GAME_STARTED, true }, { GAME_PAUSED, true } };
+                PhotonNetwork.CurrentRoom.SetCustomProperties(roomProps);
+
                 localPlayerController.allowMove = true;
                 otherPlayerController.allowMove = true;
             }
@@ -212,13 +219,30 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
                     gamePaused = false;
 
-                    //localPlayerController.freezeAnimator.Freeze(false);
-                    //otherPlayerController.freezeAnimator.Freeze(false);
+                    Hashtable roomProps = new Hashtable() { { GAME_PAUSED, false } };
+                    PhotonNetwork.CurrentRoom.SetCustomProperties(roomProps);
 
                     localPlayerController.allowMove = false;
                     otherPlayerController.allowMove = false;
                 }
             }
+        }
+    }
+
+    public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
+    {
+        if (PhotonNetwork.IsMasterClient)
+            return;
+
+        //Sync game started for client only
+        if (propertiesThatChanged.TryGetValue(GAME_STARTED, out object isGameStarted))
+        {
+            gameStarted = (bool)isGameStarted;
+        }
+        //Sync game paused for client only
+        if (propertiesThatChanged.TryGetValue(GAME_PAUSED, out object isGamePaused))
+        {
+            gamePaused = (bool)isGamePaused;
         }
     }
 
@@ -297,9 +321,6 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
                 OnPauseGame();
             }
         }
-        else
-        {
-        }
     }
 
     private void OnPauseGame()
@@ -309,8 +330,8 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         //pause game
         gamePaused = true;
 
-        //localPlayerController.freezeAnimator.Freeze(true);
-        //otherPlayerController.freezeAnimator.Freeze(true);
+        Hashtable roomProps = new Hashtable() { { GAME_PAUSED, true } };
+        PhotonNetwork.CurrentRoom.SetCustomProperties(roomProps);
 
         //check can move
         if (localPlayerController.IsIdle() || localPlayerController.CanBurst())
