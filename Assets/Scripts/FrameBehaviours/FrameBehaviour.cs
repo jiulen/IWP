@@ -9,8 +9,6 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
     protected Rigidbody2D rb;
     protected Animator animator;
 
-    [SerializeField] PlayerController playerController;
-
     public int frameNum = 0;
     protected float timeInSeconds = 0;
     protected string currentAnimName = "";
@@ -115,12 +113,8 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
 
     #endregion
 
-    private void Awake()
+    protected virtual void Awake()
     {
-        sr = playerController.playerSr;
-        rb = playerController.rb;
-        animator = playerController.animator;
-
         syncedEnabledBehaviour = enabledBehaviour;
     }
 

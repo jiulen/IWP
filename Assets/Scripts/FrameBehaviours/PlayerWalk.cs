@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerWalk : FrameBehaviour
+public class PlayerWalk : PlayerFrameBehaviour
 {
     public bool goLeft = false;
     public bool forwards = true;

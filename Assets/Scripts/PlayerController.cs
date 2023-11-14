@@ -7,7 +7,8 @@ using Photon.Realtime;
 public class PlayerController : MonoBehaviour, IPunObservable
 {
     public Rigidbody2D rb;
-    Transform spriteTransform;
+    [SerializeField] Transform spriteTransform;
+    [SerializeField] Transform playerCenter;
 
     [SerializeField] float airResistance = 0;
     [SerializeField] float friction = 0;
@@ -69,6 +70,9 @@ public class PlayerController : MonoBehaviour, IPunObservable
     FrameBehaviour currentFrameBehaviour;
     PlayerWait playerWait;
     PlayerWalk playerWalk;
+    PlayerRoll playerRoll;
+    PlayerJump playerJump;
+    PlayerFall playerFall;
 
     #region IPunObservable implementation
 
@@ -149,9 +153,6 @@ public class PlayerController : MonoBehaviour, IPunObservable
     private void Awake()
     {
         SetPlayerInfo();
-
-        rb = GetComponent<Rigidbody2D>();
-        spriteTransform = GetComponent<Transform>();
 
         playerWait = GetComponent<PlayerWait>();
         playerWalk = GetComponent<PlayerWalk>();
@@ -271,7 +272,6 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
                     currentFrameBehaviour = playerWalk;
                     break;
-
                 case PlayerActions.WALK_RIGHT:
                     playerWalk.goLeft = false;
 
@@ -279,6 +279,18 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     else playerWalk.forwards = true;
 
                     currentFrameBehaviour = playerWalk;
+                    break;
+
+                case PlayerActions.ROLL:
+                    currentFrameBehaviour = playerRoll;
+                    break;
+
+                case PlayerActions.JUMP:
+                    currentFrameBehaviour = playerJump;
+                    break;
+
+                case PlayerActions.FALL:
+                    currentFrameBehaviour = playerFall;
                     break;
             }
 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerWait : PlayerFrameBehaviour
+public class PlayerJump : PlayerFrameBehaviour
 {
     [SerializeField] string waitAnim;
 
