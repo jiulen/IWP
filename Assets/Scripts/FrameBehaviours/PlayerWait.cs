@@ -11,9 +11,10 @@ public class PlayerWait : FrameBehaviour
         switch (frameNum)
         {
             case 0:
-                AnimatorChangeAnimation(waitAnim);
+                currentAnimName = waitAnim;
+                AnimatorChangeAnimation(currentAnimName);
                 break;
-            case 11: //end
+            case 5: //end
                 lastFrame = true;
                 break;
         }
