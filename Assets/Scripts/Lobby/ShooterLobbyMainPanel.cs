@@ -49,53 +49,7 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks, IPunObservable
     private byte maxPlayers = 2;
     const int ROOM_CODE_LENGTH = 4;
 
-    #region IPunObservable implementation
-
-    //For syncing data via IPunObservable
-    const byte ROOM_PUBLIC_FLAG = 1 << 0;
-
-    bool syncedRoomPublic = false;
-
-    byte syncDataFlags;
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.IsWriting)
-        {
-            syncDataFlags = 0;
-
-            //Check which variables have changed
-            if (syncedRoomPublic != roomPublic)
-            {
-                syncDataFlags |= ROOM_PUBLIC_FLAG;
-            }
-
-            //Send data flags
-            stream.SendNext(syncDataFlags);
-
-            //Send variables that changed
-            if ((syncDataFlags & ROOM_PUBLIC_FLAG) != 0)
-            {
-                stream.SendNext(roomPublic);
-                syncedRoomPublic = roomPublic;
-            }
-        }
-        else
-        {
-            //Receive data flags
-            syncDataFlags = (byte)stream.ReceiveNext();
-
-            //Receive and update variables based on data flags
-            if ((syncDataFlags & ROOM_PUBLIC_FLAG) != 0)
-            {
-                roomPublic = (bool)stream.ReceiveNext();
-                ToggleRoomPublic();
-            }
-        }
-    }
-
-    #endregion
-
+    const string ROOM_PUBLIC = "RoomPublic";
 
     #region UNITY
 
@@ -282,6 +236,12 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks, IPunObservable
                 {ShooterGameInfo.PLAYER_LOADED_LEVEL, false}
             };
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+
+        if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue(ROOM_PUBLIC, out object isRoomPublic))
+        {
+            roomPublic = (bool)isRoomPublic;
+            ToggleRoomPublic();
+        }
     }
 
     public override void OnLeftRoom()
@@ -397,6 +357,19 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks, IPunObservable
         StartGameDim.SetActive(!playersReady);
     }
 
+    public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
+    {
+        if (PhotonNetwork.IsMasterClient)
+            return;
+
+        //Sync room publlic for client only
+        if (propertiesThatChanged.TryGetValue(ROOM_PUBLIC, out object isRoomPublic))
+        {
+            roomPublic = (bool)isRoomPublic;
+            ToggleRoomPublic();
+        }
+    }
+
     #endregion
 
     #region UI CALLBACKS
@@ -408,13 +381,14 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks, IPunObservable
 
         roomPublic = roomPublicToggle.isOn;
         PhotonNetwork.CurrentRoom.IsVisible = roomPublic;
+
+        Hashtable roomProps = new Hashtable() { { ROOM_PUBLIC, roomPublic } };
+        PhotonNetwork.CurrentRoom.SetCustomProperties(roomProps);
     }
 
     void ToggleRoomPublic()
     {
         roomPublicToggle.isOn = roomPublic;
-
-        Debug.Log("toggle public");
     }
 
     public void OnBackButtonClicked()

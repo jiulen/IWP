@@ -24,8 +24,8 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
     int currentFrame;
 
     //Room properties
-    public const string GAME_STARTED = "GameStarted";
-    public const string GAME_PAUSED = "GamePaused";
+    const string GAME_STARTED = "GameStarted";
+    const string GAME_PAUSED = "GamePaused";
 
     public void Awake()
     {

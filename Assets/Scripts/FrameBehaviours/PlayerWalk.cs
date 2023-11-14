@@ -23,16 +23,11 @@ public class PlayerWalk : FrameBehaviour
                 break;
             case 35: //end
                 EndAnimation();
+
+                rb.velocity = Vector2.zero;
                 break;
         }
 
         AnimatorSetFrame();
-    }
-
-    protected override void EndAnimation()
-    {
-        base.EndAnimation();
-
-        rb.velocity = Vector2.zero;
     }
 }
