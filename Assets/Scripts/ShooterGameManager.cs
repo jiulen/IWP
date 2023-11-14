@@ -114,17 +114,20 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
         //check when to show controls
-        if (changedProps.ContainsKey(ShooterGameInfo.PLAYER_SHOW_CONTROLS))
+        if (targetPlayer.IsLocal)
         {
-            if (changedProps.TryGetValue(ShooterGameInfo.PLAYER_SHOW_CONTROLS, out object showControls))
+            if (changedProps.ContainsKey(ShooterGameInfo.PLAYER_SHOW_CONTROLS))
             {
-                if ((bool)showControls)
+                if (changedProps.TryGetValue(ShooterGameInfo.PLAYER_SHOW_CONTROLS, out object showControls))
                 {
-                    //show this player's controls
-                    localPlayerController.ShowControls(true);
+                    if ((bool)showControls)
+                    {
+                        //show this player's controls
+                        localPlayerController.ShowControls(true);
 
-                    Hashtable props = new Hashtable() { { ShooterGameInfo.PLAYER_SHOW_CONTROLS, false } };
-                    PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+                        Hashtable props = new Hashtable() { { ShooterGameInfo.PLAYER_SHOW_CONTROLS, false } };
+                        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+                    }
                 }
             }
         }

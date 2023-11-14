@@ -21,7 +21,7 @@ public class PlayerWalk : FrameBehaviour
                 Vector2 walkDir = Vector2.right * (goLeft ? -1 : 1);
                 rb.AddForce(walkDir * walkForce, ForceMode2D.Impulse);
                 break;
-            case 36: //end
+            case 35: //end
                 rb.velocity = Vector2.zero;
                 lastFrame = true;
                 break;

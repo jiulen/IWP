@@ -13,7 +13,7 @@ public class PlayerWait : FrameBehaviour
             case 0:
                 AnimatorChangeAnimation(waitAnim);
                 break;
-            case 12: //end
+            case 11: //end
                 lastFrame = true;
                 break;
         }
