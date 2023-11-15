@@ -308,6 +308,9 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
             localPlayerController.CheckIfGrounded();
             otherPlayerController.CheckIfGrounded();
 
+            localPlayerController.RefillAirOptions();
+            otherPlayerController.RefillAirOptions();
+
             localPlayerController.ApplyResistances();
             otherPlayerController.ApplyResistances();
 

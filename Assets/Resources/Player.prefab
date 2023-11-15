@@ -288,7 +288,8 @@ MonoBehaviour:
   loopAnim: 0
   lastFrame: 1
   enabledBehaviour: 0
-  waitAnim: 
+  jumpForce: 50
+  jumpAnim: Jump
 --- !u!114 &8160912622823031159
 MonoBehaviour:
   m_ObjectHideFlags: 0

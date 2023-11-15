@@ -14,12 +14,11 @@ public class ControllerUI : MonoBehaviour
 
     [SerializeField] Toggle flipToggle;
 
+    bool isInit = false;
+
     private void Awake()
     {
-        foreach (ControllerAction controllerAction in controllerActions)
-        {
-            controllerObjects.Add(controllerAction.toggleAction, controllerAction.gameObject);
-        }
+        if (!isInit) InitControllerUI();
     }
 
     public void SetAction(PlayerController.PlayerActions toggleAction)
@@ -38,6 +37,8 @@ public class ControllerUI : MonoBehaviour
 
     public void SetUI(List<PlayerController.PlayerActions> unavailableActions, bool forceBurst)
     {
+        if (!isInit) InitControllerUI();
+
         flipToggle.isOn = false;
 
         if (forceBurst)
@@ -67,6 +68,16 @@ public class ControllerUI : MonoBehaviour
                     keyValuePair.Value.SetActive(true);
                 }
             }
+        }
+    }
+
+    void InitControllerUI()
+    {
+        isInit = true;
+
+        foreach (ControllerAction controllerAction in controllerActions)
+        {
+            controllerObjects.Add(controllerAction.toggleAction, controllerAction.gameObject);
         }
     }
 }

@@ -157,6 +157,9 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
         playerWait = GetComponent<PlayerWait>();
         playerWalk = GetComponent<PlayerWalk>();
+        playerRoll = GetComponent<PlayerRoll>();
+        playerJump = GetComponent<PlayerJump>();
+        playerFall = GetComponent<PlayerFall>();
     }
 
     void SetPlayerInfo()
@@ -208,14 +211,13 @@ public class PlayerController : MonoBehaviour, IPunObservable
                 unavailableActions.Add(PlayerActions.ROLL);
 
                 unavailableActions.Add(PlayerActions.JUMP);
+
+                unavailableActions.Add(PlayerActions.FALL);
             }
         }
         else
         {
-            if (airOptionsAvail <= 0)
-            {
-                unavailableActions.Add(PlayerActions.FALL);
-            }
+            unavailableActions.Add(PlayerActions.FALL);
         }
 
         //Check burst
@@ -237,6 +239,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
     public void ShowControls(bool active)
     {
+        CheckIfGrounded();
+
         CheckMoves();
 
         if (active)
@@ -283,14 +287,20 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     break;
 
                 case PlayerActions.ROLL:
+                    if (!isGrounded) airOptionsAvail -= 1;
+
                     currentFrameBehaviour = playerRoll;
                     break;
 
                 case PlayerActions.JUMP:
+                    if (!isGrounded) airOptionsAvail -= 1;
+
                     currentFrameBehaviour = playerJump;
                     break;
 
                 case PlayerActions.FALL:
+                    if (!isGrounded) airOptionsAvail -= 1;
+
                     currentFrameBehaviour = playerFall;
                     break;
             }
@@ -337,6 +347,17 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
     public void CheckIfGrounded()
     {
-        isGrounded = Physics2D.BoxCast(playerCollider.bounds.center, playerCollider.bounds.size, 0, Vector2.down, 0.05f, groundLayerMask);
+        isGrounded = Physics2D.BoxCast(playerCollider.bounds.center, playerCollider.bounds.size, 0, Vector2.down, 0.025f, groundLayerMask);
+
+        Debug.Log(gameObject.name + " isGrounded=" + isGrounded);
+        Debug.Log(playerCollider.bounds.center);
+    }
+
+    public void RefillAirOptions()
+    {
+        if (isGrounded)
+        {
+            if (airOptionsAvail < 2) airOptionsAvail = 2;
+        }
     }
 }
