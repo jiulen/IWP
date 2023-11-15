@@ -295,6 +295,9 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     break;
 
                 case PlayerActions.ROLL:
+                    if (facingLeft) playerRoll.goLeft = true;
+                    else playerRoll.goLeft = false;
+
                     if (!isGrounded) airOptionsAvail -= 1;
 
                     currentFrameBehaviour = playerRoll;

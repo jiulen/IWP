@@ -271,7 +271,9 @@ MonoBehaviour:
   loopAnim: 0
   lastFrame: 1
   enabledBehaviour: 0
-  waitAnim: 
+  goLeft: 0
+  rollForce: 65
+  rollAnim: Roll
 --- !u!114 &6855151038211201459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,7 +308,7 @@ MonoBehaviour:
   loopAnim: 1
   lastFrame: 1
   enabledBehaviour: 0
-  waitAnim: 
+  waitAnim: Fall
 --- !u!1 &6281997458381316374
 GameObject:
   m_ObjectHideFlags: 0
