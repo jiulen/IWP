@@ -10,7 +10,7 @@ public class ControllerUI : MonoBehaviour
     PlayerController.PlayerActions selectedAction;
 
     [SerializeField] ControllerAction[] controllerActions;
-    Dictionary<PlayerController.PlayerActions, GameObject> controllerObjects = new();
+    Dictionary<PlayerController.PlayerActions, Toggle> controllerObjects = new();
 
     [SerializeField] Toggle flipToggle;
 
@@ -41,31 +41,48 @@ public class ControllerUI : MonoBehaviour
 
         flipToggle.isOn = false;
 
+        bool selectNew;
+
         if (forceBurst)
         {
-            foreach (KeyValuePair<PlayerController.PlayerActions, GameObject> keyValuePair in controllerObjects)
+            selectNew = (selectedAction != PlayerController.PlayerActions.BURST) && (selectedAction != PlayerController.PlayerActions.SKIP);
+
+            foreach (KeyValuePair<PlayerController.PlayerActions, Toggle> keyValuePair in controllerObjects)
             {
-                if (keyValuePair.Key == PlayerController.PlayerActions.BURST)
+                if (keyValuePair.Key == PlayerController.PlayerActions.BURST || keyValuePair.Key == PlayerController.PlayerActions.SKIP)
                 {
-                    keyValuePair.Value.SetActive(true);
+                    keyValuePair.Value.gameObject.SetActive(true);
+                    if (selectNew)
+                    {
+                        keyValuePair.Value.isOn = true;
+                    }
                 }
                 else
                 {
-                    keyValuePair.Value.SetActive(false);
+                    keyValuePair.Value.gameObject.SetActive(false);
                 }
             }
         }
         else
         {
-            foreach (KeyValuePair<PlayerController.PlayerActions, GameObject> keyValuePair in controllerObjects)
+            selectNew = unavailableActions.Contains(selectedAction);
+            bool selectedFirst = false;
+
+            foreach (KeyValuePair<PlayerController.PlayerActions, Toggle> keyValuePair in controllerObjects)
             {
                 if (unavailableActions.Contains(keyValuePair.Key))
                 {
-                    keyValuePair.Value.SetActive(false);
+                    keyValuePair.Value.gameObject.SetActive(false);
                 }
                 else
                 {
-                    keyValuePair.Value.SetActive(true);
+                    keyValuePair.Value.gameObject.SetActive(true);
+
+                    if (selectNew && !selectedFirst)
+                    {
+                        keyValuePair.Value.isOn = true;
+                        selectedFirst = true;
+                    }
                 }
             }
         }
@@ -77,7 +94,7 @@ public class ControllerUI : MonoBehaviour
 
         foreach (ControllerAction controllerAction in controllerActions)
         {
-            controllerObjects.Add(controllerAction.toggleAction, controllerAction.gameObject);
+            controllerObjects.Add(controllerAction.toggleAction, controllerAction.GetComponent<Toggle>());
         }
     }
 }

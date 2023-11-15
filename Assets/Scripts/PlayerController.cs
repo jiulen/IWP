@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
         //Defense
         BLOCK,
         BURST,
+        SKIP,
 
         //Attack
         HYDRO_BALL,
@@ -224,6 +225,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
         if (!CanBurst())
         {
             unavailableActions.Add(PlayerActions.BURST);
+            unavailableActions.Add(PlayerActions.SKIP);
         }
     }
 
