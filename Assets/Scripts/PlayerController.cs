@@ -201,30 +201,36 @@ public class PlayerController : MonoBehaviour, IPunObservable
     {
         unavailableActions.Clear();
 
-        //Check movement
-        if (!isGrounded)
+        bool forceBurst = !IsIdle() && CanBurst();
+
+        if (!forceBurst)
         {
-            unavailableActions.Add(PlayerActions.WALK_LEFT);
-            unavailableActions.Add(PlayerActions.WALK_RIGHT);
-
-            if (airOptionsAvail <= 0)
+            //Check movement
+            if (!isGrounded)
             {
-                unavailableActions.Add(PlayerActions.ROLL);
+                unavailableActions.Add(PlayerActions.WALK_LEFT);
+                unavailableActions.Add(PlayerActions.WALK_RIGHT);
 
-                unavailableActions.Add(PlayerActions.JUMP);
+                if (airOptionsAvail <= 0)
+                {
+                    unavailableActions.Add(PlayerActions.ROLL);
 
+                    unavailableActions.Add(PlayerActions.JUMP);
+
+                    unavailableActions.Add(PlayerActions.FALL);
+                }
+            }
+            else
+            {
                 unavailableActions.Add(PlayerActions.FALL);
             }
-        }
-        else
-        {
-            unavailableActions.Add(PlayerActions.FALL);
-        }
 
-        //Check burst
-        if (!CanBurst())
-        {
-            unavailableActions.Add(PlayerActions.BURST);
+            //Check burst
+            if (!CanBurst())
+            {
+                unavailableActions.Add(PlayerActions.BURST);
+            }
+            //Add skip (skip only for force burst)
             unavailableActions.Add(PlayerActions.SKIP);
         }
     }
@@ -265,6 +271,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
         {
             switch (playerCurrentAction)
             {
+                //Movement
+
                 case PlayerActions.WAIT:
                     currentFrameBehaviour = playerWait;
                     break;
@@ -302,6 +310,40 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     if (!isGrounded) airOptionsAvail -= 1;
 
                     currentFrameBehaviour = playerFall;
+                    break;
+
+                //Defense
+
+                case PlayerActions.BLOCK:
+                    break;
+
+                case PlayerActions.BURST:
+                    break;
+
+                case PlayerActions.SKIP:
+                    break;
+
+                //Attack
+
+                case PlayerActions.HYDRO_BALL:
+                    break;
+
+                case PlayerActions.ICICLE:
+                    break;
+
+                case PlayerActions.LINGERING_SPIRIT:
+                    break;
+
+                case PlayerActions.EXPLOSION:
+                    break;
+
+                case PlayerActions.LIGHTNING:
+                    break;
+
+                case PlayerActions.SEISMIC_STRIKE:
+                    break;
+
+                case PlayerActions.WHIRLWIND:
                     break;
             }
 
