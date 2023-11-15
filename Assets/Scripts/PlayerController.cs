@@ -239,8 +239,6 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
     public void ShowControls(bool active)
     {
-        CheckIfGrounded();
-
         CheckMoves();
 
         if (active)
@@ -345,12 +343,14 @@ public class PlayerController : MonoBehaviour, IPunObservable
         facingLeft = !facingLeft;
     }
 
-    public void CheckIfGrounded()
+    public bool CheckIfGrounded()
     {
         isGrounded = Physics2D.BoxCast(playerCollider.bounds.center, playerCollider.bounds.size, 0, Vector2.down, 0.025f, groundLayerMask);
 
         Debug.Log(gameObject.name + " isGrounded=" + isGrounded);
         Debug.Log(playerCollider.bounds.center);
+
+        return isGrounded;
     }
 
     public void RefillAirOptions()
@@ -359,5 +359,10 @@ public class PlayerController : MonoBehaviour, IPunObservable
         {
             if (airOptionsAvail < 2) airOptionsAvail = 2;
         }
+    }
+
+    public void ForceSetGrounded(bool grounded)
+    {
+        isGrounded = grounded;
     }
 }

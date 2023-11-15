@@ -12,6 +12,7 @@ public class ShooterGameInfo
     public const string PLAYER_SELECTED_ACTION = "PlayerSelectedAction";
     public const string PLAYER_FLIP = "PlayerFlip";
     public const string PLAYER_SHOW_CONTROLS = "PlayerShowControls";
+    public const string PLAYER_GROUNDED = "PlayerGrounded";
 
     public static Color GetColor(int colorChoice)
     {

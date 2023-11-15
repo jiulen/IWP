@@ -126,11 +126,17 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
                 {
                     if ((bool)showControls)
                     {
-                        //show this player's controls
-                        localPlayerController.ShowControls(true);
+                        //set grounded first
+                        if (changedProps.TryGetValue(ShooterGameInfo.PLAYER_GROUNDED, out object grounded))
+                        {
+                            localPlayerController.ForceSetGrounded((bool)grounded);
 
-                        Hashtable props = new Hashtable() { { ShooterGameInfo.PLAYER_SHOW_CONTROLS, false } };
-                        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+                            //show this player's controls
+                            localPlayerController.ShowControls(true);
+
+                            Hashtable props = new Hashtable() { { ShooterGameInfo.PLAYER_SHOW_CONTROLS, false } };
+                            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+                        }
                     }
                 }
             }
@@ -150,8 +156,9 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
                 otherPlayerController.playerCurrentAction = PlayerController.PlayerActions.NONE;
 
                 Hashtable playerInitProps = new Hashtable() { { ShooterGameInfo.PLAYER_SELECTED_ACTION, (int)PlayerController.PlayerActions.NONE },
-                                                                { ShooterGameInfo.PLAYER_FLIP, false },
-                                                                { ShooterGameInfo.PLAYER_SHOW_CONTROLS, true } };
+                                                              { ShooterGameInfo.PLAYER_FLIP, false },
+                                                              { ShooterGameInfo.PLAYER_SHOW_CONTROLS, true },
+                                                              { ShooterGameInfo.PLAYER_GROUNDED, true} };
                 foreach (Player p in PhotonNetwork.PlayerList)
                 {
                     p.SetCustomProperties(playerInitProps);
@@ -358,8 +365,7 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
             otherPlayerController.allowMove = false;
         }
 
-        Hashtable playerContinueProps = new Hashtable() { { ShooterGameInfo.PLAYER_SELECTED_ACTION, (int)PlayerController.PlayerActions.NONE },
-                                                          { ShooterGameInfo.PLAYER_SHOW_CONTROLS, true } };
+        
 
         foreach (Player p in PhotonNetwork.PlayerList)
         {
@@ -367,14 +373,26 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
             {
                 if (localPlayerController.allowMove)
                 {
-                    p.SetCustomProperties(playerContinueProps);
+                    bool playerIsGrounded = localPlayerController.CheckIfGrounded();
+
+                    Hashtable playerPauseProps = new Hashtable() { { ShooterGameInfo.PLAYER_SELECTED_ACTION, (int)PlayerController.PlayerActions.NONE },
+                                                                   { ShooterGameInfo.PLAYER_SHOW_CONTROLS, true },
+                                                                   { ShooterGameInfo.PLAYER_GROUNDED, playerIsGrounded } };
+
+                    p.SetCustomProperties(playerPauseProps);
                 }
             }
             else
             {
                 if (otherPlayerController.allowMove)
                 {
-                    p.SetCustomProperties(playerContinueProps);
+                    bool playerIsGrounded = otherPlayerController.CheckIfGrounded();
+
+                    Hashtable playerPauseProps = new Hashtable() { { ShooterGameInfo.PLAYER_SELECTED_ACTION, (int)PlayerController.PlayerActions.NONE },
+                                                                   { ShooterGameInfo.PLAYER_SHOW_CONTROLS, true },
+                                                                   { ShooterGameInfo.PLAYER_GROUNDED, playerIsGrounded } };
+
+                    p.SetCustomProperties(playerPauseProps);
                 }
             }
         }
