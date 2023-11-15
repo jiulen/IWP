@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
     public Rigidbody2D rb;
     [SerializeField] Transform spriteTransform;
     [SerializeField] Transform playerCenter;
+    [SerializeField] Collider2D playerCollider;
+    [SerializeField] LayerMask groundLayerMask;
 
     [SerializeField] float airResistance = 0;
 
@@ -331,5 +333,10 @@ public class PlayerController : MonoBehaviour, IPunObservable
         spriteTransform.localScale = new Vector3(spriteTransform.localScale.x * -1, 1, 1);
 
         facingLeft = !facingLeft;
+    }
+
+    public void CheckIfGrounded()
+    {
+        isGrounded = Physics2D.BoxCast(playerCollider.bounds.center, playerCollider.bounds.size, 0, Vector2.down, 0.05f, groundLayerMask);
     }
 }

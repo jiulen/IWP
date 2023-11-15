@@ -588,8 +588,4 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
             roomListEntries.Add(info.Name, entry);
         }
     }
-
-    private void Update()
-    {
-    }
 }

@@ -199,8 +199,11 @@ MonoBehaviour:
   rb: {fileID: 6281997457829084010}
   spriteTransform: {fileID: 6281997457829084021}
   playerCenter: {fileID: 352801947048035083}
+  playerCollider: {fileID: 6281997457829084011}
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
   airResistance: 0.1
-  friction: 0.05
   playerInfoUI: {fileID: 0}
   controllerUI: {fileID: 0}
   playerNum: 1

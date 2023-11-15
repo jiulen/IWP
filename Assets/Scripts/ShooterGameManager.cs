@@ -305,6 +305,9 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         {
             Physics2D.Simulate(Time.fixedDeltaTime);
 
+            localPlayerController.CheckIfGrounded();
+            otherPlayerController.CheckIfGrounded();
+
             localPlayerController.ApplyResistances();
             otherPlayerController.ApplyResistances();
 
