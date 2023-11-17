@@ -14,6 +14,8 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
     protected string currentAnimName = "";
     protected string oldAnimName = "";
 
+    public int cooldown = 0;
+
     [SerializeField] protected bool loopAnim = false;
     public bool lastFrame;
 
