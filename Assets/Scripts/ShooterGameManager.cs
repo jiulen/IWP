@@ -310,11 +310,6 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
         if (!gamePaused)
         {
-            Physics2D.Simulate(Time.fixedDeltaTime);
-
-            localPlayerController.CheckIfGrounded();
-            otherPlayerController.CheckIfGrounded();
-
             localPlayerController.RefillAirOptions();
             otherPlayerController.RefillAirOptions();
 
@@ -323,6 +318,11 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
             localPlayerController.RunFrameBehaviour();
             otherPlayerController.RunFrameBehaviour();
+
+            Physics2D.Simulate(Time.fixedDeltaTime);
+
+            localPlayerController.CheckIfGrounded();
+            otherPlayerController.CheckIfGrounded();
 
             ++localPlayerController.currentFrameNum;
             ++otherPlayerController.currentFrameNum;

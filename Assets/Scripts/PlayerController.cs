@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
     bool isGrounded = true;
     [SerializeField] bool facingLeft = false;
     public bool toFlip = false;
+    bool isWalking = false;
 
     List<PlayerActions> unavailableActions = new();
 
@@ -280,6 +281,12 @@ public class PlayerController : MonoBehaviour, IPunObservable
                 case PlayerActions.WALK_LEFT:
                     playerWalk.goLeft = true;
 
+                    if (isWalking)
+                        playerWalk.firstHalf = !playerWalk.firstHalf;
+                    else
+                        playerWalk.firstHalf = true;
+
+
                     if (facingLeft) playerWalk.forwards = true;
                     else playerWalk.forwards = false;
 
@@ -287,6 +294,11 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     break;
                 case PlayerActions.WALK_RIGHT:
                     playerWalk.goLeft = false;
+
+                    if (isWalking)
+                        playerWalk.firstHalf = !playerWalk.firstHalf;
+                    else
+                        playerWalk.firstHalf = true;
 
                     if (facingLeft) playerWalk.forwards = false;
                     else playerWalk.forwards = true;
@@ -352,6 +364,16 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
             if (currentFrameBehaviour != null)
             {
+                //Check if walking
+                if (playerCurrentAction == PlayerActions.WALK_LEFT || playerCurrentAction == PlayerActions.WALK_RIGHT)
+                {
+                    isWalking = true;
+                }
+                else
+                {
+                    isWalking = false;
+                }
+
                 currentFrameBehaviour.enabledBehaviour = true;
                 currentFrameBehaviour.lastFrame = false;
             }

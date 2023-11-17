@@ -235,9 +235,12 @@ MonoBehaviour:
   enabledBehaviour: 0
   goLeft: 0
   forwards: 1
-  walkForce: 25
-  walkForwardAnim: WalkForward
-  walkBackwordAnim: WalkBackward
+  firstHalf: 1
+  walkForce: 15
+  walkForwardAnim_1: WalkForward1
+  walkForwardAnim_2: WalkForward2
+  walkBackwordAnim_1: WalkBackward1
+  walkBackwordAnim_2: WalkBackward2
 --- !u!114 &8764503897903537587
 MonoBehaviour:
   m_ObjectHideFlags: 0
