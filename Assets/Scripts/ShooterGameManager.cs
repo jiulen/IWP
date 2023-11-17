@@ -19,7 +19,9 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
     [SerializeField] ControllerUI localControllerUI;
 
-    public List<SpellFrameBehaviour> spellsPool = new();
+    List<SpellFrameBehaviour> spellsPool = new();
+    [SerializeField] Transform spellsParent;
+    const int amtToPool = 5;
 
     public bool gameStarted = false;
     public bool gamePaused = true;
@@ -315,13 +317,13 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
             //spells
             foreach (SpellFrameBehaviour spell in spellsPool)
             {
-                if (spell.enabledBehaviour)
+                if (spell.activeSpell)
                 {
                     spell.GoToFrame();
                     if (spell.IsAnimationDone())
                     {
                         spell.gameObject.SetActive(false);
-                        //delete spell
+                        spell.activeSpell = false;
                     }
 
                     ++spell.frameNum;
@@ -419,5 +421,43 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
     //Object pooling
 
+    public GameObject GetPooledSpell(string spellName) //spell name should match name of prefab
+    {
+        //find target spell from pool
+        foreach (SpellFrameBehaviour spell in spellsPool)
+        {
+            if (!spell.activeSpell && spell.name == spellName)
+            {
+                spell.gameObject.SetActive(true);
 
+                spell.activeSpell = true;
+                spell.enabledBehaviour = true;
+                spell.lastFrame = false;
+                spell.frameNum = 0;
+
+                return spell.gameObject;
+            }
+        }
+
+        GameObject newSpellObj = null;
+        SpellFrameBehaviour newSpell = null;
+
+        for (int i = 0; i < amtToPool; ++i)
+        {
+            newSpellObj = PhotonNetwork.InstantiateRoomObject(spellName, spellsParent.position, Quaternion.identity);
+            newSpellObj.transform.SetParent(spellsParent);
+
+            newSpell = newSpellObj.GetComponent<SpellFrameBehaviour>();
+            spellsPool.Add(newSpell);
+        }
+
+        newSpell.gameObject.SetActive(true);
+
+        newSpell.activeSpell = true;
+        newSpell.enabledBehaviour = true;
+        newSpell.lastFrame = false;
+        newSpell.frameNum = 0;
+
+        return newSpellObj;
+    }
 }

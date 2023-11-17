@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpellFrameBehaviour : FrameBehaviour
 {
     public PlayerController.PlayerActions spellType;
+    public bool activeSpell = false;
 
     protected override void Awake()
     {
