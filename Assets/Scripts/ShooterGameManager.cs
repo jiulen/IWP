@@ -19,6 +19,8 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
     [SerializeField] ControllerUI localControllerUI;
 
+    public List<SpellFrameBehaviour> spellsPool = new();
+
     public bool gameStarted = false;
     public bool gamePaused = true;
     int currentFrame;
@@ -310,6 +312,23 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
         if (!gamePaused)
         {
+            //spells
+            foreach (SpellFrameBehaviour spell in spellsPool)
+            {
+                if (spell.enabledBehaviour)
+                {
+                    spell.GoToFrame();
+                    if (spell.IsAnimationDone())
+                    {
+                        spell.gameObject.SetActive(false);
+                        //delete spell
+                    }
+
+                    ++spell.frameNum;
+                }
+            }
+
+            //player
             localPlayerController.RefillAirOptions();
             otherPlayerController.RefillAirOptions();
 
@@ -397,4 +416,8 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
             }
         }
     }
+
+    //Object pooling
+
+
 }

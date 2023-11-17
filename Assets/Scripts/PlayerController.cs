@@ -346,6 +346,9 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     break;
 
                 case PlayerActions.ICICLE:
+                    if (facingLeft) playerIcicle.goLeft = true;
+                    else playerIcicle.goLeft = false;
+
                     currentFrameBehaviour = playerIcicle;
                     break;
 

@@ -16,7 +16,6 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
 
     public int cooldown = 0;
 
-    [SerializeField] protected bool loopAnim = false;
     public bool lastFrame;
 
     public bool enabledBehaviour = true;
@@ -152,10 +151,6 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
     public void AnimatorSetFrame()
     {
         timeInSeconds = frameNum / animationFPS;
-        if (timeInSeconds > 1 && !loopAnim)
-        {
-            timeInSeconds = 1;
-        }
 
         animator.PlayInFixedTime(currentAnimName, sr.sortingLayerID, timeInSeconds);
     }
