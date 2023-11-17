@@ -205,7 +205,7 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
                         else if (currentController.allowMove)
                         {
                             currentController.playerCurrentAction = selectedAction;
-                            currentController.currentFrameNum = 0;
+                            if (selectedAction != PlayerController.PlayerActions.SKIP) currentController.currentFrameNum = 0;
 
                             if (p.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_FLIP, out object playerFlip))
                             {

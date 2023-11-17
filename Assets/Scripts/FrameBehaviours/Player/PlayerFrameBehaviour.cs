@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerFrameBehaviour : FrameBehaviour
 {
-    PlayerController playerController;
+    protected PlayerController playerController;
 
     protected override void Awake()
     {

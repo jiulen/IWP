@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
     public SpriteRenderer playerSr;
     public Animator animator;
 
-    bool isGrounded = true;
+    public bool isGrounded = true;
     [SerializeField] bool facingLeft = false;
     public bool toFlip = false;
     bool isWalking = false;
@@ -76,6 +76,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
     PlayerRoll playerRoll;
     PlayerJump playerJump;
     PlayerFall playerFall;
+    PlayerIcicle playerIcicle;
 
     #region IPunObservable implementation
 
@@ -162,6 +163,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
         playerRoll = GetComponent<PlayerRoll>();
         playerJump = GetComponent<PlayerJump>();
         playerFall = GetComponent<PlayerFall>();
+        playerIcicle = GetComponent<PlayerIcicle>();
     }
 
     void SetPlayerInfo()
@@ -344,6 +346,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     break;
 
                 case PlayerActions.ICICLE:
+                    currentFrameBehaviour = playerIcicle;
                     break;
 
                 case PlayerActions.LINGERING_SPIRIT:
@@ -364,18 +367,21 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
             if (currentFrameBehaviour != null)
             {
-                //Check if walking
-                if (playerCurrentAction == PlayerActions.WALK_LEFT || playerCurrentAction == PlayerActions.WALK_RIGHT)
+                if (playerCurrentAction != PlayerActions.SKIP)
                 {
-                    isWalking = true;
-                }
-                else
-                {
-                    isWalking = false;
-                }
+                    //Check if walking
+                    if (playerCurrentAction == PlayerActions.WALK_LEFT || playerCurrentAction == PlayerActions.WALK_RIGHT)
+                    {
+                        isWalking = true;
+                    }
+                    else
+                    {
+                        isWalking = false;
+                    }
 
-                currentFrameBehaviour.enabledBehaviour = true;
-                currentFrameBehaviour.lastFrame = false;
+                    currentFrameBehaviour.enabledBehaviour = true;
+                    currentFrameBehaviour.lastFrame = false;
+                }
             }
         }
 
@@ -415,9 +421,6 @@ public class PlayerController : MonoBehaviour, IPunObservable
     public bool CheckIfGrounded()
     {
         isGrounded = Physics2D.BoxCast(playerCollider.bounds.center, playerCollider.bounds.size, 0, Vector2.down, 0.025f, groundLayerMask);
-
-        Debug.Log(gameObject.name + " isGrounded=" + isGrounded);
-        Debug.Log(playerCollider.bounds.center);
 
         return isGrounded;
     }
