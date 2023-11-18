@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6147233219259245329
+--- !u!1 &1291367702410531055
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,7 +8,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 352801947048035083}
+  - component: {fileID: 6502589514095023719}
   m_Layer: 0
   m_Name: PlayerCenter
   m_TagString: Untagged
@@ -16,20 +16,52 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &352801947048035083
+--- !u!4 &6502589514095023719
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6147233219259245329}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5625, z: 0}
+  m_GameObject: {fileID: 1291367702410531055}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.03125, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2590056764565829062}
+  m_Father: {fileID: 6281997457829084021}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5515439448353626641
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2590056764565829062}
+  m_Layer: 0
+  m_Name: IcicleSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2590056764565829062
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5515439448353626641}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.7, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6281997457829084021}
-  m_RootOrder: 1
+  m_Father: {fileID: 6502589514095023719}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6281997457829084022
 GameObject:
@@ -72,7 +104,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6281997458381316373}
-  - {fileID: 352801947048035083}
+  - {fileID: 6502589514095023719}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -200,7 +232,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 6281997457829084010}
   spriteTransform: {fileID: 6281997457829084021}
-  playerCenter: {fileID: 352801947048035083}
+  playerCenter: {fileID: 6502589514095023719}
   playerCollider: {fileID: 6281997457829084011}
   groundLayerMask:
     serializedVersion: 2
@@ -234,7 +266,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   frameNum: 0
   cooldown: 0
-  loopAnim: 0
   lastFrame: 36
   enabledBehaviour: 0
   goLeft: 0
@@ -259,7 +290,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   frameNum: 0
   cooldown: 0
-  loopAnim: 0
   lastFrame: 1
   enabledBehaviour: 0
   waitAnim: Wait
@@ -277,7 +307,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   frameNum: 0
   cooldown: 0
-  loopAnim: 0
   lastFrame: 1
   enabledBehaviour: 0
   goLeft: 0
@@ -297,7 +326,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   frameNum: 0
   cooldown: 0
-  loopAnim: 0
   lastFrame: 1
   enabledBehaviour: 0
   jumpForce: 50
@@ -316,7 +344,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   frameNum: 0
   cooldown: 0
-  loopAnim: 1
   lastFrame: 1
   enabledBehaviour: 0
   fallAnim: 
@@ -334,9 +361,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   frameNum: 0
   cooldown: 0
-  loopAnim: 0
   lastFrame: 0
   enabledBehaviour: 1
+  goLeft: 0
+  icicleSpawnPoint: {fileID: 2590056764565829062}
   attackAnim: Attack
 --- !u!1 &6281997458381316374
 GameObject:

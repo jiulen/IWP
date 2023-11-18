@@ -19,8 +19,9 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
     [SerializeField] ControllerUI localControllerUI;
 
-    List<SpellFrameBehaviour> spellsPool = new();
-    [SerializeField] Transform spellsParent;
+    [SerializeField] List<SpellFrameBehaviour> spellsPool = new();
+    [SerializeField] Transform spellsPoolTransform;
+    [SerializeField] Transform spellsSpawnPoint;
     const int amtToPool = 5;
 
     public bool gameStarted = false;
@@ -322,8 +323,7 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
                     spell.GoToFrame();
                     if (spell.IsAnimationDone())
                     {
-                        spell.gameObject.SetActive(false);
-                        spell.activeSpell = false;
+                        ReturnPooledObject(spell);
                     }
 
                     ++spell.frameNum;
@@ -426,38 +426,54 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         //find target spell from pool
         foreach (SpellFrameBehaviour spell in spellsPool)
         {
-            if (!spell.activeSpell && spell.name == spellName)
+            if (!spell.activeSpell && spell.spellName == spellName)
             {
-                spell.gameObject.SetActive(true);
-
-                spell.activeSpell = true;
-                spell.enabledBehaviour = true;
-                spell.lastFrame = false;
-                spell.frameNum = 0;
+                ActivatePooledObject(spell);
 
                 return spell.gameObject;
             }
         }
 
-        GameObject newSpellObj = null;
-        SpellFrameBehaviour newSpell = null;
+        GameObject returnSpellObj = null;
+        SpellFrameBehaviour returnSpell = null;
 
         for (int i = 0; i < amtToPool; ++i)
         {
-            newSpellObj = PhotonNetwork.InstantiateRoomObject(spellName, spellsParent.position, Quaternion.identity);
-            newSpellObj.transform.SetParent(spellsParent);
+            GameObject newSpellObj = PhotonNetwork.InstantiateRoomObject(spellName, spellsSpawnPoint.position, Quaternion.identity);
+            newSpellObj.transform.SetParent(spellsPoolTransform);
 
-            newSpell = newSpellObj.GetComponent<SpellFrameBehaviour>();
+            SpellFrameBehaviour newSpell = newSpellObj.GetComponent<SpellFrameBehaviour>();
             spellsPool.Add(newSpell);
+
+            ReturnPooledObject(newSpell);
+
+            if (i == 0)
+            {
+                returnSpellObj = newSpellObj;
+                returnSpell = newSpell;
+            }
         }
 
-        newSpell.gameObject.SetActive(true);
+        ActivatePooledObject(returnSpell);
 
-        newSpell.activeSpell = true;
-        newSpell.enabledBehaviour = true;
-        newSpell.lastFrame = false;
-        newSpell.frameNum = 0;
+        return returnSpellObj;
+    }
 
-        return newSpellObj;
+    void ReturnPooledObject(SpellFrameBehaviour spell)
+    {
+        spell.activeSpell = false;
+        spell.enabledBehaviour = false;
+        spell.lastFrame = true;
+        spell.frameNum = 0;
+
+        spell.transform.position = spellsSpawnPoint.position;
+    }
+
+    void ActivatePooledObject(SpellFrameBehaviour spell)
+    {
+        spell.activeSpell = true;
+        spell.enabledBehaviour = true;
+        spell.lastFrame = false;
+        spell.frameNum = 0;
     }
 }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8284633437816278538}
   - component: {fileID: 4407625338390775543}
   - component: {fileID: 8644113453109778919}
-  - component: {fileID: 6419250137284841241}
+  - component: {fileID: 4298071726239255838}
   - component: {fileID: 8860571451282865106}
   - component: {fileID: 6739412367180406545}
   m_Layer: 8
@@ -122,12 +122,12 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!95 &4407625338390775543
 Animator:
   serializedVersion: 5
@@ -167,13 +167,13 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 6419250137284841241}
+  - {fileID: 4298071726239255838}
   - {fileID: 8860571451282865106}
   - {fileID: 6739412367180406545}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &6419250137284841241
+--- !u!114 &4298071726239255838
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -182,13 +182,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 6525039382373912121}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Script: {fileID: 11500000, guid: 8efc6b1d64977384eb3405357896c656, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 0
-  m_SynchronizeScale: 1
-  m_UseLocal: 1
+  m_PositionModel:
+    SynchronizeEnabled: 1
+    TeleportEnabled: 1
+    TeleportIfDistanceGreaterThan: 3
+    InterpolateOption: 0
+    InterpolateMoveTowardsSpeed: 1
+    InterpolateLerpSpeed: 1
+    ExtrapolateOption: 0
+    ExtrapolateSpeed: 1
+    ExtrapolateIncludingRoundTripTime: 1
+    ExtrapolateNumberOfStoredPositions: 1
+  m_RotationModel:
+    SynchronizeEnabled: 0
+    InterpolateOption: 1
+    InterpolateRotateTowardsSpeed: 180
+    InterpolateLerpSpeed: 5
+  m_ScaleModel:
+    SynchronizeEnabled: 1
+    InterpolateOption: 0
+    InterpolateMoveTowardsSpeed: 1
+    InterpolateLerpSpeed: 0
 --- !u!114 &8860571451282865106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,7 +220,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SynchronizeVelocity: 1
   m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 1
+  m_TeleportEnabled: 0
   m_TeleportIfDistanceGreaterThan: 3
 --- !u!114 &6739412367180406545
 MonoBehaviour:
@@ -220,8 +237,9 @@ MonoBehaviour:
   frameNum: 0
   cooldown: 0
   lastFrame: 0
-  enabledBehaviour: 1
-  spellType: 10
+  enabledBehaviour: 0
+  spellName: Icicle
+  activeSpell: 0
   startAnim: Start
   repeatableAnim: Repeatable
   hitAnim: Hit
