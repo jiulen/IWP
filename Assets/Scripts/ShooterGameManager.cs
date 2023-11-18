@@ -320,13 +320,13 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
             {
                 if (spell.activeSpell)
                 {
+                    ++spell.frameNum; //add frame first since start is -1
+
                     spell.GoToFrame();
                     if (spell.IsAnimationDone())
                     {
                         ReturnPooledObject(spell);
                     }
-
-                    ++spell.frameNum;
                 }
             }
 

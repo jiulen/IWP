@@ -22,6 +22,7 @@ public class SpellIcicle : SpellFrameBehaviour
                     AnimatorChangeAnimation(currentAnimName);
                     break;
                 case 17: //end start
+                    phase = 1;
                     break;
             }
         }
@@ -33,10 +34,8 @@ public class SpellIcicle : SpellFrameBehaviour
                     currentAnimName = repeatableAnim;
                     AnimatorChangeAnimation(currentAnimName);
                     break;
-                case 17: //end
-                    EndAnimation();
-
-                    rb.velocity = Vector2.zero;
+                case 17: //end repeatable
+                    phase = 2;
                     break;
             }
         }
