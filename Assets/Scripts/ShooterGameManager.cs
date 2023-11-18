@@ -464,7 +464,8 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         spell.activeSpell = false;
         spell.enabledBehaviour = false;
         spell.lastFrame = true;
-        spell.frameNum = 0;
+        spell.frameNum = -1;
+        spell.phase = 0;
 
         spell.transform.position = spellsSpawnPoint.position;
     }
@@ -474,6 +475,6 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         spell.activeSpell = true;
         spell.enabledBehaviour = true;
         spell.lastFrame = false;
-        spell.frameNum = 0;
+        spell.frameNum = -1;
     }
 }

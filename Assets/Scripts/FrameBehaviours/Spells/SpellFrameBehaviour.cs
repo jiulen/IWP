@@ -6,6 +6,10 @@ public class SpellFrameBehaviour : FrameBehaviour
 {
     public string spellName;
     public bool activeSpell = false;
+    public Vector3 spawnPos;
+
+    public int phase = 0;
+    public Vector3 moveDir = Vector3.zero;
 
     protected override void Awake()
     {

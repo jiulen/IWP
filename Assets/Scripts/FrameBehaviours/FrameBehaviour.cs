@@ -150,7 +150,14 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
 
     public void AnimatorSetFrame()
     {
-        timeInSeconds = frameNum / animationFPS;
+        if (frameNum < 0)
+        {
+            timeInSeconds = 0;
+        }
+        else
+        {
+            timeInSeconds = frameNum / animationFPS;
+        }
 
         animator.PlayInFixedTime(currentAnimName, sr.sortingLayerID, timeInSeconds);
     }

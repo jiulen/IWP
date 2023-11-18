@@ -19,17 +19,20 @@ public class PlayerIcicle : PlayerFrameBehaviour
                 currentAnimName = attackAnim;
                 AnimatorChangeAnimation(currentAnimName);
                 break;
-            case 17: //create icicle
+            case 17: //create icicle + end
                 GameObject icicleObj = ShooterGameManager.Instance.GetPooledSpell("Icicle");
 
-                icicleObj.transform.position = icicleSpawnPoint.position;
+                icicleObj.GetComponent<SpellFrameBehaviour>().spawnPos = icicleSpawnPoint.position;
                 icicleObj.transform.rotation = Quaternion.identity;
                 if (goLeft)
                 {
                     icicleObj.transform.localScale = new Vector3(-1, 1, 1);
                 }
-                break;
-            case 23: //end
+                else
+                {
+                    icicleObj.transform.localScale = new Vector3(1, 1, 1);
+                }
+
                 EndAnimation();
                 break;
         }
