@@ -447,13 +447,16 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
     public void TakeHit()
     {
-        currentFrameBehaviour.EndAnimation();
+        if (currentFrameBehaviour != null)
+        {
+            currentFrameBehaviour.EndAnimation();
+        }
 
         playerCurrentAction = PlayerActions.STUNNED;
         currentFrameBehaviour = playerStun;
 
-        currentFrameNum = 0;
+        currentFrameNum = -1;
 
-        currentFrameBehaviour.frameNum = 0;
+        currentFrameBehaviour.frameNum = -1;
     }
 }
