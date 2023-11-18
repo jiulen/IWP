@@ -22,8 +22,19 @@ public class PlayerIcicle : PlayerFrameBehaviour
             case 17: //create icicle + end
                 GameObject icicleObj = ShooterGameManager.Instance.GetPooledSpell("Icicle");
 
-                icicleObj.GetComponent<SpellFrameBehaviour>().spawnPos = icicleSpawnPoint.position;
+                SpellIcicle spellIcicle = icicleObj.GetComponent<SpellIcicle>();
+                spellIcicle.spawnPos = icicleSpawnPoint.position;
+                if (goLeft)
+                {
+                    spellIcicle.targetDir = Vector2.left;
+                }
+                else
+                {
+                    spellIcicle.targetDir = Vector2.right;
+                }
+
                 icicleObj.transform.rotation = Quaternion.identity;
+
                 if (goLeft)
                 {
                     icicleObj.transform.localScale = new Vector3(-1, 1, 1);

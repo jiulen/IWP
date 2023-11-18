@@ -189,7 +189,7 @@ MonoBehaviour:
     SynchronizeEnabled: 1
     TeleportEnabled: 1
     TeleportIfDistanceGreaterThan: 3
-    InterpolateOption: 0
+    InterpolateOption: 2
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 1
     ExtrapolateOption: 0
@@ -240,6 +240,11 @@ MonoBehaviour:
   enabledBehaviour: 0
   spellName: Icicle
   activeSpell: 0
+  spawnPos: {x: 0, y: 0, z: 0}
+  phase: 0
+  targetDir: {x: 0, y: 0}
+  icicleSpeed: 1
+  icicleCollider: {fileID: 17488593414969843}
   startAnim: Start
   repeatableAnim: Repeatable
   hitAnim: Hit

@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class SpellIcicle : SpellFrameBehaviour
 {
+    [SerializeField] float icicleSpeed;
+    [SerializeField] Collider2D icicleCollider;
+
     //Phases
     //0 is start, 1 is repeatable, 2 is hit
+
+    bool startPhase_1, startPhase_2;
 
     [SerializeField] string startAnim, repeatableAnim, hitAnim;
 
@@ -16,41 +21,59 @@ public class SpellIcicle : SpellFrameBehaviour
             switch (frameNum)
             {
                 case 0:
+                    icicleCollider.enabled = false;
+
                     gameObject.transform.position = spawnPos;
 
                     currentAnimName = startAnim;
                     AnimatorChangeAnimation(currentAnimName);
                     break;
                 case 17: //end start
+                    rb.velocity = targetDir * icicleSpeed;
+
+                    startPhase_1 = true;
                     phase = 1;
                     break;
             }
         }
         else if (phase == 1)
         {
-            switch (frameNum)
+            if (startPhase_1)
             {
-                case 0:
-                    currentAnimName = repeatableAnim;
-                    AnimatorChangeAnimation(currentAnimName);
-                    break;
-                case 17: //end repeatable
-                    phase = 2;
-                    break;
+                icicleCollider.enabled = true;
+
+                frameNum = 0;
+
+                currentAnimName = repeatableAnim;
+                AnimatorChangeAnimation(currentAnimName);
+
+                startPhase_1 = false;
+            }
+
+            if (frameNum > 63)
+            {
+                frameNum %= 64;
             }
         }
         else if (phase == 2)
         {
+            if (startPhase_1)
+            {
+                frameNum = 0;
+
+                startPhase_2 = false;
+            }
+
             switch (frameNum)
             {
                 case 0:
+                    icicleCollider.enabled = false;
+
                     currentAnimName = hitAnim;
                     AnimatorChangeAnimation(currentAnimName);
                     break;
-                case 17: //end
+                case 41: //end
                     EndAnimation();
-
-                    rb.velocity = Vector2.zero;
                     break;
             }
         }

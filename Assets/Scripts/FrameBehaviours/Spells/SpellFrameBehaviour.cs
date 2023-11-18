@@ -9,7 +9,7 @@ public class SpellFrameBehaviour : FrameBehaviour
     public Vector3 spawnPos;
 
     public int phase = 0;
-    public Vector3 moveDir = Vector3.zero;
+    public Vector2 targetDir = Vector3.zero;
 
     protected override void Awake()
     {
