@@ -76,6 +76,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
     PlayerRoll playerRoll;
     PlayerJump playerJump;
     PlayerFall playerFall;
+    PlayerStun playerStun;
+
     PlayerIcicle playerIcicle;
 
     #region IPunObservable implementation
@@ -163,6 +165,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
         playerRoll = GetComponent<PlayerRoll>();
         playerJump = GetComponent<PlayerJump>();
         playerFall = GetComponent<PlayerFall>();
+        playerStun = GetComponent<PlayerStun>();
+
         playerIcicle = GetComponent<PlayerIcicle>();
     }
 
@@ -443,6 +447,13 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
     public void TakeHit()
     {
+        currentFrameBehaviour.EndAnimation();
 
+        playerCurrentAction = PlayerActions.STUNNED;
+        currentFrameBehaviour = playerStun;
+
+        currentFrameNum = 0;
+
+        currentFrameBehaviour.frameNum = 0;
     }
 }

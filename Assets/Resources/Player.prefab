@@ -83,6 +83,7 @@ GameObject:
   - component: {fileID: 8345743297456637200}
   - component: {fileID: 6855151038211201459}
   - component: {fileID: 8160912622823031159}
+  - component: {fileID: 4474947036822240987}
   - component: {fileID: 7471432880383022299}
   m_Layer: 6
   m_Name: Player
@@ -182,6 +183,7 @@ MonoBehaviour:
   - {fileID: 8345743297456637200}
   - {fileID: 6855151038211201459}
   - {fileID: 8160912622823031159}
+  - {fileID: 4474947036822240987}
   - {fileID: 7471432880383022299}
   sceneViewId: 0
   InstantiationId: 0
@@ -347,6 +349,23 @@ MonoBehaviour:
   lastFrame: 1
   enabledBehaviour: 0
   fallAnim: 
+--- !u!114 &4474947036822240987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6281997457829084022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef586cd2018622540b102c2585ef99bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frameNum: 0
+  cooldown: 0
+  lastFrame: 0
+  enabledBehaviour: 1
+  stunAnim: Stun
 --- !u!114 &7471432880383022299
 MonoBehaviour:
   m_ObjectHideFlags: 0
