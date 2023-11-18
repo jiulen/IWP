@@ -445,7 +445,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
         isGrounded = grounded;
     }
 
-    public void TakeHit()
+    public void TakeHit(int knockbackIncrease, Vector2 knockbackForce)
     {
         if (currentFrameBehaviour != null)
         {

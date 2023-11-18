@@ -12,6 +12,10 @@ public class SpellFrameBehaviour : FrameBehaviour
     public int phase = 0;
     public Vector2 targetDir = Vector3.zero;
 
+    [SerializeField] protected int knockbackIncrease = 0;
+    [SerializeField] protected float knockbackForce = 0;
+    [SerializeField] protected Vector2 knockbackDirection = Vector2.right;
+
     public int ownerNum = -1;
 
     protected override void Awake()
