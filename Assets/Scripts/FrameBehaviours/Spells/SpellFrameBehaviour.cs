@@ -14,7 +14,7 @@ public class SpellFrameBehaviour : FrameBehaviour
 
     [SerializeField] protected int knockbackIncrease = 0;
     [SerializeField] protected float knockbackForce = 0;
-    [SerializeField] protected Vector2 knockbackDirection = Vector2.right;
+    public Vector2 knockbackDirection = Vector2.right;
 
     public int ownerNum = -1;
 

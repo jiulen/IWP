@@ -27,10 +27,12 @@ public class PlayerIcicle : PlayerFrameBehaviour
                 if (goLeft)
                 {
                     spellIcicle.targetDir = Vector2.left;
+                    spellIcicle.knockbackDirection = Vector2.left;
                 }
                 else
                 {
                     spellIcicle.targetDir = Vector2.right;
+                    spellIcicle.knockbackDirection = Vector2.right;
                 }
                 spellIcicle.ownerNum = playerController.playerNum;
 

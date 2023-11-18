@@ -243,6 +243,10 @@ MonoBehaviour:
   spawnPos: {x: 0, y: 0, z: 0}
   phase: 0
   targetDir: {x: 0, y: 0}
+  knockbackIncrease: 1
+  knockbackForce: 20
+  knockbackDirection: {x: 1, y: 0}
+  ownerNum: -1
   icicleSpeed: 1
   icicleCollider: {fileID: 17488593414969843}
   startAnim: Start
