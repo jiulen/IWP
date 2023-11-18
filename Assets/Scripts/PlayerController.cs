@@ -440,4 +440,9 @@ public class PlayerController : MonoBehaviour, IPunObservable
     {
         isGrounded = grounded;
     }
+
+    public void TakeHit()
+    {
+
+    }
 }

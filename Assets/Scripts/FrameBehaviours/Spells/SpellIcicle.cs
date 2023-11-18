@@ -57,7 +57,7 @@ public class SpellIcicle : SpellFrameBehaviour
         }
         else if (phase == 2)
         {
-            if (startPhase_1)
+            if (startPhase_2)
             {
                 frameNum = 0;
 
@@ -67,8 +67,6 @@ public class SpellIcicle : SpellFrameBehaviour
             switch (frameNum)
             {
                 case 0:
-                    icicleCollider.enabled = false;
-
                     currentAnimName = hitAnim;
                     AnimatorChangeAnimation(currentAnimName);
                     break;
@@ -79,5 +77,16 @@ public class SpellIcicle : SpellFrameBehaviour
         }
 
         AnimatorSetFrame();
+    }
+
+    protected override void HitPlayer(PlayerController playerController)
+    {
+        rb.velocity = Vector2.zero;
+        icicleCollider.enabled = false;
+
+        startPhase_2 = true;
+        phase = 2;
+
+
     }
 }
