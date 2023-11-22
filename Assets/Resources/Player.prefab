@@ -267,7 +267,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frameNum: 0
-  cooldown: 0
+  maxCooldown: -1
+  currentCooldown: -1
   lastFrame: 36
   enabledBehaviour: 0
   goLeft: 0
@@ -291,7 +292,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frameNum: 0
-  cooldown: 0
+  maxCooldown: -1
+  currentCooldown: -1
   lastFrame: 1
   enabledBehaviour: 0
   waitAnim: Wait
@@ -308,7 +310,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frameNum: 0
-  cooldown: 0
+  maxCooldown: -1
+  currentCooldown: -1
   lastFrame: 1
   enabledBehaviour: 0
   goLeft: 0
@@ -327,7 +330,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frameNum: 0
-  cooldown: 0
+  maxCooldown: -1
+  currentCooldown: -1
   lastFrame: 1
   enabledBehaviour: 0
   jumpForce: 50
@@ -345,7 +349,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frameNum: 0
-  cooldown: 0
+  maxCooldown: -1
+  currentCooldown: -1
   lastFrame: 1
   enabledBehaviour: 0
   fallAnim: 
@@ -362,7 +367,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frameNum: 0
-  cooldown: 0
+  maxCooldown: -1
+  currentCooldown: 1
   lastFrame: 0
   enabledBehaviour: 1
   stunAnim: Stun
@@ -379,7 +385,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frameNum: 0
-  cooldown: 0
+  maxCooldown: 42
+  currentCooldown: -1
   lastFrame: 0
   enabledBehaviour: 1
   goLeft: 0

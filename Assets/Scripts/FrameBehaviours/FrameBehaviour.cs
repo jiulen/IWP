@@ -14,7 +14,8 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
     protected string currentAnimName = "";
     protected string oldAnimName = "";
 
-    public int cooldown = 0;
+    public int maxCooldown = 1;
+    public int currentCooldown = 1;
 
     public bool lastFrame;
 
@@ -117,6 +118,8 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
     protected virtual void Awake()
     {
         syncedEnabledBehaviour = enabledBehaviour;
+
+        currentCooldown = -1;
     }
 
     private void FixedUpdate()

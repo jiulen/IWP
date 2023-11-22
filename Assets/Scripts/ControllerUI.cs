@@ -46,20 +46,25 @@ public class ControllerUI : MonoBehaviour
         if (forceBurst)
         {
             selectNew = (selectedAction != PlayerController.PlayerActions.BURST) && (selectedAction != PlayerController.PlayerActions.SKIP);
+            bool selectedFirst = false;
 
             foreach (KeyValuePair<PlayerController.PlayerActions, Toggle> keyValuePair in controllerObjects)
             {
                 if (keyValuePair.Key == PlayerController.PlayerActions.BURST || keyValuePair.Key == PlayerController.PlayerActions.SKIP)
                 {
                     keyValuePair.Value.gameObject.SetActive(true);
-                    if (selectNew)
+                    if (selectNew && !selectedFirst)
                     {
                         keyValuePair.Value.isOn = true;
+                        selectedFirst = true;
+
+                        selectedAction = keyValuePair.Key;
                     }
                 }
                 else
                 {
                     keyValuePair.Value.gameObject.SetActive(false);
+                    keyValuePair.Value.isOn = false;
                 }
             }
         }
@@ -73,6 +78,7 @@ public class ControllerUI : MonoBehaviour
                 if (unavailableActions.Contains(keyValuePair.Key))
                 {
                     keyValuePair.Value.gameObject.SetActive(false);
+                    keyValuePair.Value.isOn = false;
                 }
                 else
                 {
@@ -82,6 +88,8 @@ public class ControllerUI : MonoBehaviour
                     {
                         keyValuePair.Value.isOn = true;
                         selectedFirst = true;
+
+                        selectedAction = keyValuePair.Key;
                     }
                 }
             }

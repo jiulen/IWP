@@ -80,6 +80,9 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
     PlayerIcicle playerIcicle;
 
+    //Store attacks for their cooldowns
+    Dictionary<PlayerActions, PlayerFrameBehaviour> playerAttacks = new();
+
     #region IPunObservable implementation
 
     //For syncing data via IPunObservable
@@ -168,6 +171,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
         playerStun = GetComponent<PlayerStun>();
 
         playerIcicle = GetComponent<PlayerIcicle>();
+
+        playerAttacks.Add(PlayerActions.ICICLE, playerIcicle);
     }
 
     void SetPlayerInfo()
@@ -239,6 +244,15 @@ public class PlayerController : MonoBehaviour, IPunObservable
             }
             //Add skip (skip only for force burst)
             unavailableActions.Add(PlayerActions.SKIP);
+
+            //Check attacks
+            foreach (KeyValuePair<PlayerActions, PlayerFrameBehaviour> playerAttack in playerAttacks)
+            {
+                if (playerAttack.Value.currentCooldown >= 0)
+                {
+                    unavailableActions.Add(playerAttack.Key);
+                }
+            }
         }
     }
 
@@ -388,6 +402,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
                     currentFrameBehaviour.enabledBehaviour = true;
                     currentFrameBehaviour.lastFrame = false;
+                    currentFrameBehaviour.currentCooldown = currentFrameBehaviour.maxCooldown;
                 }
             }
         }
@@ -403,6 +418,11 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
                 currentFrameBehaviour = null;
             }
+        }
+
+        foreach (KeyValuePair<PlayerActions, PlayerFrameBehaviour> playerAttack in playerAttacks)
+        {
+            --playerAttack.Value.currentCooldown;
         }
     }
 
