@@ -11,15 +11,19 @@ public class CameraController : MonoBehaviour
 
     [SerializeField] float minSize, maxSize;
 
-    [SerializeField] Camera controlledCamera;
-
-    [SerializeField] Vector3 cameraOffset;
+    Camera controlledCamera;
 
     float nextCameraSize;
     Vector2 nextCameraPosition;
 
+    [SerializeField] float screenRatio;
+    [SerializeField] float paddingPercentAll;
+    [SerializeField] float paddingPercentY;
+
     private void Awake()
     {
+        controlledCamera = GetComponent<Camera>();
+
         CalculateCameraLocations();
         MoveCameraInstant();
     }
@@ -101,25 +105,25 @@ public class CameraController : MonoBehaviour
         averageCenter = totalPositions / targetsTransforms.Count;
 
         float ratioX, ratioY;
-        ratioX = targetBounds.extents.x / levelBounds.bounds.extents.x;
-        ratioY = targetBounds.extents.y / levelBounds.bounds.extents.y;
-
-        float extents = 0;
-        float lerpPercent = 0;
+        ratioX = targetBounds.extents.x * screenRatio;
+        ratioY = targetBounds.extents.y;
 
         if (ratioX > ratioY)
         {
-            extents = Mathf.Min(targetBounds.extents.x, levelBounds.bounds.extents.x);
-            lerpPercent = Mathf.InverseLerp(0, levelBounds.bounds.extents.x, extents);
+            nextCameraSize = targetBounds.extents.x * screenRatio;
+            nextCameraSize *= 1 + paddingPercentAll;
+            nextCameraSize = Mathf.Clamp(nextCameraSize, minSize, maxSize);
         }
         else
         {
-            extents = Mathf.Min(targetBounds.extents.y, levelBounds.bounds.extents.y);
-            lerpPercent = Mathf.InverseLerp(0, levelBounds.bounds.extents.y, extents);
+            nextCameraSize = targetBounds.extents.y;
+            nextCameraSize *= 1 + paddingPercentAll;
+            nextCameraSize = Mathf.Clamp(nextCameraSize, minSize, maxSize);
         }
 
-        nextCameraSize = Mathf.Lerp(minSize, maxSize, lerpPercent);
+        float minYSize = targetBounds.extents.y * (1 + paddingPercentY);
+        nextCameraSize = Mathf.Max(nextCameraSize, minYSize);
 
-        nextCameraPosition = new Vector3(averageCenter.x, averageCenter.y) + cameraOffset;
+        nextCameraPosition = new Vector3(averageCenter.x, averageCenter.y);
     }
 }
