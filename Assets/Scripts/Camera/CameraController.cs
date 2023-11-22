@@ -18,6 +18,12 @@ public class CameraController : MonoBehaviour
     float nextCameraSize;
     Vector2 nextCameraPosition;
 
+    private void Awake()
+    {
+        CalculateCameraLocations();
+        MoveCameraInstant();
+    }
+
     private void LateUpdate()
     {
         CalculateCameraLocations();
@@ -43,6 +49,28 @@ public class CameraController : MonoBehaviour
         if (currentSize != nextCameraSize)
         {
             controlledCamera.orthographicSize = Mathf.MoveTowards(currentSize, nextCameraSize, updateSizeSpeed * Time.deltaTime);
+        }
+    }
+
+    void MoveCameraInstant()
+    {
+        Vector2 currentPosition = transform.position;
+
+        if (currentPosition != nextCameraPosition)
+        {
+            Vector3 targetPosition;
+            targetPosition.x = nextCameraPosition.x;
+            targetPosition.y = nextCameraPosition.y;
+            targetPosition.z = transform.position.z;
+
+            transform.position = targetPosition;
+        }
+
+        float currentSize = controlledCamera.orthographicSize;
+
+        if (currentSize != nextCameraSize)
+        {
+            controlledCamera.orthographicSize = nextCameraSize;
         }
     }
 
@@ -72,11 +100,26 @@ public class CameraController : MonoBehaviour
 
         averageCenter = totalPositions / targetsTransforms.Count;
 
-        float extents = targetBounds.extents.x + targetBounds.extents.y;
-        float lerpPercent = Mathf.InverseLerp(0, levelBounds.bounds.extents.x + levelBounds.bounds.extents.y, extents);
+        float ratioX, ratioY;
+        ratioX = targetBounds.extents.x / levelBounds.bounds.extents.x;
+        ratioY = targetBounds.extents.y / levelBounds.bounds.extents.y;
+
+        float extents = 0;
+        float lerpPercent = 0;
+
+        if (ratioX > ratioY)
+        {
+            extents = Mathf.Min(targetBounds.extents.x, levelBounds.bounds.extents.x);
+            lerpPercent = Mathf.InverseLerp(0, levelBounds.bounds.extents.x, extents);
+        }
+        else
+        {
+            extents = Mathf.Min(targetBounds.extents.y, levelBounds.bounds.extents.y);
+            lerpPercent = Mathf.InverseLerp(0, levelBounds.bounds.extents.y, extents);
+        }
 
         nextCameraSize = Mathf.Lerp(minSize, maxSize, lerpPercent);
 
-        nextCameraPosition = new Vector3(averageCenter.x, averageCenter.y);
+        nextCameraPosition = new Vector3(averageCenter.x, averageCenter.y) + cameraOffset;
     }
 }
