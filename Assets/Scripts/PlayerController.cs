@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
     [SerializeField] PlayerInfoUI playerInfoUI;
     public ControllerUI controllerUI;
 
+    public Player photonPlayer;
     public int playerNum;
 
     public SpriteRenderer playerSr;
@@ -183,6 +184,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
             {
                 if ((int)playerNumber == playerNum)
                 {
+                    photonPlayer = p;
+
                     playerInfoUI.SetPlayerName(p.NickName);
 
                     if (p.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_SKIN, out object playerSkinID))
@@ -251,8 +254,6 @@ public class PlayerController : MonoBehaviour, IPunObservable
                 if (playerAttack.Value.currentCooldown >= 0)
                 {
                     unavailableActions.Add(playerAttack.Key);
-                    Debug.Log("cd " + playerAttack.Key);
-                    Debug.Log(playerAttack.Value.currentCooldown);
                 }
             }
         }

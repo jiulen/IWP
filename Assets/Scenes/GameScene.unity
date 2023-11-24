@@ -3720,6 +3720,7 @@ MonoBehaviour:
   spellsSpawnPoint: {fileID: 2077680169}
   gameStarted: 0
   gamePaused: 1
+  gameOver: 0
 --- !u!114 &547240155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7933,6 +7934,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1353430501}
   - component: {fileID: 1353430502}
+  - component: {fileID: 1353430503}
   m_Layer: 0
   m_Name: LevelBounds
   m_TagString: Untagged
@@ -7979,8 +7981,20 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 17.777779, y: 10}
+  m_Size: {x: 18, y: 12}
   m_EdgeRadius: 0
+--- !u!114 &1353430503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1353430500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf46c946c10aa54482b2f14ad9fdb59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1383787933
 PrefabInstance:
   m_ObjectHideFlags: 0

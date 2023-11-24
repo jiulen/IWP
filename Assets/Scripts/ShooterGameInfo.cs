@@ -14,6 +14,8 @@ public class ShooterGameInfo
     public const string PLAYER_SHOW_CONTROLS = "PlayerShowControls";
     public const string PLAYER_GROUNDED = "PlayerGrounded";
 
+    public const string PLAYER_DEAD = "PlayerDead";
+
     public static Color GetColor(int colorChoice)
     {
         switch (colorChoice)

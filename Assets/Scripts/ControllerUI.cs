@@ -77,8 +77,6 @@ public class ControllerUI : MonoBehaviour
             {
                 if (unavailableActions.Contains(keyValuePair.Key))
                 {
-                    Debug.Log(keyValuePair.Key);
-
                     keyValuePair.Value.gameObject.SetActive(false);
                     keyValuePair.Value.isOn = false;
                 }

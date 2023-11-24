@@ -26,6 +26,7 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
     public bool gameStarted = false;
     public bool gamePaused = true;
+    public bool gameOver = false;
     int currentFrame;
 
     //Room properties
@@ -117,11 +118,23 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
+        if (gameOver)
+            return;
+
         CheckEndOfGame();
     }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
+        if (gameOver)
+            return;
+
+        //check if any player dead (out of stage)
+        if (changedProps.ContainsKey(ShooterGameInfo.PLAYER_DEAD))
+        {
+            CheckEndOfGame();
+        }
+
         //check when to show controls
         if (targetPlayer.IsLocal)
         {
@@ -163,7 +176,8 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
                 Hashtable playerInitProps = new Hashtable() { { ShooterGameInfo.PLAYER_SELECTED_ACTION, (int)PlayerController.PlayerActions.NONE },
                                                               { ShooterGameInfo.PLAYER_FLIP, false },
                                                               { ShooterGameInfo.PLAYER_SHOW_CONTROLS, true },
-                                                              { ShooterGameInfo.PLAYER_GROUNDED, true} };
+                                                              { ShooterGameInfo.PLAYER_GROUNDED, true },
+                                                              { ShooterGameInfo.PLAYER_DEAD, false}  };
                 foreach (Player p in PhotonNetwork.PlayerList)
                 {
                     p.SetCustomProperties(playerInitProps);
@@ -286,17 +300,37 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
     private void CheckEndOfGame() //TODO
     {
         bool playerDead = false;
-        string winner = "";
-        bool draw = true;
+        string winner = ""; //if draw then winner will be ""
+
+        if (PhotonNetwork.PlayerList.Length == 1)
+        {
+            winner = PhotonNetwork.PlayerList[0].NickName;
+            playerDead = true;
+        }
+        else
+        {
+            foreach (Player p in PhotonNetwork.PlayerList)
+            {
+                if (p.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_DEAD, out object isDead))
+                {
+                    if (!(bool)isDead)
+                    {
+                        winner = p.NickName;
+                    }
+                    else
+                    {
+                        playerDead = true;
+                    }
+                }
+            }
+        }
 
         if (playerDead)
         {
-            if (PhotonNetwork.IsMasterClient)
-            {
-                StopAllCoroutines();
-            }
+            gameOver = true;
 
-            StartCoroutine(EndOfGame(winner, draw));
+            if (winner != "") Debug.Log($"Game Over : {winner} wins");
+            else Debug.Log("Game Over : Draw");
         }
     }
 
@@ -352,7 +386,10 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
             if (localPlayerController.IsIdle() || otherPlayerController.IsIdle())
             {
-                OnPauseGame();
+                if (!gameOver)
+                {
+                    OnPauseGame();
+                }
             }
         }
     }
