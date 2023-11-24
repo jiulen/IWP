@@ -252,7 +252,7 @@ MonoBehaviour:
   currentFrameNum: 0
   burstMeterValue: 0
   knockbackMultiplier: 0
-  airOptionsAvail: 2
+  airOptionsAvail: 4
   allowMove: 0
 --- !u!114 &7357678559156546124
 MonoBehaviour:

@@ -29,17 +29,17 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
     const byte ENABLED_FLAG = 1 << 0;
     const byte FRAME_NUM_FLAG = 1 << 1;
     const byte CUREENT_ANIM_FLAG = 1 << 2;
+    const byte CURRENT_COOLDOWN_FLAG = 1 << 3;
 
     bool syncedEnabledBehaviour = true;
     int syncedFrameNum = 0;
     string syncedAnimName = "";
+    int syncedCooldown = 0;
 
     byte syncDataFlags;
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        //if (!enabledBehaviour) return;
-
         if (stream.IsWriting)
         {
             syncDataFlags = 0;
@@ -57,6 +57,10 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
             {
                 syncDataFlags |= CUREENT_ANIM_FLAG;
             }
+            if (syncedCooldown != currentCooldown)
+            {
+                syncDataFlags |= CURRENT_COOLDOWN_FLAG;
+            }
 
             //Send data flags
             stream.SendNext(syncDataFlags);
@@ -66,6 +70,12 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
             {
                 stream.SendNext(enabledBehaviour);
                 syncedEnabledBehaviour = enabledBehaviour;
+            }
+
+            if ((syncDataFlags & CURRENT_COOLDOWN_FLAG) != 0)
+            {
+                stream.SendNext(currentCooldown);
+                syncedCooldown = currentCooldown;
             }
 
             if (enabledBehaviour)
@@ -91,6 +101,11 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
             if ((syncDataFlags & ENABLED_FLAG) != 0)
             {
                 enabledBehaviour = (bool)stream.ReceiveNext();
+            }
+
+            if ((syncDataFlags & CURRENT_COOLDOWN_FLAG) != 0)
+            {
+                currentCooldown = (int)stream.ReceiveNext();
             }
 
             if (enabledBehaviour)

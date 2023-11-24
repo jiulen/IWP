@@ -64,8 +64,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
     //Player stats
     public float burstMeterValue = 0;
     public int knockbackMultiplier = 0;
-    public int airOptionsAvail = 2;
-    public const int airOptionsMax = 2;
+    public int airOptionsAvail = 4;
+    public const int airOptionsMax = 4;
 
     public bool allowMove = false;
 
@@ -251,6 +251,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
                 if (playerAttack.Value.currentCooldown >= 0)
                 {
                     unavailableActions.Add(playerAttack.Key);
+                    Debug.Log("cd " + playerAttack.Key);
+                    Debug.Log(playerAttack.Value.currentCooldown);
                 }
             }
         }
@@ -456,7 +458,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
     {
         if (isGrounded)
         {
-            if (airOptionsAvail < 2) airOptionsAvail = 2;
+            if (airOptionsAvail < airOptionsMax) airOptionsAvail = airOptionsMax;
         }
     }
 
