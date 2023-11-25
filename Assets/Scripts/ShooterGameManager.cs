@@ -33,6 +33,10 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
     const string GAME_STARTED = "GameStarted";
     const string GAME_PAUSED = "GamePaused";
 
+    //Game over stuff
+    [SerializeField] Animator gameOverSlide, gameOverFade;
+    [SerializeField] TMP_Text winnerText;
+
     public void Awake()
     {
         Instance = this;
@@ -76,21 +80,18 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         base.OnDisable();
     }
 
-    private IEnumerator EndOfGame(string winner, bool draw = false) //TODO
+    private IEnumerator EndOfGame() //TODO
     {
-        float timer = 2.0f;
+        gameOverSlide.Play("GameOverSlide");
+
+        yield return new WaitForSeconds(0.5f);
+
+        gameOverFade.Play("GameOverFade");
+
+        float timer = 3.5f;
 
         while (timer > 0.0f)
         {
-            if (!draw)
-            {
-                InfoText.text = string.Format("{0} wins", winner);
-            }
-            else
-            {
-                InfoText.text = "DRAW";
-            }
-
             yield return new WaitForEndOfFrame();
 
             timer -= Time.deltaTime;
@@ -106,7 +107,7 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
     public override void OnLeftRoom()
     {
-        PhotonNetwork.Disconnect();
+        UnityEngine.SceneManagement.SceneManager.LoadScene("LobbyScene");
     }
 
     public override void OnMasterClientSwitched(Player newMasterClient)
@@ -329,8 +330,18 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         {
             gameOver = true;
 
-            if (winner != "") Debug.Log($"Game Over : {winner} wins");
-            else Debug.Log("Game Over : Draw");
+            if (winner != "")
+            {
+                Debug.Log($"Game Over : {winner} wins");
+                winnerText.text = winner + " WINS";
+            }
+            else
+            {
+                Debug.Log("Game Over : Draw");
+                winnerText.text = "DRAW?";
+            }
+
+            StartCoroutine(EndOfGame());
         }
     }
 

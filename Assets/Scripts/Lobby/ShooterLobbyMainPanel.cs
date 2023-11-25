@@ -68,6 +68,11 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
         {
             PlayerNameInput.text = "Guest " + Random.Range(1000, 10000);
         }
+
+        if (PhotonNetwork.IsConnected)
+        {
+            SetActivePanel(SelectionPanel.name);
+        }
     }
 
     #endregion

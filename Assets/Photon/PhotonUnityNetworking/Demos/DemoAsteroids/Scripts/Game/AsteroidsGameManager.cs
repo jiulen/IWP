@@ -120,7 +120,7 @@ namespace Photon.Pun.Demo.Asteroids
 
         public override void OnLeftRoom()
         {
-            PhotonNetwork.Disconnect();
+            UnityEngine.SceneManagement.SceneManager.LoadScene("DemoAsteroids-LobbyScene");
         }
 
         public override void OnMasterClientSwitched(Player newMasterClient)
