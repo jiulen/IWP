@@ -87,6 +87,6 @@ public class SpellIcicle : SpellFrameBehaviour
         startPhase_2 = true;
         phase = 2;
 
-        playerController.TakeHit(knockbackIncrease, knockbackForce * knockbackDirection);
+        playerController.TakeHit(knockbackIncrease, knockbackForce * knockbackDirection, 6);
     }
 }

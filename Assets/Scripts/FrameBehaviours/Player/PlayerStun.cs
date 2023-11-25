@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerStun : PlayerFrameBehaviour
 {
+    public int stunDuration;
+
     [SerializeField] string stunAnim;
 
     public override void GoToFrame()
@@ -14,9 +16,13 @@ public class PlayerStun : PlayerFrameBehaviour
                 currentAnimName = stunAnim;
                 AnimatorChangeAnimation(currentAnimName);
                 break;
-            case 17: //end
-                EndAnimation();
-                break;
+        }
+
+        if (frameNum >= stunDuration && ShooterGameManager.Instance.currentFrame % 6 == 5)
+        {
+            Debug.Log(ShooterGameManager.Instance.currentFrame);
+
+            EndAnimation();
         }
 
         AnimatorSetFrame();

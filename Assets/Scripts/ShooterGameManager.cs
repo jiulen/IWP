@@ -27,7 +27,7 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
     public bool gameStarted = false;
     public bool gamePaused = true;
     public bool gameOver = false;
-    int currentFrame;
+    public int currentFrame;
 
     //Room properties
     const string GAME_STARTED = "GameStarted";
@@ -332,12 +332,10 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
             if (winner != "")
             {
-                Debug.Log($"Game Over : {winner} wins");
                 winnerText.text = winner + " WINS";
             }
             else
             {
-                Debug.Log("Game Over : Draw");
                 winnerText.text = "DRAW?";
             }
 

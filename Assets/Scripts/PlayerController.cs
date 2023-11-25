@@ -468,7 +468,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
         isGrounded = grounded;
     }
 
-    public void TakeHit(int knockbackIncrease, Vector2 knockbackForce)
+    public void TakeHit(int knockbackIncrease, Vector2 knockbackForce, int stunDuration)
     {
         if (currentFrameBehaviour != null)
         {
@@ -476,6 +476,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
         }
 
         playerCurrentAction = PlayerActions.STUNNED;
+        playerStun.stunDuration = stunDuration;
         currentFrameBehaviour = playerStun;
 
         currentFrameNum = -1;
