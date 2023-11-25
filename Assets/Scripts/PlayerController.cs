@@ -81,6 +81,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
     PlayerIcicle playerIcicle;
 
+    PlayerBlock playerBlock;
+
     //Store attacks for their cooldowns
     Dictionary<PlayerActions, PlayerFrameBehaviour> playerAttacks = new();
 
@@ -173,6 +175,9 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
         playerIcicle = GetComponent<PlayerIcicle>();
 
+        playerBlock = GetComponent<PlayerBlock>();
+
+        playerAttacks.Add(PlayerActions.BLOCK, playerBlock);
         playerAttacks.Add(PlayerActions.ICICLE, playerIcicle);
     }
 
@@ -240,7 +245,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
                 unavailableActions.Add(PlayerActions.FALL);
             }
 
-            //Check burst
+            //Check burst (cant burst without meter)
             if (!CanBurst())
             {
                 unavailableActions.Add(PlayerActions.BURST);
@@ -248,7 +253,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
             //Add skip (skip only for force burst)
             unavailableActions.Add(PlayerActions.SKIP);
 
-            //Check attacks
+            //Check attacks (cant use attacks on cooldown)
             foreach (KeyValuePair<PlayerActions, PlayerFrameBehaviour> playerAttack in playerAttacks)
             {
                 if (playerAttack.Value.currentCooldown >= 0)
@@ -353,6 +358,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
                 //Defense
 
                 case PlayerActions.BLOCK:
+                    currentFrameBehaviour = playerBlock;
                     break;
 
                 case PlayerActions.BURST:
@@ -427,6 +433,13 @@ public class PlayerController : MonoBehaviour, IPunObservable
         {
             --playerAttack.Value.currentCooldown;
         }
+
+        //update spellBlock
+        if (playerBlock.spellBlock.activeSpell)
+        {
+            playerBlock.spellBlock.GoToFrame();
+            ++playerBlock.spellBlock.frameNum;
+        }
     }
 
     void ApplyAirResistance()
@@ -470,6 +483,19 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
     public void TakeHit(int knockbackIncrease, Vector2 knockbackForce, int stunDuration)
     {
+        float finalKnockbackMultiplier = (1 + knockbackMultiplier / 100f);
+        int finalKnockbackIncrease = knockbackIncrease;
+
+        if (playerCurrentAction == PlayerActions.BLOCK && !playerBlock.blockedAttack)
+        {
+            playerBlock.blockedAttack = true;
+            playerBlock.ShrinkSpellBlock();
+
+            stunDuration = 6; //reduce stun duration to 6 frames (6 frames is least possible stun time)
+            finalKnockbackMultiplier *= 0.25f; //only take 25% of knockback
+            finalKnockbackIncrease /= 2; //only take 50% of knockback increase (rounded down)
+        }
+
         if (currentFrameBehaviour != null)
         {
             currentFrameBehaviour.EndAnimation();
@@ -483,7 +509,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
         currentFrameBehaviour.frameNum = -1;
 
-        rb.AddForce(knockbackForce * (1 + knockbackMultiplier / 100f) , ForceMode2D.Impulse);
-        knockbackMultiplier += knockbackIncrease;
+        rb.AddForce(finalKnockbackMultiplier * knockbackForce, ForceMode2D.Impulse);
+        knockbackMultiplier += finalKnockbackIncrease;
     }
 }

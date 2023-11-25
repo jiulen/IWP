@@ -20,8 +20,6 @@ public class PlayerStun : PlayerFrameBehaviour
 
         if (frameNum >= stunDuration && ShooterGameManager.Instance.currentFrame % 6 == 5)
         {
-            Debug.Log(ShooterGameManager.Instance.currentFrame);
-
             EndAnimation();
         }
 

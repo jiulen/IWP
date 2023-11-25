@@ -4,38 +4,45 @@ using UnityEngine;
 
 public class PlayerBlock: PlayerFrameBehaviour
 {
-    public bool goLeft = false;
-    public bool forwards = true;
-    public bool firstHalf = true; //check if walk cycle is first or second half
+    public bool blockedAttack;
 
-    [SerializeField] float walkForce;
-    [SerializeField] string walkForwardAnim_1, walkForwardAnim_2, walkBackwordAnim_1, walkBackwordAnim_2;
+    public SpellBlock spellBlock;
+
+    [SerializeField] string blockAnim; //can use same anim as wait
 
     public override void GoToFrame()
     {
         switch (frameNum)
         {
             case 0:
-                if (forwards)
-                {
-                    currentAnimName = firstHalf ? walkForwardAnim_1 : walkForwardAnim_2;
-                }
-                else
-                {
-                    currentAnimName = firstHalf ? walkBackwordAnim_1 : walkBackwordAnim_2;
-                }
+                blockedAttack = false;
+
+                //reset spellBlock to start
+                spellBlock.activeSpell = true;
+                spellBlock.enabledBehaviour = true;
+                spellBlock.lastFrame = false;
+                spellBlock.frameNum = 0;
+                spellBlock.phase = 0;
+
+                currentAnimName = blockAnim;
                 AnimatorChangeAnimation(currentAnimName);
-
-                Vector2 walkDir = Vector2.right * (goLeft ? -1 : 1);
-                rb.AddForce(walkDir * walkForce, ForceMode2D.Impulse);
                 break;
-            case 17: //end
-                EndAnimation();
+            case 59: //end
+                if (!blockedAttack)
+                {
+                    ShrinkSpellBlock();
 
-                rb.velocity = Vector2.zero;
+                    EndAnimation();
+                }
                 break;
         }
 
         AnimatorSetFrame();
+    }
+
+    public void ShrinkSpellBlock()
+    {
+        spellBlock.phase = 1;
+        spellBlock.startPhase_1 = true;
     }
 }

@@ -86,6 +86,7 @@ GameObject:
   - component: {fileID: 8160912622823031159}
   - component: {fileID: 4474947036822240987}
   - component: {fileID: 7471432880383022299}
+  - component: {fileID: 2923208727740288504}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -186,6 +187,8 @@ MonoBehaviour:
   - {fileID: 8160912622823031159}
   - {fileID: 4474947036822240987}
   - {fileID: 7471432880383022299}
+  - {fileID: 2923208727740288504}
+  - {fileID: 1289158970875237763}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -370,8 +373,9 @@ MonoBehaviour:
   frameNum: 0
   maxCooldown: -1
   currentCooldown: 1
-  lastFrame: 0
-  enabledBehaviour: 1
+  lastFrame: 1
+  enabledBehaviour: 0
+  stunDuration: 0
   stunAnim: Stun
 --- !u!114 &7471432880383022299
 MonoBehaviour:
@@ -386,13 +390,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frameNum: 0
-  maxCooldown: 42
+  maxCooldown: 24
   currentCooldown: -1
-  lastFrame: 0
-  enabledBehaviour: 1
+  lastFrame: 1
+  enabledBehaviour: 0
   goLeft: 0
   icicleSpawnPoint: {fileID: 2590056764565829062}
   attackAnim: Attack
+--- !u!114 &2923208727740288504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6281997457829084022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c0260978afeef41a647fb5897ae58d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frameNum: 0
+  maxCooldown: 90
+  currentCooldown: -1
+  lastFrame: 1
+  enabledBehaviour: 0
+  blockedAttack: 0
+  spellBlock: {fileID: 1289158970875237763}
+  blockAnim: Wait
 --- !u!1 &6281997458381316374
 GameObject:
   m_ObjectHideFlags: 0
@@ -524,8 +548,9 @@ GameObject:
   - component: {fileID: 7481419589976823938}
   - component: {fileID: 7683863930940042995}
   - component: {fileID: 6623544200195157695}
+  - component: {fileID: 1289158970875237763}
   m_Layer: 0
-  m_Name: Bubble
+  m_Name: BlockBubble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -618,3 +643,32 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+--- !u!114 &1289158970875237763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6906897362371993381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80d849d7a7978b4479fe15bd9ac27b8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frameNum: 0
+  maxCooldown: 1
+  currentCooldown: 1
+  lastFrame: 0
+  enabledBehaviour: 1
+  spellName: 
+  activeSpell: 0
+  spawnPos: {x: 0, y: 0, z: 0}
+  phase: 0
+  targetDir: {x: 0, y: 0}
+  knockbackIncrease: 0
+  knockbackForce: 0
+  knockbackDirection: {x: 1, y: 0}
+  ownerNum: -1
+  startPhase_1: 0
+  blockingAnim: Blocking
+  shrinkAnim: Shrink

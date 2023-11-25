@@ -27,7 +27,7 @@ public class SpellFrameBehaviour : FrameBehaviour
         animator = GetComponent<Animator>();
     }
 
-    protected void OnTriggerEnter2D(Collider2D collision)
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if (!PhotonNetwork.IsMasterClient)
             return;
