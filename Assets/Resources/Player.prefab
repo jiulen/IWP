@@ -319,6 +319,7 @@ MonoBehaviour:
   lastFrame: 1
   enabledBehaviour: 0
   goLeft: 0
+  rollGravScale: 0.25
   rollForce: 65
   rollAnim: Roll
 --- !u!114 &6855151038211201459

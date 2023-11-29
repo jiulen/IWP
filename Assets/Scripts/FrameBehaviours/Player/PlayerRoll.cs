@@ -6,6 +6,8 @@ public class PlayerRoll : PlayerFrameBehaviour
 {
     public bool goLeft = false;
 
+    [SerializeField] float rollGravScale;
+
     [SerializeField] float rollForce;
     [SerializeField] string rollAnim;
 
@@ -21,6 +23,8 @@ public class PlayerRoll : PlayerFrameBehaviour
 
                 Vector2 rollDir = Vector2.right * (goLeft ? -1 : 1);
                 rb.AddForce(rollDir * rollForce, ForceMode2D.Impulse);
+
+                rb.gravityScale = rollGravScale;
                 break;
             case 23: //end
                 EndAnimation();
@@ -30,6 +34,13 @@ public class PlayerRoll : PlayerFrameBehaviour
         }
 
         AnimatorSetFrame();
+    }
+
+    public override void EndAnimation()
+    {
+        base.EndAnimation();
+
+        rb.gravityScale = 1;
     }
 }
 
