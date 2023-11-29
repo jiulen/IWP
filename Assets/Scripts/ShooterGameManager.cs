@@ -52,7 +52,8 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         //Notify ready
         Hashtable props = new()
         {
-            {ShooterGameInfo.PLAYER_LOADED_LEVEL, true}
+            {ShooterGameInfo.PLAYER_LOADED_LEVEL, true},
+            {ShooterGameInfo.PLAYER_DEAD, false}
         };
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
 
@@ -80,7 +81,7 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         base.OnDisable();
     }
 
-    private IEnumerator EndOfGame() //TODO
+    private IEnumerator EndOfGame()
     {
         gameOverSlide.Play("GameOverSlide");
 
@@ -177,8 +178,7 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
                 Hashtable playerInitProps = new Hashtable() { { ShooterGameInfo.PLAYER_SELECTED_ACTION, (int)PlayerController.PlayerActions.NONE },
                                                               { ShooterGameInfo.PLAYER_FLIP, false },
                                                               { ShooterGameInfo.PLAYER_SHOW_CONTROLS, true },
-                                                              { ShooterGameInfo.PLAYER_GROUNDED, true },
-                                                              { ShooterGameInfo.PLAYER_DEAD, false}  };
+                                                              { ShooterGameInfo.PLAYER_GROUNDED, true } };
                 foreach (Player p in PhotonNetwork.PlayerList)
                 {
                     p.SetCustomProperties(playerInitProps);
