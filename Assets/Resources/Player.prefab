@@ -281,7 +281,7 @@ MonoBehaviour:
   goLeft: 0
   forwards: 1
   firstHalf: 1
-  walkForce: 15
+  walkForce: 20
   walkForwardAnim_1: WalkForward1
   walkForwardAnim_2: WalkForward2
   walkBackwordAnim_1: WalkBackward1
@@ -323,7 +323,7 @@ MonoBehaviour:
   enabledBehaviour: 0
   goLeft: 0
   rollGravScale: 0.25
-  rollForce: 65
+  rollForce: 50
   rollAnim: Roll
 --- !u!114 &6855151038211201459
 MonoBehaviour:
@@ -342,7 +342,7 @@ MonoBehaviour:
   currentCooldown: -1
   lastFrame: 1
   enabledBehaviour: 0
-  jumpForce: 50
+  jumpForce: 60
   jumpAnim: Jump
 --- !u!114 &8160912622823031159
 MonoBehaviour:

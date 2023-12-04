@@ -31,8 +31,6 @@ public class PlayerWalk : PlayerFrameBehaviour
                 break;
             case 17: //end
                 EndAnimation();
-
-                rb.velocity = Vector2.zero;
                 break;
         }
 
