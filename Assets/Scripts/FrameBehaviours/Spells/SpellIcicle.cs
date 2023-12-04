@@ -23,7 +23,7 @@ public class SpellIcicle : SpellFrameBehaviour
                 case 0:
                     icicleCollider.enabled = false;
 
-                    gameObject.transform.position = spawnPos;
+                    transform.position = spawnPos;
 
                     currentAnimName = startAnim;
                     AnimatorChangeAnimation(currentAnimName);

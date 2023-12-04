@@ -20,5 +20,6 @@ public class PlayerFrameBehaviour : FrameBehaviour
     public override void EndAnimation() //dont disable behaviour here, do in player controller
     {
         lastFrame = true;
+        enabledBehaviour = false;
     }
 }

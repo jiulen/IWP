@@ -85,8 +85,9 @@ GameObject:
   - component: {fileID: 6855151038211201459}
   - component: {fileID: 8160912622823031159}
   - component: {fileID: 4474947036822240987}
-  - component: {fileID: 7471432880383022299}
   - component: {fileID: 2923208727740288504}
+  - component: {fileID: 7471432880383022299}
+  - component: {fileID: 5693845008507408846}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -186,8 +187,9 @@ MonoBehaviour:
   - {fileID: 6855151038211201459}
   - {fileID: 8160912622823031159}
   - {fileID: 4474947036822240987}
-  - {fileID: 7471432880383022299}
   - {fileID: 2923208727740288504}
+  - {fileID: 7471432880383022299}
+  - {fileID: 5693845008507408846}
   - {fileID: 1289158970875237763}
   sceneViewId: 0
   InstantiationId: 0
@@ -258,6 +260,7 @@ MonoBehaviour:
   knockbackMultiplier: 0
   airOptionsAvail: 4
   allowMove: 0
+  oppTransform: {fileID: 0}
 --- !u!114 &7357678559156546124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -380,26 +383,6 @@ MonoBehaviour:
   enabledBehaviour: 0
   stunDuration: 0
   stunAnim: Stun
---- !u!114 &7471432880383022299
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6281997457829084022}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5a291de96a1dfb408f3f24382b61bb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  frameNum: 0
-  maxCooldown: 24
-  currentCooldown: -1
-  lastFrame: 1
-  enabledBehaviour: 0
-  goLeft: 0
-  icicleSpawnPoint: {fileID: 2590056764565829062}
-  attackAnim: Attack
 --- !u!114 &2923208727740288504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -420,6 +403,44 @@ MonoBehaviour:
   blockedAttack: 0
   spellBlock: {fileID: 1289158970875237763}
   blockAnim: Wait
+--- !u!114 &7471432880383022299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6281997457829084022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5a291de96a1dfb408f3f24382b61bb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frameNum: 0
+  maxCooldown: 24
+  currentCooldown: -1
+  lastFrame: 1
+  enabledBehaviour: 0
+  goLeft: 0
+  icicleSpawnPoint: {fileID: 2590056764565829062}
+  attackAnim: Attack
+--- !u!114 &5693845008507408846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6281997457829084022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6fdab9dcad229a4ba8aa92f9987c4e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frameNum: 0
+  maxCooldown: 60
+  currentCooldown: -1
+  lastFrame: 1
+  enabledBehaviour: 0
+  attackAnim: Attack
 --- !u!1 &6281997458381316374
 GameObject:
   m_ObjectHideFlags: 0

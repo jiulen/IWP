@@ -80,11 +80,15 @@ public class PlayerController : MonoBehaviour, IPunObservable
     PlayerStun playerStun;
 
     PlayerIcicle playerIcicle;
+    PlayerExplosion playerExplosion;
 
     PlayerBlock playerBlock;
 
     //Store attacks for their cooldowns
     Dictionary<PlayerActions, PlayerFrameBehaviour> playerAttacks = new();
+
+    //Opponent stuff
+    public Transform oppTransform;
 
     #region IPunObservable implementation
 
@@ -174,11 +178,13 @@ public class PlayerController : MonoBehaviour, IPunObservable
         playerStun = GetComponent<PlayerStun>();
 
         playerIcicle = GetComponent<PlayerIcicle>();
+        playerExplosion = GetComponent<PlayerExplosion>();
 
         playerBlock = GetComponent<PlayerBlock>();
 
         playerAttacks.Add(PlayerActions.BLOCK, playerBlock);
         playerAttacks.Add(PlayerActions.ICICLE, playerIcicle);
+        playerAttacks.Add(PlayerActions.EXPLOSION, playerExplosion);
     }
 
     void SetPlayerInfo()
@@ -300,8 +306,11 @@ public class PlayerController : MonoBehaviour, IPunObservable
         {
             if (currentFrameBehaviour != null) //will only be null the first time
             {
-                currentFrameBehaviour.DisableBehaviour(); //only disable current behaviour before switching to new one
-                currentFrameBehaviour = null;
+                if (currentFrameBehaviour != playerStun)
+                {
+                    currentFrameBehaviour.DisableBehaviour(); //only disable current behaviour before switching to new one
+                    currentFrameBehaviour = null;
+                }
             }
 
             switch (playerCurrentAction)
@@ -388,6 +397,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     break;
 
                 case PlayerActions.EXPLOSION:
+                    currentFrameBehaviour = playerExplosion;
                     break;
 
                 case PlayerActions.LIGHTNING:
@@ -502,6 +512,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
         if (currentFrameBehaviour != null)
         {
             currentFrameBehaviour.EndAnimation();
+            currentFrameBehaviour.DisableBehaviour();
         }
 
         playerCurrentAction = PlayerActions.STUNNED;
