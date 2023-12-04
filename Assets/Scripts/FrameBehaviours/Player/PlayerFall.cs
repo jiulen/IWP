@@ -4,25 +4,35 @@ using UnityEngine;
 
 public class PlayerFall : PlayerFrameBehaviour
 {
+    public bool startFall = false;
+
+    [SerializeField] float fallForce;
     [SerializeField] string fallAnim;
 
     public override void GoToFrame()
     {
+        if (frameNum > 35)
+        {
+            frameNum %= 36;
+        }
+
         switch (frameNum)
         {
             case 0:
-                currentAnimName = fallAnim;
-                AnimatorChangeAnimation(currentAnimName);
-                break;
-            case 5: //end
-                EndAnimation();
+                if (startFall)
+                {
+                    startFall = false;
+
+                    currentAnimName = fallAnim;
+                    AnimatorChangeAnimation(currentAnimName);
+
+                    rb.AddForce(Vector2.down * fallForce, ForceMode2D.Impulse);
+                }
                 break;
         }
 
         if (playerController.isGrounded)
         {
-            rb.velocity = new Vector2(rb.velocity.x, 0);
-
             EndAnimation();
         }
 

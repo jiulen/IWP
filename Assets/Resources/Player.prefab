@@ -358,7 +358,9 @@ MonoBehaviour:
   currentCooldown: -1
   lastFrame: 1
   enabledBehaviour: 0
-  fallAnim: 
+  startFall: 0
+  fallForce: 50
+  fallAnim: Fall
 --- !u!114 &4474947036822240987
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -50,9 +50,9 @@ public class SpellIcicle : SpellFrameBehaviour
                 startPhase_1 = false;
             }
 
-            if (frameNum > 63)
+            if (frameNum > 59)
             {
-                frameNum %= 64;
+                frameNum %= 60;
             }
         }
         else if (phase == 2)

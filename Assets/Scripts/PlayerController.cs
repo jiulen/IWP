@@ -298,6 +298,12 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
         if (currentFrameNum == 0)
         {
+            if (currentFrameBehaviour != null) //will only be null the first time
+            {
+                currentFrameBehaviour.DisableBehaviour(); //only disable current behaviour before switching to new one
+                currentFrameBehaviour = null;
+            }
+
             switch (playerCurrentAction)
             {
                 //Movement
@@ -350,6 +356,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     break;
 
                 case PlayerActions.FALL:
+                    playerFall.startFall = true;
+
                     if (!isGrounded) airOptionsAvail -= 1;
 
                     currentFrameBehaviour = playerFall;
@@ -368,9 +376,6 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     break;
 
                 //Attack
-
-                case PlayerActions.HYDRO_BALL:
-                    break;
 
                 case PlayerActions.ICICLE:
                     if (facingLeft) playerIcicle.goLeft = true;
@@ -424,8 +429,6 @@ public class PlayerController : MonoBehaviour, IPunObservable
             if (currentFrameBehaviour.IsAnimationDone())
             {
                 playerCurrentAction = PlayerActions.NONE;
-
-                currentFrameBehaviour = null;
             }
         }
 

@@ -16,4 +16,9 @@ public class PlayerFrameBehaviour : FrameBehaviour
         rb = playerController.rb;
         animator = playerController.animator;
     }
+
+    public override void EndAnimation() //dont disable behaviour here, do in player controller
+    {
+        lastFrame = true;
+    }
 }
