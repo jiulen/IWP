@@ -9,7 +9,7 @@ public class CameraController : MonoBehaviour
 
     [SerializeField] float updateSizeSpeed, updatePositionSpeed;
 
-    [SerializeField] float minSize, maxSize;
+    [SerializeField] float minSize;
 
     Camera controlledCamera;
 
@@ -81,28 +81,23 @@ public class CameraController : MonoBehaviour
     void CalculateCameraLocations()
     {
         Vector2 averageCenter;
-        Vector2 totalPositions = Vector2.zero;
         Bounds targetBounds = new();
 
         foreach (Transform targetTransform in targetsTransforms)
         {
             Vector2 targetPosition = targetTransform.position;
 
-            if (!levelBounds.bounds.Contains(targetPosition))
-            {
-                float targetX, targetY;
+            float targetX, targetY;
 
-                targetX = Mathf.Clamp(targetPosition.x, levelBounds.bounds.min.x, levelBounds.bounds.max.x);
-                targetY = Mathf.Clamp(targetPosition.y, levelBounds.bounds.min.y, levelBounds.bounds.max.y);
+            targetX = Mathf.Clamp(targetPosition.x, levelBounds.bounds.min.x, levelBounds.bounds.max.x);
+            targetY = Mathf.Clamp(targetPosition.y, levelBounds.bounds.min.y, levelBounds.bounds.max.y);
 
-                targetPosition = new Vector3(targetX, targetY);
-            }
+            targetPosition = new Vector3(targetX, targetY);
 
-            totalPositions += targetPosition;
             targetBounds.Encapsulate(targetPosition);
         }
 
-        averageCenter = totalPositions / targetsTransforms.Count;
+        averageCenter = targetBounds.center;
 
         float ratioX, ratioY;
         ratioX = targetBounds.extents.x * screenRatio;
@@ -111,18 +106,16 @@ public class CameraController : MonoBehaviour
         if (ratioX > ratioY)
         {
             nextCameraSize = targetBounds.extents.x * screenRatio;
-            nextCameraSize *= 1 + paddingPercentAll;
-            nextCameraSize = Mathf.Clamp(nextCameraSize, minSize, maxSize);
         }
         else
         {
             nextCameraSize = targetBounds.extents.y;
-            nextCameraSize *= 1 + paddingPercentAll;
-            nextCameraSize = Mathf.Clamp(nextCameraSize, minSize, maxSize);
         }
 
+        nextCameraSize = Mathf.Max(nextCameraSize, minSize);
         float minYSize = targetBounds.extents.y * (1 + paddingPercentY);
         nextCameraSize = Mathf.Max(nextCameraSize, minYSize);
+        nextCameraSize *= 1 + paddingPercentAll;
 
         nextCameraPosition = new Vector3(averageCenter.x, averageCenter.y);
     }
