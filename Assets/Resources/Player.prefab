@@ -29,8 +29,40 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2590056764565829062}
+  - {fileID: 5880970627290093305}
   - {fileID: 7481419589976823938}
   m_Father: {fileID: 6281997457829084021}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2777473894293137177
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5880970627290093305}
+  m_Layer: 0
+  m_Name: SpiritSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5880970627290093305
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2777473894293137177}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.5, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6502589514095023719}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5515439448353626641
@@ -88,6 +120,7 @@ GameObject:
   - component: {fileID: 2923208727740288504}
   - component: {fileID: 7471432880383022299}
   - component: {fileID: 5693845008507408846}
+  - component: {fileID: 7397149281138199079}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -190,6 +223,7 @@ MonoBehaviour:
   - {fileID: 2923208727740288504}
   - {fileID: 7471432880383022299}
   - {fileID: 5693845008507408846}
+  - {fileID: 7397149281138199079}
   - {fileID: 1289158970875237763}
   sceneViewId: 0
   InstantiationId: 0
@@ -436,10 +470,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frameNum: 0
+  maxCooldown: 42
+  currentCooldown: -1
+  lastFrame: 1
+  enabledBehaviour: 0
+  attackAnim: Attack
+--- !u!114 &7397149281138199079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6281997457829084022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fb9827106fa58c4598c5b5ac81e5d69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frameNum: 0
   maxCooldown: 60
   currentCooldown: -1
   lastFrame: 1
   enabledBehaviour: 0
+  goLeft: 0
+  spiritSpawnPoint: {fileID: 5880970627290093305}
   attackAnim: Attack
 --- !u!1 &6281997458381316374
 GameObject:
@@ -593,7 +647,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6502589514095023719}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7683863930940042995
 SpriteRenderer:

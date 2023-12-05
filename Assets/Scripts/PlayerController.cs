@@ -81,6 +81,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
     PlayerIcicle playerIcicle;
     PlayerExplosion playerExplosion;
+    PlayerLingeringSpirit playerLingeringSpirit;
 
     PlayerBlock playerBlock;
 
@@ -179,12 +180,14 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
         playerIcicle = GetComponent<PlayerIcicle>();
         playerExplosion = GetComponent<PlayerExplosion>();
+        playerLingeringSpirit = GetComponent<PlayerLingeringSpirit>();
 
         playerBlock = GetComponent<PlayerBlock>();
 
         playerAttacks.Add(PlayerActions.BLOCK, playerBlock);
         playerAttacks.Add(PlayerActions.ICICLE, playerIcicle);
         playerAttacks.Add(PlayerActions.EXPLOSION, playerExplosion);
+        playerAttacks.Add(PlayerActions.LINGERING_SPIRIT, playerLingeringSpirit);
     }
 
     void SetPlayerInfo()
@@ -394,6 +397,11 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     break;
 
                 case PlayerActions.LINGERING_SPIRIT:
+                    if (facingLeft) playerLingeringSpirit.goLeft = true;
+                    else playerLingeringSpirit.goLeft = false;
+
+
+                    currentFrameBehaviour = playerLingeringSpirit;
                     break;
 
                 case PlayerActions.EXPLOSION:
