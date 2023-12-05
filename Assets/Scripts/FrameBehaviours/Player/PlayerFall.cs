@@ -31,7 +31,7 @@ public class PlayerFall : PlayerFrameBehaviour
                 break;
         }
 
-        if (playerController.isGrounded)
+        if (playerController.isGrounded && ShooterGameManager.Instance.currentFrame % 6 == 5)
         {
             EndAnimation();
         }

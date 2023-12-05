@@ -69,6 +69,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
     public const int airOptionsMax = 4;
 
     public bool allowMove = false;
+    bool gotStunned = false;
 
     //Actions
     FrameBehaviour currentFrameBehaviour;
@@ -309,10 +310,14 @@ public class PlayerController : MonoBehaviour, IPunObservable
         {
             if (currentFrameBehaviour != null) //will only be null the first time
             {
-                if (currentFrameBehaviour != playerStun)
+                if (!gotStunned) //dont disable behaviour if just switched to stun
                 {
                     currentFrameBehaviour.DisableBehaviour(); //only disable current behaviour before switching to new one
                     currentFrameBehaviour = null;
+                }
+                else
+                {
+                    gotStunned = false;
                 }
             }
 
@@ -533,5 +538,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
         rb.AddForce(finalKnockbackMultiplier * knockbackForce, ForceMode2D.Impulse);
         knockbackMultiplier += finalKnockbackIncrease;
+
+        gotStunned = true;
     }
 }
