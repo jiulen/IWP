@@ -103,7 +103,7 @@ public class SpellLingeringSpirit : SpellFrameBehaviour
         startPhase_1 = true;
         phase = 1;
 
-        knockbackDirection = Vector2.right;
+        knockbackDirection = rb.velocity.normalized;
 
         playerController.TakeHit(knockbackIncrease, knockbackForce * knockbackDirection, 6);
     }
