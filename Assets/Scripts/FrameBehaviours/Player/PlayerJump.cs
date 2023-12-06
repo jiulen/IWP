@@ -12,6 +12,8 @@ public class PlayerJump : PlayerFrameBehaviour
         switch (frameNum)
         {
             case 0:
+                rb.velocity = Vector2.zero;
+
                 currentAnimName = jumpAnim;
                 AnimatorChangeAnimation(currentAnimName);
 

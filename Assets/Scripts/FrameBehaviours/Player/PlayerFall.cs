@@ -23,6 +23,10 @@ public class PlayerFall : PlayerFrameBehaviour
                 {
                     startFall = false;
 
+                    float veloY = rb.velocity.y;
+                    if (veloY > 0) veloY = 0;
+                    rb.velocity = new Vector2(0, veloY);
+
                     currentAnimName = fallAnim;
                     AnimatorChangeAnimation(currentAnimName);
 

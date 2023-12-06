@@ -16,6 +16,8 @@ public class PlayerRoll : PlayerFrameBehaviour
         switch (frameNum)
         {
             case 0:
+                rb.velocity = Vector2.zero;
+
                 currentAnimName = rollAnim;
                 AnimatorChangeAnimation(currentAnimName);
 
@@ -25,6 +27,8 @@ public class PlayerRoll : PlayerFrameBehaviour
                 rb.gravityScale = rollGravScale;
                 break;
             case 23: //end
+                rb.velocity = new Vector2(0, rb.velocity.y);
+
                 EndAnimation();
                 break;
         }

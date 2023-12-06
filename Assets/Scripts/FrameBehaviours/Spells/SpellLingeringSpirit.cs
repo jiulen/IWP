@@ -97,13 +97,13 @@ public class SpellLingeringSpirit : SpellFrameBehaviour
 
     protected override void HitPlayer(PlayerController playerController)
     {
-        rb.velocity = Vector2.zero;
         spiritCollider.enabled = false;
 
         startPhase_1 = true;
         phase = 1;
 
         knockbackDirection = rb.velocity.normalized;
+        rb.velocity = Vector2.zero;
 
         playerController.TakeHit(knockbackIncrease, knockbackForce * knockbackDirection, 6);
     }

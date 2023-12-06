@@ -245,7 +245,7 @@ MonoBehaviour:
   phase: 0
   targetDir: {x: 0, y: 0}
   knockbackIncrease: 15
-  knockbackForce: 45
+  knockbackForce: 60
   knockbackDirection: {x: 1, y: 0}
   ownerNum: -1
   explosionCollider: {fileID: 9063545305331979688}

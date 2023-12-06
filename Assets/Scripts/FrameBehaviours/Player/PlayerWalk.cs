@@ -16,6 +16,8 @@ public class PlayerWalk : PlayerFrameBehaviour
         switch (frameNum)
         {
             case 0:
+                rb.velocity = Vector2.zero;
+
                 if (forwards)
                 {
                     currentAnimName = firstHalf ? walkForwardAnim_1 : walkForwardAnim_2;
@@ -30,6 +32,8 @@ public class PlayerWalk : PlayerFrameBehaviour
                 rb.AddForce(walkDir * walkForce, ForceMode2D.Impulse);
                 break;
             case 17: //end
+                rb.velocity = new Vector2(0, rb.velocity.y);
+
                 EndAnimation();
                 break;
         }
