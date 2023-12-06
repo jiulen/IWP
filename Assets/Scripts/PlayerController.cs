@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
     public bool isGrounded = true;
     [SerializeField] bool facingLeft = false;
     public bool toFlip = false;
-    bool isWalking, isRolling, movingLeft = false;
+    bool isWalking, isRolling;
 
     List<PlayerActions> unavailableActions = new();
 
@@ -69,7 +69,6 @@ public class PlayerController : MonoBehaviour, IPunObservable
     public const int airOptionsMax = 4;
 
     public bool allowMove = false;
-    bool gotStunned = false;
 
     //Actions
     FrameBehaviour currentFrameBehaviour;
@@ -310,15 +309,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
         {
             if (currentFrameBehaviour != null) //will only be null the first time
             {
-                if (!gotStunned) //dont disable behaviour if just switched to stun
-                {
-                    currentFrameBehaviour.DisableBehaviour(); //only disable current behaviour before switching to new one
-                    currentFrameBehaviour = null;
-                }
-                else
-                {
-                    gotStunned = false;
-                }
+                currentFrameBehaviour.DisableBehaviour(); //only disable current behaviour before switching to new one
+                currentFrameBehaviour = null;
             }
 
             switch (playerCurrentAction)
@@ -443,6 +435,10 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
                 case PlayerActions.WHIRLWIND:
                     break;
+
+                case PlayerActions.STUNNED:
+                    currentFrameBehaviour = playerStun;
+                    break;
             }
 
             if (currentFrameBehaviour != null)
@@ -473,6 +469,10 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     currentFrameBehaviour.lastFrame = false;
                     currentFrameBehaviour.currentCooldown = currentFrameBehaviour.maxCooldown;
                 }
+            }
+            else
+            {
+                Debug.Log("No new behaviour selected");
             }
         }
 
@@ -554,23 +554,14 @@ public class PlayerController : MonoBehaviour, IPunObservable
             finalKnockbackIncrease /= 2; //only take 50% of knockback increase (rounded down)
         }
 
-        if (currentFrameBehaviour != null)
-        {
-            currentFrameBehaviour.EndAnimation();
-            currentFrameBehaviour.DisableBehaviour();
-        }
+        if (currentFrameBehaviour != null) currentFrameBehaviour.EndAnimation();
 
         playerCurrentAction = PlayerActions.STUNNED;
         playerStun.stunDuration = stunDuration;
-        currentFrameBehaviour = playerStun;
 
         currentFrameNum = -1;
 
-        currentFrameBehaviour.frameNum = -1;
-
         rb.AddForce(finalKnockbackMultiplier * knockbackForce, ForceMode2D.Impulse);
         knockbackMultiplier += finalKnockbackIncrease;
-
-        gotStunned = true;
     }
 }

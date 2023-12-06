@@ -10,6 +10,8 @@ public class PlayerStun : PlayerFrameBehaviour
 
     public override void GoToFrame()
     {
+        Debug.Log("stunned");
+
         switch (frameNum)
         {
             case 0:
