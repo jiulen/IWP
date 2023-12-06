@@ -376,7 +376,12 @@ MonoBehaviour:
   currentCooldown: -1
   lastFrame: 1
   enabledBehaviour: 0
+  isWalking: 0
+  isRolling: 0
+  forwardDir: {x: 0, y: 0}
   jumpForce: 60
+  walkJumpForce: 10
+  rollJumpForce: 40
   jumpAnim: Jump
 --- !u!114 &8160912622823031159
 MonoBehaviour:

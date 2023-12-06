@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
     public bool isGrounded = true;
     [SerializeField] bool facingLeft = false;
     public bool toFlip = false;
-    bool isWalking = false;
+    bool isWalking, isRolling, movingLeft = false;
 
     List<PlayerActions> unavailableActions = new();
 
@@ -337,6 +337,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     else
                         playerWalk.firstHalf = true;
 
+                    playerJump.forwardDir = Vector2.left;
 
                     if (facingLeft) playerWalk.forwards = true;
                     else playerWalk.forwards = false;
@@ -351,6 +352,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     else
                         playerWalk.firstHalf = true;
 
+                    playerJump.forwardDir = Vector2.right;
+
                     if (facingLeft) playerWalk.forwards = false;
                     else playerWalk.forwards = true;
 
@@ -358,8 +361,16 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     break;
 
                 case PlayerActions.ROLL:
-                    if (facingLeft) playerRoll.goLeft = true;
-                    else playerRoll.goLeft = false;
+                    if (facingLeft)
+                    {
+                        playerRoll.goLeft = true;
+                        playerJump.forwardDir = Vector2.left;
+                    }
+                    else
+                    {
+                        playerRoll.goLeft = false;
+                        playerJump.forwardDir = Vector2.right;
+                    }
 
                     if (!isGrounded) airOptionsAvail -= 1;
 
@@ -368,6 +379,17 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
                 case PlayerActions.JUMP:
                     if (!isGrounded) airOptionsAvail -= 1;
+
+                    if (isWalking)
+                    {
+                        playerJump.isWalking = true;
+                        playerJump.isRolling = false;
+                    }
+                    else if (isRolling)
+                    {
+                        playerJump.isWalking = false;
+                        playerJump.isRolling = true;
+                    }
 
                     currentFrameBehaviour = playerJump;
                     break;
@@ -432,9 +454,19 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     {
                         isWalking = true;
                     }
-                    else
+                    else if (playerCurrentAction != PlayerActions.JUMP)
                     {
                         isWalking = false;
+                    }
+
+                    //Check if rolling
+                    if (playerCurrentAction == PlayerActions.ROLL)
+                    {
+                        isRolling = true;
+                    }
+                    else if (playerCurrentAction != PlayerActions.JUMP)
+                    {
+                        isRolling = false;
                     }
 
                     currentFrameBehaviour.enabledBehaviour = true;
