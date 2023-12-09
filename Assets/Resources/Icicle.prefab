@@ -247,7 +247,9 @@ MonoBehaviour:
   knockbackIncrease: 5
   knockbackForce: 30
   knockbackDirection: {x: 1, y: 0}
+  stunDuration: 6
   ownerNum: -1
+  owner: {fileID: 0}
   icicleSpeed: 1
   icicleCollider: {fileID: 17488593414969843}
   startAnim: Start

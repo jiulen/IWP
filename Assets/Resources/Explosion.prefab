@@ -247,6 +247,8 @@ MonoBehaviour:
   knockbackIncrease: 15
   knockbackForce: 60
   knockbackDirection: {x: 1, y: 0}
+  stunDuration: 12
   ownerNum: -1
+  owner: {fileID: 0}
   explosionCollider: {fileID: 9063545305331979688}
   explosionAnim: Explosion

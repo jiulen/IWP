@@ -247,7 +247,9 @@ MonoBehaviour:
   knockbackIncrease: 5
   knockbackForce: 30
   knockbackDirection: {x: 1, y: 0}
+  stunDuration: 6
   ownerNum: -1
+  owner: {fileID: 0}
   maxHomingFrames: 60
   minHomingMultiplier: 0.2
   startSpell: 0

@@ -35,6 +35,7 @@ public class PlayerIcicle : PlayerFrameBehaviour
                     spellIcicle.knockbackDirection = Vector2.right;
                 }
                 spellIcicle.ownerNum = playerController.playerNum;
+                spellIcicle.owner = playerController;
 
                 icicleObj.transform.rotation = Quaternion.identity;
 

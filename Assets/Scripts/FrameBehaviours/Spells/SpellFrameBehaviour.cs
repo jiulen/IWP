@@ -15,8 +15,10 @@ public class SpellFrameBehaviour : FrameBehaviour
     [SerializeField] protected int knockbackIncrease = 0;
     [SerializeField] protected float knockbackForce = 0;
     public Vector2 knockbackDirection = Vector2.right;
+    [SerializeField] protected int stunDuration;
 
     public int ownerNum = -1;
+    public PlayerController owner;
 
     protected override void Awake()
     {
@@ -46,5 +48,11 @@ public class SpellFrameBehaviour : FrameBehaviour
     protected virtual void HitPlayer(PlayerController playerController)
     {
 
+    }
+    
+    protected virtual void GiveMeter(PlayerController attacker, PlayerController defender)
+    {
+        attacker.AddMeter(stunDuration * 0.001f);
+        defender.AddMeter(stunDuration * 0.0005f);
     }
 }

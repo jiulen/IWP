@@ -39,6 +39,7 @@ public class SpellExplosion : SpellFrameBehaviour
         knockbackDirection = playerController.transform.position - transform.position;
         knockbackDirection.Normalize();
 
-        playerController.TakeHit(knockbackIncrease, knockbackForce * knockbackDirection, 12);
+        playerController.TakeHit(knockbackIncrease, knockbackForce * knockbackDirection, stunDuration);
+        GiveMeter(owner, playerController);
     }
 }

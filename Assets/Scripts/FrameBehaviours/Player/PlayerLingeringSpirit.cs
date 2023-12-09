@@ -33,6 +33,8 @@ public class PlayerLingeringSpirit : PlayerFrameBehaviour
                     spellLingeringSpirit.targetDir = Vector2.right;
                 }
                 spellLingeringSpirit.ownerNum = playerController.playerNum;
+                spellLingeringSpirit.owner = playerController;
+
                 spellLingeringSpirit.target = playerController.oppTransform;
                 spellLingeringSpirit.startSpell = true;
 

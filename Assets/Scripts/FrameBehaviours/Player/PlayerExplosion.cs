@@ -21,6 +21,7 @@ public class PlayerExplosion : PlayerFrameBehaviour
                 SpellExplosion spellExplosion = explosionObj.GetComponent<SpellExplosion>();
                 spellExplosion.spawnPos = playerController.oppTransform.position;
                 spellExplosion.ownerNum = playerController.playerNum;
+                spellExplosion.owner = playerController;
 
                 explosionObj.transform.rotation = Quaternion.identity;
 

@@ -564,4 +564,11 @@ public class PlayerController : MonoBehaviour, IPunObservable
         rb.AddForce(finalKnockbackMultiplier * knockbackForce, ForceMode2D.Impulse);
         knockbackMultiplier += finalKnockbackIncrease;
     }
+
+    public void AddMeter(float value)
+    {
+        burstMeterValue += value;
+
+        burstMeterValue = Mathf.Min(burstMeterValue, 1);
+    }
 }

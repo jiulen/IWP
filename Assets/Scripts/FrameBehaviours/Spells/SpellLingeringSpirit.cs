@@ -105,6 +105,7 @@ public class SpellLingeringSpirit : SpellFrameBehaviour
         knockbackDirection = rb.velocity.normalized;
         rb.velocity = Vector2.zero;
 
-        playerController.TakeHit(knockbackIncrease, knockbackForce * knockbackDirection, 6);
+        playerController.TakeHit(knockbackIncrease, knockbackForce * knockbackDirection, stunDuration);
+        GiveMeter(owner, playerController);
     }
 }
