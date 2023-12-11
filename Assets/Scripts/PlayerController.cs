@@ -84,6 +84,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
     PlayerLingeringSpirit playerLingeringSpirit;
 
     PlayerBlock playerBlock;
+    PlayerBurst playerBurst;
 
     //Store attacks for their cooldowns
     Dictionary<PlayerActions, PlayerFrameBehaviour> playerAttacks = new();
@@ -183,6 +184,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
         playerLingeringSpirit = GetComponent<PlayerLingeringSpirit>();
 
         playerBlock = GetComponent<PlayerBlock>();
+        playerBurst = GetComponent<PlayerBurst>();
 
         playerAttacks.Add(PlayerActions.BLOCK, playerBlock);
         playerAttacks.Add(PlayerActions.ICICLE, playerIcicle);
@@ -401,6 +403,9 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     break;
 
                 case PlayerActions.BURST:
+                    burstMeterValue = 0;
+
+                    currentFrameBehaviour = playerBurst;
                     break;
 
                 case PlayerActions.SKIP:
@@ -418,7 +423,6 @@ public class PlayerController : MonoBehaviour, IPunObservable
                 case PlayerActions.LINGERING_SPIRIT:
                     if (facingLeft) playerLingeringSpirit.goLeft = true;
                     else playerLingeringSpirit.goLeft = false;
-
 
                     currentFrameBehaviour = playerLingeringSpirit;
                     break;

@@ -118,6 +118,7 @@ GameObject:
   - component: {fileID: 8160912622823031159}
   - component: {fileID: 4474947036822240987}
   - component: {fileID: 2923208727740288504}
+  - component: {fileID: 7505675737456189462}
   - component: {fileID: 7471432880383022299}
   - component: {fileID: 5693845008507408846}
   - component: {fileID: 7397149281138199079}
@@ -211,6 +212,7 @@ MonoBehaviour:
   - {fileID: 8160912622823031159}
   - {fileID: 4474947036822240987}
   - {fileID: 2923208727740288504}
+  - {fileID: 7505675737456189462}
   - {fileID: 7471432880383022299}
   - {fileID: 5693845008507408846}
   - {fileID: 7397149281138199079}
@@ -432,6 +434,25 @@ MonoBehaviour:
   blockedAttack: 0
   spellBlock: {fileID: 1289158970875237763}
   blockAnim: Wait
+--- !u!114 &7505675737456189462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6281997457829084022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26b7acb5348afe749b2131a3288cc428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frameNum: 0
+  maxCooldown: -1
+  currentCooldown: 1
+  lastFrame: 1
+  enabledBehaviour: 0
+  playerCenter: {fileID: 6502589514095023719}
+  burstAnim: Burst
 --- !u!114 &7471432880383022299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -741,7 +762,9 @@ MonoBehaviour:
   knockbackIncrease: 0
   knockbackForce: 0
   knockbackDirection: {x: 1, y: 0}
+  stunDuration: 0
   ownerNum: -1
+  owner: {fileID: 0}
   startPhase_1: 0
   blockingAnim: Blocking
   shrinkAnim: Shrink
