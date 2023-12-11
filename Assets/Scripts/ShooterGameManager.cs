@@ -417,7 +417,7 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         PhotonNetwork.CurrentRoom.SetCustomProperties(roomProps);
 
         //check can move
-        if (localPlayerController.IsIdle() || localPlayerController.CanBurst())
+        if (localPlayerController.IsIdle() || (localPlayerController.IsStunned() && localPlayerController.CanBurst()))
         {
             localPlayerController.allowMove = true;
         }
@@ -426,7 +426,7 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
             localPlayerController.allowMove = false;
         }
 
-        if (otherPlayerController.IsIdle() || otherPlayerController.CanBurst())
+        if (otherPlayerController.IsIdle() || (otherPlayerController.IsStunned() && otherPlayerController.CanBurst()))
         {
             otherPlayerController.allowMove = true;
         }

@@ -543,6 +543,11 @@ public class PlayerController : MonoBehaviour, IPunObservable
         isGrounded = grounded;
     }
 
+    public bool IsStunned()
+    {
+        return playerCurrentAction == PlayerActions.STUNNED;
+    }
+
     public void TakeHit(int knockbackIncrease, Vector2 knockbackForce, int stunDuration)
     {
         float finalKnockbackMultiplier = (1 + knockbackMultiplier / 100f);
