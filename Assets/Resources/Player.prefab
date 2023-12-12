@@ -530,7 +530,7 @@ MonoBehaviour:
   currentCooldown: -1
   lastFrame: 1
   enabledBehaviour: 0
-  ySpawnPos: 0
+  ySpawnPos: 15
   attackAnim: Attack
 --- !u!1 &6281997458381316374
 GameObject:

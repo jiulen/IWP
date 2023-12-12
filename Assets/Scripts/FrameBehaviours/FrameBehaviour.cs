@@ -17,6 +17,8 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
     public int maxCooldown = 1;
     public int currentCooldown = 1;
 
+    public float srSizeY = 1;
+
     public bool lastFrame;
 
     public bool enabledBehaviour = true;
@@ -28,13 +30,15 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
     //For syncing data via IPunObservable
     const byte ENABLED_FLAG = 1 << 0;
     const byte FRAME_NUM_FLAG = 1 << 1;
-    const byte CUREENT_ANIM_FLAG = 1 << 2;
+    const byte CURRENT_ANIM_FLAG = 1 << 2;
     const byte CURRENT_COOLDOWN_FLAG = 1 << 3;
+    const byte SR_SIZE_Y = 1 << 4;
 
     bool syncedEnabledBehaviour = true;
     int syncedFrameNum = 0;
     string syncedAnimName = "";
     int syncedCooldown = 0;
+    float syncedSrSizeY = 1;
 
     byte syncDataFlags;
 
@@ -55,11 +59,15 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
             }
             if (syncedAnimName != currentAnimName)
             {
-                syncDataFlags |= CUREENT_ANIM_FLAG;
+                syncDataFlags |= CURRENT_ANIM_FLAG;
             }
             if (syncedCooldown != currentCooldown)
             {
                 syncDataFlags |= CURRENT_COOLDOWN_FLAG;
+            }
+            if (syncedSrSizeY != srSizeY)
+            {
+                syncDataFlags |= SR_SIZE_Y;
             }
 
             //Send data flags
@@ -85,10 +93,15 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
                     stream.SendNext(frameNum);
                     syncedFrameNum = frameNum;
                 }
-                if ((syncDataFlags & CUREENT_ANIM_FLAG) != 0)
+                if ((syncDataFlags & CURRENT_ANIM_FLAG) != 0)
                 {
                     stream.SendNext(currentAnimName);
                     syncedAnimName = currentAnimName;
+                }
+                if ((syncDataFlags & SR_SIZE_Y) != 0)
+                {
+                    stream.SendNext(srSizeY);
+                    syncedSrSizeY = srSizeY;
                 }
             }
         }
@@ -114,9 +127,17 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
                 {
                     frameNum = (int)stream.ReceiveNext();
                 }
-                if ((syncDataFlags & CUREENT_ANIM_FLAG) != 0)
+                if ((syncDataFlags & CURRENT_ANIM_FLAG) != 0)
                 {
                     currentAnimName = (string)stream.ReceiveNext();
+                }
+                if ((syncDataFlags & SR_SIZE_Y) != 0)
+                {
+                    srSizeY = (float)stream.ReceiveNext();
+                    if (sr != null)
+                    {
+                        sr.size = new Vector2(1, srSizeY);
+                    }
                 }
 
                 if (currentAnimName != "")

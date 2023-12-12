@@ -5,9 +5,10 @@ using UnityEngine;
 public class SpellLightning : SpellFrameBehaviour
 {
     [SerializeField] SpriteRenderer boltRenderer, hitRenderer;
-    [SerializeField] Collider2D lightingCollider;
+    [SerializeField] Collider2D lightningCollider;
+    [SerializeField] LayerMask groundLayerMask;
 
-    [SerializeField] string explosionAnim;
+    [SerializeField] string lightningAnim;
 
     protected override void Awake()
     {
@@ -21,20 +22,37 @@ public class SpellLightning : SpellFrameBehaviour
         switch (frameNum)
         {
             case 0:
-                lightingCollider.enabled = false;
+                lightningCollider.enabled = true;
 
                 transform.position = spawnPos;
+                RaycastHit2D hit = Physics2D.Raycast(spawnPos, Vector2.down, 30, groundLayerMask);
+                float hitDistance;
+                if (hit)
+                {
+                    hitDistance = hit.distance;
+                    hitRenderer.gameObject.SetActive(true);
+                }
+                else
+                {
+                    hitDistance = 30;
+                    hitRenderer.gameObject.SetActive(false);
+                }
 
-                currentAnimName = explosionAnim;
+                srSizeY = hitDistance;
+                boltRenderer.size = new Vector2(1, srSizeY);
+                boltRenderer.transform.localPosition = new Vector3(0, -hitDistance / 2, 0);
+                hitRenderer.transform.localPosition = new Vector3(0, -hitDistance, 0);
+
+                lightningCollider.offset = new Vector2(0, -hitDistance / 2);
+                lightningCollider.GetComponent<BoxCollider2D>().size = new Vector2(0.15f, hitDistance);
+
+                currentAnimName = lightningAnim;
                 AnimatorChangeAnimation(currentAnimName);
                 break;
             case 17:
-                lightingCollider.enabled = true;
+                lightningCollider.enabled = false;
                 break;
-            case 29:
-                lightingCollider.enabled = false;
-                break;
-            case 83: //end
+            case 29: //end
                 EndAnimation();
                 break;
         }
@@ -42,7 +60,7 @@ public class SpellLightning : SpellFrameBehaviour
 
     protected override void HitPlayer(PlayerController playerController)
     {
-        lightingCollider.enabled = false;
+        lightningCollider.enabled = false;
 
         playerController.TakeHit(knockbackIncrease, knockbackForce * knockbackDirection, stunDuration);
         GiveMeter(owner, playerController);

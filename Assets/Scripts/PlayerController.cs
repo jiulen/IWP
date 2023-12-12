@@ -82,6 +82,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
     PlayerIcicle playerIcicle;
     PlayerExplosion playerExplosion;
     PlayerLingeringSpirit playerLingeringSpirit;
+    PlayerLightning playerLightning;
 
     PlayerBlock playerBlock;
     PlayerBurst playerBurst;
@@ -182,6 +183,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
         playerIcicle = GetComponent<PlayerIcicle>();
         playerExplosion = GetComponent<PlayerExplosion>();
         playerLingeringSpirit = GetComponent<PlayerLingeringSpirit>();
+        playerLightning = GetComponent<PlayerLightning>();
 
         playerBlock = GetComponent<PlayerBlock>();
         playerBurst = GetComponent<PlayerBurst>();
@@ -190,6 +192,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
         playerAttacks.Add(PlayerActions.ICICLE, playerIcicle);
         playerAttacks.Add(PlayerActions.EXPLOSION, playerExplosion);
         playerAttacks.Add(PlayerActions.LINGERING_SPIRIT, playerLingeringSpirit);
+        playerAttacks.Add(PlayerActions.LIGHTNING, playerLightning);
     }
 
     void SetPlayerInfo()
@@ -432,6 +435,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     break;
 
                 case PlayerActions.LIGHTNING:
+                    currentFrameBehaviour = playerLightning;
                     break;
 
                 case PlayerActions.SEISMIC_STRIKE:
