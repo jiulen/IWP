@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 7397149281138199079}
   - component: {fileID: 4274378183740257858}
   - component: {fileID: 5332357486040211611}
+  - component: {fileID: 5352697439581963250}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -220,6 +221,7 @@ MonoBehaviour:
   - {fileID: 7397149281138199079}
   - {fileID: 4274378183740257858}
   - {fileID: 5332357486040211611}
+  - {fileID: 5352697439581963250}
   - {fileID: 1289158970875237763}
   sceneViewId: 0
   InstantiationId: 0
@@ -564,7 +566,28 @@ MonoBehaviour:
   srSizeY: 1
   lastFrame: 1
   enabledBehaviour: 0
+  goLeft: 0
   ySpawnPos: -0.5
+  attackAnim: Attack
+--- !u!114 &5352697439581963250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6281997457829084022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2e861e15afe4e841856e1115fc822b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frameNum: 0
+  maxCooldown: 48
+  currentCooldown: -1
+  srSizeY: 1
+  lastFrame: 1
+  enabledBehaviour: 0
+  playerCenter: {fileID: 6502589514095023719}
   attackAnim: Attack
 --- !u!1 &6281997458381316374
 GameObject:
