@@ -123,6 +123,7 @@ GameObject:
   - component: {fileID: 5693845008507408846}
   - component: {fileID: 7397149281138199079}
   - component: {fileID: 4274378183740257858}
+  - component: {fileID: 5332357486040211611}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -218,6 +219,7 @@ MonoBehaviour:
   - {fileID: 5693845008507408846}
   - {fileID: 7397149281138199079}
   - {fileID: 4274378183740257858}
+  - {fileID: 5332357486040211611}
   - {fileID: 1289158970875237763}
   sceneViewId: 0
   InstantiationId: 0
@@ -304,6 +306,7 @@ MonoBehaviour:
   frameNum: 0
   maxCooldown: -1
   currentCooldown: -1
+  srSizeY: 1
   lastFrame: 36
   enabledBehaviour: 0
   goLeft: 0
@@ -329,6 +332,7 @@ MonoBehaviour:
   frameNum: 0
   maxCooldown: -1
   currentCooldown: -1
+  srSizeY: 1
   lastFrame: 1
   enabledBehaviour: 0
   waitAnim: Wait
@@ -347,6 +351,7 @@ MonoBehaviour:
   frameNum: 0
   maxCooldown: -1
   currentCooldown: -1
+  srSizeY: 1
   lastFrame: 1
   enabledBehaviour: 0
   goLeft: 0
@@ -368,6 +373,7 @@ MonoBehaviour:
   frameNum: 0
   maxCooldown: -1
   currentCooldown: -1
+  srSizeY: 1
   lastFrame: 1
   enabledBehaviour: 0
   isWalking: 0
@@ -392,6 +398,7 @@ MonoBehaviour:
   frameNum: 0
   maxCooldown: -1
   currentCooldown: -1
+  srSizeY: 1
   lastFrame: 1
   enabledBehaviour: 0
   startFall: 0
@@ -412,6 +419,7 @@ MonoBehaviour:
   frameNum: 0
   maxCooldown: -1
   currentCooldown: 1
+  srSizeY: 1
   lastFrame: 1
   enabledBehaviour: 0
   stunDuration: 0
@@ -431,6 +439,7 @@ MonoBehaviour:
   frameNum: 0
   maxCooldown: 90
   currentCooldown: -1
+  srSizeY: 1
   lastFrame: 1
   enabledBehaviour: 0
   blockedAttack: 0
@@ -451,6 +460,7 @@ MonoBehaviour:
   frameNum: 0
   maxCooldown: -1
   currentCooldown: 1
+  srSizeY: 1
   lastFrame: 1
   enabledBehaviour: 0
   playerCenter: {fileID: 6502589514095023719}
@@ -470,6 +480,7 @@ MonoBehaviour:
   frameNum: 0
   maxCooldown: 24
   currentCooldown: -1
+  srSizeY: 1
   lastFrame: 1
   enabledBehaviour: 0
   goLeft: 0
@@ -490,6 +501,7 @@ MonoBehaviour:
   frameNum: 0
   maxCooldown: 42
   currentCooldown: -1
+  srSizeY: 1
   lastFrame: 1
   enabledBehaviour: 0
   attackAnim: Attack
@@ -508,6 +520,7 @@ MonoBehaviour:
   frameNum: 0
   maxCooldown: 60
   currentCooldown: -1
+  srSizeY: 1
   lastFrame: 1
   enabledBehaviour: 0
   goLeft: 0
@@ -528,9 +541,30 @@ MonoBehaviour:
   frameNum: 0
   maxCooldown: 42
   currentCooldown: -1
+  srSizeY: 1
   lastFrame: 1
   enabledBehaviour: 0
   ySpawnPos: 15
+  attackAnim: Attack
+--- !u!114 &5332357486040211611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6281997457829084022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3781470d86756a44892fc1fd842f8b7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frameNum: 0
+  maxCooldown: 30
+  currentCooldown: -1
+  srSizeY: 1
+  lastFrame: 1
+  enabledBehaviour: 0
+  ySpawnPos: -0.5
   attackAnim: Attack
 --- !u!1 &6281997458381316374
 GameObject:
@@ -773,6 +807,7 @@ MonoBehaviour:
   frameNum: 0
   maxCooldown: 1
   currentCooldown: 1
+  srSizeY: 1
   lastFrame: 0
   enabledBehaviour: 1
   spellName: 
