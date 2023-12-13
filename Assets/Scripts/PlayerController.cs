@@ -84,6 +84,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
     PlayerLingeringSpirit playerLingeringSpirit;
     PlayerLightning playerLightning;
     PlayerSeismicStrike playerSeismicStrike;
+    PlayerWhirlwind playerWhirlwind;
 
     PlayerBlock playerBlock;
     PlayerBurst playerBurst;
@@ -186,6 +187,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
         playerLingeringSpirit = GetComponent<PlayerLingeringSpirit>();
         playerLightning = GetComponent<PlayerLightning>();
         playerSeismicStrike = GetComponent<PlayerSeismicStrike>();
+        playerWhirlwind = GetComponent<PlayerWhirlwind>();
 
         playerBlock = GetComponent<PlayerBlock>();
         playerBurst = GetComponent<PlayerBurst>();
@@ -196,6 +198,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
         playerAttacks.Add(PlayerActions.LINGERING_SPIRIT, playerLingeringSpirit);
         playerAttacks.Add(PlayerActions.LIGHTNING, playerLightning);
         playerAttacks.Add(PlayerActions.SEISMIC_STRIKE, playerSeismicStrike);
+        playerAttacks.Add(PlayerActions.WHIRLWIND, playerWhirlwind);
     }
 
     void SetPlayerInfo()
@@ -449,6 +452,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     break;
 
                 case PlayerActions.WHIRLWIND:
+                    currentFrameBehaviour = playerWhirlwind;
                     break;
 
                 case PlayerActions.STUNNED:

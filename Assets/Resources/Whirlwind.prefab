@@ -189,9 +189,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.05}
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.4
+  m_Radius: 1
 --- !u!50 &8284633437816278538
 Rigidbody2D:
   serializedVersion: 4
@@ -333,7 +333,7 @@ MonoBehaviour:
   knockbackIncrease: 10
   knockbackForce: 40
   knockbackDirection: {x: 1, y: 0}
-  stunDuration: 6
+  stunDuration: 12
   ownerNum: -1
   owner: {fileID: 0}
   playerCenter: {fileID: 0}
