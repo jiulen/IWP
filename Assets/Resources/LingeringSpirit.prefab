@@ -251,6 +251,9 @@ MonoBehaviour:
   stunDuration: 6
   ownerNum: -1
   owner: {fileID: 0}
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
   maxHomingFrames: 60
   minHomingMultiplier: 0.2
   startSpell: 0

@@ -20,6 +20,8 @@ public class SpellFrameBehaviour : FrameBehaviour
     public int ownerNum = -1;
     public PlayerController owner;
 
+    [SerializeField] protected LayerMask groundLayerMask;
+
     protected override void Awake()
     {
         base.Awake();
@@ -43,13 +45,23 @@ public class SpellFrameBehaviour : FrameBehaviour
                 HitPlayer(playerController);
             }
         }
+
+        if (((1 << collision.gameObject.layer) & groundLayerMask) != 0)
+        {
+            HitGround();
+        }
     }
 
     protected virtual void HitPlayer(PlayerController playerController)
     {
 
     }
-    
+
+    protected virtual void HitGround()
+    {
+
+    }
+
     protected virtual void GiveMeter(PlayerController attacker, PlayerController defender)
     {
         attacker.AddMeter(stunDuration * 0.001f);

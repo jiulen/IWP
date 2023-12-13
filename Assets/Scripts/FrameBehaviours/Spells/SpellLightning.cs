@@ -6,7 +6,6 @@ public class SpellLightning : SpellFrameBehaviour
 {
     [SerializeField] SpriteRenderer boltRenderer, hitRenderer;
     [SerializeField] Collider2D lightningCollider;
-    [SerializeField] LayerMask groundLayerMask;
 
     [SerializeField] string lightningAnim;
 

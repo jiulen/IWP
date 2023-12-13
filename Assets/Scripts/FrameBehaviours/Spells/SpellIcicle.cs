@@ -90,4 +90,13 @@ public class SpellIcicle : SpellFrameBehaviour
         playerController.TakeHit(knockbackIncrease, knockbackForce * knockbackDirection, stunDuration);
         GiveMeter(owner, playerController);
     }
+
+    protected override void HitGround()
+    {
+        rb.velocity = Vector2.zero;
+        icicleCollider.enabled = false;
+
+        startPhase_2 = true;
+        phase = 2;
+    }
 }

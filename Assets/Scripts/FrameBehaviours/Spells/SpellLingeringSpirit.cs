@@ -108,4 +108,13 @@ public class SpellLingeringSpirit : SpellFrameBehaviour
         playerController.TakeHit(knockbackIncrease, knockbackForce * knockbackDirection, stunDuration);
         GiveMeter(owner, playerController);
     }
+
+    protected override void HitGround()
+    {
+        spiritCollider.enabled = false;
+
+        startPhase_1 = true;
+        phase = 1;
+        rb.velocity = Vector2.zero;
+    }
 }
