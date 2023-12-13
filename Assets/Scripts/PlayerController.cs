@@ -574,7 +574,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
             playerBlock.ShrinkSpellBlock();
 
             stunDuration = 6; //reduce stun duration to 6 frames (6 frames is least possible stun time)
-            finalKnockbackMultiplier *= 0.25f; //only take 25% of knockback
+            finalKnockbackMultiplier *= 0.5f; //only take 25% of knockback
             finalKnockbackIncrease /= 2; //only take 50% of knockback increase (rounded down)
         }
 
