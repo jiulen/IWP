@@ -141,7 +141,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PlayerWalk_0
+      name: PlayerFall_0
       rect:
         serializedVersion: 2
         x: 0
@@ -162,7 +162,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerWalk_1
+      name: PlayerFall_1
       rect:
         serializedVersion: 2
         x: 16
@@ -183,7 +183,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerWalk_2
+      name: PlayerFall_2
       rect:
         serializedVersion: 2
         x: 32
@@ -204,7 +204,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerWalk_3
+      name: PlayerFall_3
       rect:
         serializedVersion: 2
         x: 48
@@ -225,7 +225,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerWalk_4
+      name: PlayerFall_4
       rect:
         serializedVersion: 2
         x: 64
@@ -246,7 +246,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerWalk_5
+      name: PlayerFall_5
       rect:
         serializedVersion: 2
         x: 80
@@ -267,7 +267,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerRoll_0
+      name: PlayerHurt_0
       rect:
         serializedVersion: 2
         x: 0
@@ -288,7 +288,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerRoll_1
+      name: PlayerHurt_1
       rect:
         serializedVersion: 2
         x: 16
@@ -309,7 +309,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerRoll_2
+      name: PlayerHurt_2
       rect:
         serializedVersion: 2
         x: 32
@@ -330,28 +330,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerRoll_3
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 64
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 53fba4e2c218faa4ea537dbd913d3247
-      internalID: 204965106
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PlayerRoll_4
+      name: PlayerBurst_0
       rect:
         serializedVersion: 2
         x: 64
@@ -372,7 +351,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerJump_0
+      name: PlayerAttackA_0
       rect:
         serializedVersion: 2
         x: 0
@@ -393,7 +372,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerJump_1
+      name: PlayerAttackA_1
       rect:
         serializedVersion: 2
         x: 16
@@ -414,7 +393,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerJump_2
+      name: PlayerAttackA_2
       rect:
         serializedVersion: 2
         x: 32
@@ -435,7 +414,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerJump_3
+      name: PlayerAttackB_0
       rect:
         serializedVersion: 2
         x: 48
@@ -456,7 +435,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerJump_4
+      name: PlayerAttackB_1
       rect:
         serializedVersion: 2
         x: 64
@@ -477,7 +456,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerJump_5
+      name: PlayerAttackB_2
       rect:
         serializedVersion: 2
         x: 80
@@ -498,7 +477,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerFall_0
+      name: PlayerAttackC_0
       rect:
         serializedVersion: 2
         x: 0
@@ -519,7 +498,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerFall_1
+      name: PlayerAttackC_1
       rect:
         serializedVersion: 2
         x: 16
@@ -540,28 +519,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerFall_2
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 32
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 087c8452e9db5e148ad09ace243292bd
-      internalID: -1710092012
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PlayerFall_3
+      name: PlayerAttackD_0
       rect:
         serializedVersion: 2
         x: 48
@@ -582,7 +540,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerFall_4
+      name: PlayerAttackD_1
       rect:
         serializedVersion: 2
         x: 64
@@ -603,7 +561,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerFall_5
+      name: PlayerAttackD_2
       rect:
         serializedVersion: 2
         x: 80
@@ -624,7 +582,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerHurt_0
+      name: PlayerAttackE_0
       rect:
         serializedVersion: 2
         x: 0
@@ -645,7 +603,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerHurt_1
+      name: PlayerAttackE_1
       rect:
         serializedVersion: 2
         x: 16
@@ -666,7 +624,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerHurt_2
+      name: PlayerAttackE_2
       rect:
         serializedVersion: 2
         x: 32
@@ -687,53 +645,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerBurst_0
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 16
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3734e910365fc8246a0d863b0354975f
-      internalID: -669439446
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PlayerIdle_0
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 16
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape:
-      - - {x: -5, y: 7}
-        - {x: -5, y: -8}
-        - {x: 5, y: -8}
-        - {x: 5, y: 7}
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2b4459c3b660ada44a68ff001a5b2c4c
-      internalID: 1320373268
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PlayerAttack_0
+      name: PlayerAttackF_0
       rect:
         serializedVersion: 2
         x: 0
@@ -754,7 +666,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerAttack_1
+      name: PlayerAttackF_1
       rect:
         serializedVersion: 2
         x: 16
@@ -775,28 +687,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerAttack_2
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b0b1ffb5573f94f49af468a8bd1f2af4
-      internalID: 1618046596
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PlayerStomp_0
+      name: PlayerAttackG_0
       rect:
         serializedVersion: 2
         x: 48
@@ -817,7 +708,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerStomp_1
+      name: PlayerAttackG_1
       rect:
         serializedVersion: 2
         x: 64
@@ -838,7 +729,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerStomp_2
+      name: PlayerAttackG_2
       rect:
         serializedVersion: 2
         x: 80
@@ -858,6 +749,384 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: PlayerWalk_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85026ae00e5ca104fbb8f4ea8a3fefef
+      internalID: 1495961203
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerWalk_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 128
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9481abc3a13660542acc1af8e5a11c70
+      internalID: -201922413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerWalk_2
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 128
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d0559d953d219147a9d243000f61c6d
+      internalID: 1154621805
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerWalk_3
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 128
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48ea2c7ff2b7dd443b46a12eea8e8c8e
+      internalID: 739975762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerWalk_4
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 128
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c4b35fd3199fbf4fa13d48cc47e222d
+      internalID: 866052609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerWalk_5
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 128
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9262bb63a76b6c140bbfab1a348ed1b2
+      internalID: 922867508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerRoll_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ca6b6894d6e81e4cab01faa613b40fa
+      internalID: -1380530443
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerRoll_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77f6d0c813070a949a2cb1b9f6acbdfb
+      internalID: -362793232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerRoll_2
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44aae288a96671e428278082d3d42252
+      internalID: -447086407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerRoll_3
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ab107b91d622ab4fa5aab858f81d127
+      internalID: 760986168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerRoll_4
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8c6ff89f399cc0488babce9e6a4aba4
+      internalID: 1386386806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerJump_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31c8da308f29fa6419f1c3b3d9e825ed
+      internalID: -1112377161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerJump_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 96
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0594cbdecc4cc584a9eda83ea673ee42
+      internalID: 1452631380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerJump_2
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32289d2f7786a8140914c1834acbff80
+      internalID: -596255036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerJump_3
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 96
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 781b5bfc762781340a77f03ec61273bc
+      internalID: -708136496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerJump_4
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 96
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8213082f05cbcd643a9ff3d895bdbe59
+      internalID: 851738310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerJump_5
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 96
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48d8287e56466ba4b933c010c6e010f1
+      internalID: -770164830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerIdle_0
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b1fe75cd7fb8a24c805f427c4eb16a7
+      internalID: -18722854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -869,40 +1138,53 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      PlayerStomp_1: -622817581
-      PlayerStomp_2: -824808655
-      PlayerStomp_0: 1728612089
-      PlayerRoll_4: -221473901
-      PlayerJump_0: -1500794644
-      PlayerWalk_5: -1012009292
-      PlayerJump_4: 1146224705
-      PlayerFall_0: 1164943089
-      PlayerIdle_0: 1320373268
-      PlayerRoll_2: -2010949733
-      PlayerRoll_1: -1625009767
-      PlayerFall_4: -1475388976
-      PlayerHurt_0: -736749361
-      PlayerRoll_0: 1692685127
-      PlayerFall_1: 398293092
-      PlayerFall_5: -428669587
-      PlayerFall_3: 330313225
-      PlayerAttack_0: 352589405
-      PlayerAttack_2: 1618046596
-      PlayerWalk_4: 1050875240
-      PlayerWalk_1: 308616323
-      PlayerWalk_2: -846587987
-      PlayerWalk_0: 1324369405
-      PlayerWalk_3: 53338735
-      PlayerJump_2: 736767045
-      PlayerJump_1: -1590251904
-      PlayerBurst_0: -669439446
-      PlayerJump_3: 540270776
-      PlayerHurt_2: 1464498917
-      PlayerAttack_1: 1578611570
-      PlayerFall_2: -1710092012
-      PlayerRoll_3: 204965106
-      PlayerHurt_1: 523551268
-      PlayerJump_5: 1682465730
+      PlayerAttackE_0: -736749361
+      PlayerRoll_4: 1386386806
+      PlayerAttackD_2: -428669587
+      PlayerFall_0: 1324369405
+      PlayerAttackG_2: -824808655
+      PlayerAttackC_0: 1164943089
+      PlayerAttackD_1: -1475388976
+      PlayerRoll_1: -362793232
+      PlayerFall_3: 53338735
+      PlayerAttackE_2: 1464498917
+      PlayerWalk_4: 866052609
+      PlayerAttackA_0: -1500794644
+      PlayerWalk_1: -201922413
+      PlayerBurst_0: -221473901
+      PlayerJump_3: -708136496
+      PlayerWalk_2: 1154621805
+      PlayerAttackB_0: 540270776
+      PlayerHurt_2: -2010949733
+      PlayerFall_2: -846587987
+      PlayerRoll_3: 760986168
+      PlayerHurt_1: -1625009767
+      PlayerJump_5: -770164830
+      PlayerAttackF_0: 352589405
+      PlayerJump_0: -1112377161
+      PlayerWalk_5: 922867508
+      PlayerJump_4: 851738310
+      PlayerAttackA_2: 736767045
+      PlayerAttackB_2: 1682465730
+      PlayerIdle_0: -18722854
+      PlayerRoll_2: -447086407
+      PlayerAttackF_1: 1578611570
+      PlayerFall_4: 1050875240
+      PlayerAttackD_0: 330313225
+      PlayerHurt_0: 1692685127
+      PlayerRoll_0: -1380530443
+      PlayerAttackC_1: 398293092
+      PlayerAttackB_1: 1146224705
+      PlayerFall_1: 308616323
+      PlayerFall_5: -1012009292
+      PlayerWalk_3: 739975762
+      PlayerWalk_0: 1495961203
+      PlayerJump_2: -596255036
+      PlayerJump_1: 1452631380
+      PlayerAttackG_0: 1728612089
+      PlayerAttackG_1: -622817581
+      PlayerAttackE_1: 523551268
+      PlayerAttackA_1: -1590251904
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
