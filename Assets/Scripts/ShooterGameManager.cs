@@ -230,8 +230,11 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
                         }
                         else if (currentController.allowMove)
                         {
-                            currentController.playerCurrentAction = selectedAction;
-                            if (selectedAction != PlayerController.PlayerActions.SKIP) currentController.currentFrameNum = 0;
+                            if (selectedAction != PlayerController.PlayerActions.CONTINUE_BLOCK)
+                            {
+                                currentController.playerCurrentAction = selectedAction;
+                                if (selectedAction != PlayerController.PlayerActions.SKIP) currentController.currentFrameNum = 0;
+                            }
 
                             if (p.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_FLIP, out object playerFlip))
                             {

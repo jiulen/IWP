@@ -42,7 +42,7 @@ public class SpellBlock : SpellFrameBehaviour
                     AnimatorChangeAnimation(currentAnimName);
                     break;
 
-                case 23: //end
+                case 11: //end
                     EndAnimation();
                     break;
             }

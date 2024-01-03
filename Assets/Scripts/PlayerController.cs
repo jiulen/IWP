@@ -89,6 +89,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
     PlayerWhirlwind playerWhirlwind;
 
     PlayerBlock playerBlock;
+    PlayerCancelBlock playerCancelBlock;
     PlayerBurst playerBurst;
 
     //Store attacks for their cooldowns
@@ -192,9 +193,9 @@ public class PlayerController : MonoBehaviour, IPunObservable
         playerWhirlwind = GetComponent<PlayerWhirlwind>();
 
         playerBlock = GetComponent<PlayerBlock>();
+        playerCancelBlock = GetComponent<PlayerCancelBlock>();
         playerBurst = GetComponent<PlayerBurst>();
 
-        playerAttacks.Add(PlayerActions.BLOCK, playerBlock);
         playerAttacks.Add(PlayerActions.ICICLE, playerIcicle);
         playerAttacks.Add(PlayerActions.EXPLOSION, playerExplosion);
         playerAttacks.Add(PlayerActions.LINGERING_SPIRIT, playerLingeringSpirit);
@@ -428,6 +429,11 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
                 case PlayerActions.BLOCK:
                     currentFrameBehaviour = playerBlock;
+                    break;
+
+                case PlayerActions.STOP_BLOCK:
+                    currentFrameBehaviour = playerCancelBlock;
+                    Debug.Log("cancel block");
                     break;
 
                 case PlayerActions.BURST:

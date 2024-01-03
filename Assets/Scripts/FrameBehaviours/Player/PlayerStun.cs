@@ -18,7 +18,7 @@ public class PlayerStun : PlayerFrameBehaviour
                 break;
         }
 
-        if (frameNum >= stunDuration && ShooterGameManager.Instance.currentFrame % 6 == 5)
+        if (frameNum >= stunDuration)
         {
             EndAnimation();
         }
