@@ -7,9 +7,13 @@ public class PlayerIcicle : PlayerFrameBehaviour
 {
     public bool goLeft = false;
 
-    [SerializeField] Transform icicleSpawnPoint;
+    [SerializeField] Transform icicleSpawnPoint, iciclePos1, iciclePos2;
 
     [SerializeField] string attackAnim;
+
+    SpellIcicle spellIcicle;
+
+    public bool icicleEnded = false;
 
     public override void GoToFrame()
     {
@@ -18,40 +22,53 @@ public class PlayerIcicle : PlayerFrameBehaviour
             case 0:
                 currentAnimName = attackAnim;
                 AnimatorChangeAnimation(currentAnimName);
-                break;
-            case 17: //create icicle + end
+
                 GameObject icicleObj = ShooterGameManager.Instance.GetPooledSpell("Icicle");
 
-                SpellIcicle spellIcicle = icicleObj.GetComponent<SpellIcicle>();
+                spellIcicle = icicleObj.GetComponent<SpellIcicle>();
                 spellIcicle.spawnPos = icicleSpawnPoint.position;
                 if (goLeft)
                 {
-                    spellIcicle.targetDir = Vector2.left;
                     spellIcicle.knockbackDirection = Vector2.left;
-                }
-                else
-                {
-                    spellIcicle.targetDir = Vector2.right;
-                    spellIcicle.knockbackDirection = Vector2.right;
-                }
-                spellIcicle.ownerNum = playerController.playerNum;
-                spellIcicle.owner = playerController;
-
-                icicleObj.transform.rotation = Quaternion.identity;
-
-                if (goLeft)
-                {
                     icicleObj.transform.localScale = new Vector3(-1, 1, 1);
                 }
                 else
                 {
+                    spellIcicle.knockbackDirection = Vector2.right;
                     icicleObj.transform.localScale = new Vector3(1, 1, 1);
                 }
+                spellIcicle.ownerNum = playerController.playerNum;
+                spellIcicle.owner = playerController;
+                spellIcicle.playerIcicle = this;
 
+                icicleObj.transform.rotation = Quaternion.identity;
+
+                spellIcicle.position0 = icicleSpawnPoint;
+                spellIcicle.position1 = iciclePos1;
+                spellIcicle.position2 = iciclePos2;
+
+                //run frame 0 of icicle
+                ++spellIcicle.frameNum;
+                spellIcicle.GoToFrame();
+
+                icicleEnded = false;
+
+                break;
+            case 32: //end
                 EndAnimation();
                 break;
         }
 
         AnimatorSetFrame();
+    }
+
+    public override void EndAnimation() //dont disable behaviour here, do in player controller
+    {
+        base.EndAnimation();
+
+        if (!icicleEnded)
+        {
+            ShooterGameManager.Instance.ReturnPooledObject(spellIcicle);
+        }
     }
 }

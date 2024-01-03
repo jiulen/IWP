@@ -245,10 +245,10 @@ MonoBehaviour:
   spawnPos: {x: 0, y: 0, z: 0}
   phase: 0
   targetDir: {x: 0, y: 0}
-  knockbackIncrease: 5
-  knockbackForce: 20
+  knockbackIncrease: 1
+  knockbackForce: 4
   knockbackDirection: {x: 1, y: 0}
-  stunDuration: 6
+  stunDuration: 4
   ownerNum: -1
   owner: {fileID: 0}
   groundLayerMask:
@@ -256,6 +256,9 @@ MonoBehaviour:
     m_Bits: 128
   icicleSpeed: 1
   icicleCollider: {fileID: 17488593414969843}
+  playerIcicle: {fileID: 0}
+  position0: {fileID: 0}
+  position1: {fileID: 0}
+  position2: {fileID: 0}
   startAnim: Start
-  repeatableAnim: Repeatable
   hitAnim: Hit

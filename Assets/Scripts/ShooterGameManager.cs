@@ -508,7 +508,7 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         return returnSpellObj;
     }
 
-    void ReturnPooledObject(SpellFrameBehaviour spell)
+    public void ReturnPooledObject(SpellFrameBehaviour spell)
     {
         spell.activeSpell = false;
         spell.enabledBehaviour = false;

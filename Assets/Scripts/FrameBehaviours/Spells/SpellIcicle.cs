@@ -7,20 +7,40 @@ public class SpellIcicle : SpellFrameBehaviour
     [SerializeField] float icicleSpeed;
     [SerializeField] Collider2D icicleCollider;
 
+    public PlayerIcicle playerIcicle;
+
+    public Transform position0, position1, position2;
+
+    bool hitPlayer = false;
+
     //Phases
-    //0 is start, 1 is repeatable, 2 is hit
+    //0 is start and damaging, 1 is hit
 
-    bool startPhase_1, startPhase_2;
+    bool startPhase_1;
 
-    [SerializeField] string startAnim, repeatableAnim, hitAnim;
+    [SerializeField] string startAnim, hitAnim;
 
     public override void GoToFrame()
     {
         if (phase == 0)
         {
+            if (frameNum < 3)
+            {
+                transform.position = position0.position;
+            }
+            else if (frameNum < 9)
+            {
+                transform.position = position1.position;
+            }
+            else
+            {
+                transform.position = position2.position;
+            }
+
             switch (frameNum)
             {
                 case 0:
+                    hitPlayer = false;
                     icicleCollider.enabled = false;
 
                     transform.position = spawnPos;
@@ -28,11 +48,33 @@ public class SpellIcicle : SpellFrameBehaviour
                     currentAnimName = startAnim;
                     AnimatorChangeAnimation(currentAnimName);
                     break;
-                case 17: //end start
-                    rb.velocity = targetDir * icicleSpeed;
+                case 9:
+                    icicleCollider.enabled = true;
+                    break;
+                case 12:
+                    icicleCollider.enabled = true;
+                    break;
+                case 15:
+                    icicleCollider.enabled = true;
+                    break;
+                case 18:
+                    icicleCollider.enabled = true;
+                    break;
+                case 21:
+                    icicleCollider.enabled = true;
+                    break;
+                case 23: //end start
+                    if (hitPlayer)
+                    {
+                        startPhase_1 = true;
+                        phase = 1;
+                        playerIcicle.EndAnimation();
+                    }
+                    else
+                    {
+                        EndAnimation();
+                    }
 
-                    startPhase_1 = true;
-                    phase = 1;
                     break;
             }
         }
@@ -40,28 +82,9 @@ public class SpellIcicle : SpellFrameBehaviour
         {
             if (startPhase_1)
             {
-                icicleCollider.enabled = true;
-
                 frameNum = 0;
-
-                currentAnimName = repeatableAnim;
-                AnimatorChangeAnimation(currentAnimName);
 
                 startPhase_1 = false;
-            }
-
-            if (frameNum > 59)
-            {
-                frameNum %= 60;
-            }
-        }
-        else if (phase == 2)
-        {
-            if (startPhase_2)
-            {
-                frameNum = 0;
-
-                startPhase_2 = false;
             }
 
             switch (frameNum)
@@ -70,7 +93,7 @@ public class SpellIcicle : SpellFrameBehaviour
                     currentAnimName = hitAnim;
                     AnimatorChangeAnimation(currentAnimName);
                     break;
-                case 41: //end
+                case 20: //end
                     EndAnimation();
                     break;
             }
@@ -81,22 +104,17 @@ public class SpellIcicle : SpellFrameBehaviour
 
     protected override void HitPlayer(PlayerController playerController)
     {
-        rb.velocity = Vector2.zero;
+        hitPlayer = true;
         icicleCollider.enabled = false;
-
-        startPhase_2 = true;
-        phase = 2;
 
         playerController.TakeHit(knockbackIncrease, knockbackForce * knockbackDirection, stunDuration);
         GiveMeter(owner, playerController);
     }
 
-    protected override void HitGround()
+    public override void EndAnimation()
     {
-        rb.velocity = Vector2.zero;
-        icicleCollider.enabled = false;
+        base.EndAnimation();
 
-        startPhase_2 = true;
-        phase = 2;
+        playerIcicle.icicleEnded = true;
     }
 }
