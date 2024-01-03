@@ -14,7 +14,7 @@ public class PlayerWait : PlayerFrameBehaviour
                 currentAnimName = waitAnim;
                 AnimatorChangeAnimation(currentAnimName);
                 break;
-            case 5: //end
+            case 11: //end
                 EndAnimation();
                 break;
         }
