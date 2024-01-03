@@ -10,9 +10,17 @@ public class ControllerAction : MonoBehaviour
 
     Toggle thisToggle;
 
-    private void Awake()
+    public void InitToggle()
     {
         thisToggle = GetComponent<Toggle>();
+        /*if (thisToggle == null)
+        {
+            Debug.Log(gameObject.name + " not set");
+        }
+        else
+        {
+            Debug.Log(gameObject.name + " set");
+        }*/
     }
 
     public void OnActionToggled()

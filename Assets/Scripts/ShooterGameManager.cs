@@ -146,7 +146,13 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
                 {
                     if ((bool)showControls)
                     {
-                        //set grounded first
+                        //set player current action first
+                        if (changedProps.TryGetValue(ShooterGameInfo.PLAYER_CURRENT_ACTION, out object playerCurrAction))
+                        {
+                            localPlayerController.playerCurrentAction = (PlayerController.PlayerActions)(int)playerCurrAction;
+                        }
+
+                        //set grounded last
                         if (changedProps.TryGetValue(ShooterGameInfo.PLAYER_GROUNDED, out object grounded))
                         {
                             localPlayerController.ForceSetGrounded((bool)grounded);
@@ -417,7 +423,27 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         PhotonNetwork.CurrentRoom.SetCustomProperties(roomProps);
 
         //check can move
+
+        bool localCanMove, otherCanMove = false;
+
         if (localPlayerController.IsIdle() || (localPlayerController.IsStunned() && localPlayerController.CanBurst()))
+        {
+            localCanMove = true;
+        }
+        else
+        {
+            localCanMove = false;
+        }
+        if (otherPlayerController.IsIdle() || (otherPlayerController.IsStunned() && otherPlayerController.CanBurst()))
+        {
+            otherCanMove = true;
+        }
+        else
+        {
+            otherCanMove = false;
+        }
+
+        if (localCanMove || (localPlayerController.IsInterruptable() && otherCanMove)) //move can be interrupted during opponents turn
         {
             localPlayerController.allowMove = true;
         }
@@ -426,7 +452,7 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
             localPlayerController.allowMove = false;
         }
 
-        if (otherPlayerController.IsIdle() || (otherPlayerController.IsStunned() && otherPlayerController.CanBurst()))
+        if (otherCanMove || (otherPlayerController.IsInterruptable() && localCanMove)) //move can be interrupted during opponents turn
         {
             otherPlayerController.allowMove = true;
         }
@@ -434,8 +460,6 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         {
             otherPlayerController.allowMove = false;
         }
-
-        
 
         foreach (Player p in PhotonNetwork.PlayerList)
         {
@@ -447,7 +471,8 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
                     Hashtable playerPauseProps = new Hashtable() { { ShooterGameInfo.PLAYER_SELECTED_ACTION, (int)PlayerController.PlayerActions.NONE },
                                                                    { ShooterGameInfo.PLAYER_SHOW_CONTROLS, true },
-                                                                   { ShooterGameInfo.PLAYER_GROUNDED, playerIsGrounded } };
+                                                                   { ShooterGameInfo.PLAYER_GROUNDED, playerIsGrounded },
+                                                                   { ShooterGameInfo.PLAYER_CURRENT_ACTION, (int)localPlayerController.playerCurrentAction } };
 
                     p.SetCustomProperties(playerPauseProps);
                 }
@@ -460,7 +485,8 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
                     Hashtable playerPauseProps = new Hashtable() { { ShooterGameInfo.PLAYER_SELECTED_ACTION, (int)PlayerController.PlayerActions.NONE },
                                                                    { ShooterGameInfo.PLAYER_SHOW_CONTROLS, true },
-                                                                   { ShooterGameInfo.PLAYER_GROUNDED, playerIsGrounded } };
+                                                                   { ShooterGameInfo.PLAYER_GROUNDED, playerIsGrounded },
+                                                                   { ShooterGameInfo.PLAYER_CURRENT_ACTION, (int)otherPlayerController.playerCurrentAction } };
 
                     p.SetCustomProperties(playerPauseProps);
                 }

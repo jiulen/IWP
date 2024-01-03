@@ -319,7 +319,7 @@ MonoBehaviour:
   isGrounded: 1
   facingLeft: 0
   toFlip: 0
-  playerCurrentAction: 16
+  playerCurrentAction: 19
   currentFrameNum: 0
   burstMeterValue: 0
   knockbackMultiplier: 0
@@ -523,6 +523,7 @@ MonoBehaviour:
   iciclePos1: {fileID: 4818092924675309953}
   iciclePos2: {fileID: 8361046887235073169}
   attackAnim: AttackE
+  icicleEnded: 0
 --- !u!114 &5693845008507408846
 MonoBehaviour:
   m_ObjectHideFlags: 0

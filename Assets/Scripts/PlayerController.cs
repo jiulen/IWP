@@ -56,6 +56,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
         //Others
         STUNNED,
+        CONTINUE_BLOCK,
+        STOP_BLOCK,
         NONE
     }
 
@@ -245,41 +247,49 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
         if (!forceBurst)
         {
-            //Check movement
-            if (!isGrounded)
+            bool blocking = playerCurrentAction == PlayerActions.BLOCK;
+            if (!blocking)
             {
-                unavailableActions.Add(PlayerActions.WALK_LEFT);
-                unavailableActions.Add(PlayerActions.WALK_RIGHT);
-
-                if (airOptionsAvail <= 0)
+                //Check movement
+                if (!isGrounded)
                 {
-                    unavailableActions.Add(PlayerActions.ROLL);
+                    unavailableActions.Add(PlayerActions.WALK_LEFT);
+                    unavailableActions.Add(PlayerActions.WALK_RIGHT);
 
-                    unavailableActions.Add(PlayerActions.JUMP);
+                    if (airOptionsAvail <= 0)
+                    {
+                        unavailableActions.Add(PlayerActions.ROLL);
 
+                        unavailableActions.Add(PlayerActions.JUMP);
+
+                        unavailableActions.Add(PlayerActions.FALL);
+                    }
+                }
+                else
+                {
                     unavailableActions.Add(PlayerActions.FALL);
                 }
-            }
-            else
-            {
-                unavailableActions.Add(PlayerActions.FALL);
-            }
 
-            //Check burst (cant burst without meter)
-            if (!CanBurst())
-            {
-                unavailableActions.Add(PlayerActions.BURST);
-            }
-            //Add skip (skip only for force burst)
-            unavailableActions.Add(PlayerActions.SKIP);
-
-            //Check attacks (cant use attacks on cooldown)
-            foreach (KeyValuePair<PlayerActions, PlayerFrameBehaviour> playerAttack in playerAttacks)
-            {
-                if (playerAttack.Value.currentCooldown >= 0)
+                //Check burst (cant burst without meter)
+                if (!CanBurst())
                 {
-                    unavailableActions.Add(playerAttack.Key);
+                    unavailableActions.Add(PlayerActions.BURST);
                 }
+                //Add skip (skip only for force burst)
+                unavailableActions.Add(PlayerActions.SKIP);
+
+                //Check attacks (cant use attacks on cooldown)
+                foreach (KeyValuePair<PlayerActions, PlayerFrameBehaviour> playerAttack in playerAttacks)
+                {
+                    if (playerAttack.Value.currentCooldown >= 0)
+                    {
+                        unavailableActions.Add(playerAttack.Key);
+                    }
+                }
+
+                //Add continue and stop block
+                unavailableActions.Add(PlayerActions.CONTINUE_BLOCK);
+                unavailableActions.Add(PlayerActions.STOP_BLOCK);
             }
         }
     }
@@ -294,6 +304,14 @@ public class PlayerController : MonoBehaviour, IPunObservable
         return playerCurrentAction == PlayerActions.NONE;
     }
 
+    public bool IsInterruptable()
+    {
+        return (playerCurrentAction == PlayerActions.WAIT) ||
+               (playerCurrentAction == PlayerActions.WALK_LEFT) ||
+               (playerCurrentAction == PlayerActions.WALK_RIGHT) || 
+               (playerCurrentAction == PlayerActions.BLOCK);
+    }
+
     public void ShowControls(bool active)
     {
         CheckMoves();
@@ -302,7 +320,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
         {
             //Set ui first
             bool forceBurst = !IsIdle() && CanBurst();
-            controllerUI.SetUI(unavailableActions, forceBurst);
+            controllerUI.SetUI(unavailableActions, forceBurst, playerCurrentAction == PlayerActions.BLOCK);
         }
 
         controllerUI.gameObject.SetActive(active);
@@ -320,6 +338,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
         {
             if (currentFrameBehaviour != null) //will only be null the first time
             {
+                //currentFrameBehaviour.EndAnimation();
                 currentFrameBehaviour.DisableBehaviour(); //only disable current behaviour before switching to new one
                 currentFrameBehaviour = null;
             }

@@ -35,7 +35,7 @@ public class ControllerUI : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void SetUI(List<PlayerController.PlayerActions> unavailableActions, bool forceBurst)
+    public void SetUI(List<PlayerController.PlayerActions> unavailableActions, bool forceBurst, bool blocking)
     {
         if (!isInit) InitControllerUI();
 
@@ -51,6 +51,31 @@ public class ControllerUI : MonoBehaviour
             foreach (KeyValuePair<PlayerController.PlayerActions, Toggle> keyValuePair in controllerObjects)
             {
                 if (keyValuePair.Key == PlayerController.PlayerActions.BURST || keyValuePair.Key == PlayerController.PlayerActions.SKIP)
+                {
+                    keyValuePair.Value.gameObject.SetActive(true);
+                    if (selectNew && !selectedFirst)
+                    {
+                        keyValuePair.Value.isOn = true;
+                        selectedFirst = true;
+
+                        selectedAction = keyValuePair.Key;
+                    }
+                }
+                else
+                {
+                    keyValuePair.Value.gameObject.SetActive(false);
+                    keyValuePair.Value.isOn = false;
+                }
+            }
+        }
+        else if (blocking)
+        {
+            selectNew = (selectedAction != PlayerController.PlayerActions.CONTINUE_BLOCK) && (selectedAction != PlayerController.PlayerActions.STOP_BLOCK);
+            bool selectedFirst = false;
+
+            foreach (KeyValuePair<PlayerController.PlayerActions, Toggle> keyValuePair in controllerObjects)
+            {
+                if (keyValuePair.Key == PlayerController.PlayerActions.CONTINUE_BLOCK || keyValuePair.Key == PlayerController.PlayerActions.STOP_BLOCK)
                 {
                     keyValuePair.Value.gameObject.SetActive(true);
                     if (selectNew && !selectedFirst)
@@ -102,6 +127,8 @@ public class ControllerUI : MonoBehaviour
 
         foreach (ControllerAction controllerAction in controllerActions)
         {
+            controllerAction.InitToggle();
+
             controllerObjects.Add(controllerAction.toggleAction, controllerAction.GetComponent<Toggle>());
         }
     }
