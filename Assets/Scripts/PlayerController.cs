@@ -602,6 +602,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
             currentFrameNum = -1;
 
+            rb.velocity = Vector2.zero;
+
             rb.AddForce(finalKnockbackMultiplier * knockbackForce, ForceMode2D.Impulse);
             knockbackMultiplier += finalKnockbackIncrease;
         }
