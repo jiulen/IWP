@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerBlock: PlayerFrameBehaviour
 {
-    public bool blockedAttack;
-
     public SpellBlock spellBlock;
 
     [SerializeField] string blockAnim; //can use same anim as wait
@@ -15,8 +13,6 @@ public class PlayerBlock: PlayerFrameBehaviour
         switch (frameNum)
         {
             case 0:
-                blockedAttack = false;
-
                 //reset spellBlock to start
                 spellBlock.activeSpell = true;
                 spellBlock.enabledBehaviour = true;
@@ -28,12 +24,9 @@ public class PlayerBlock: PlayerFrameBehaviour
                 AnimatorChangeAnimation(currentAnimName);
                 break;
             case 59: //end
-                if (!blockedAttack)
-                {
-                    ShrinkSpellBlock();
+                ShrinkSpellBlock();
 
-                    EndAnimation();
-                }
+                EndAnimation();
                 break;
         }
 

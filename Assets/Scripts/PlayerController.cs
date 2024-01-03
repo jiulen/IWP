@@ -590,28 +590,21 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
     public void TakeHit(int knockbackIncrease, Vector2 knockbackForce, int stunDuration)
     {
-        float finalKnockbackMultiplier = (1 + knockbackMultiplier / 100f);
-        int finalKnockbackIncrease = knockbackIncrease;
-
-        if (playerCurrentAction == PlayerActions.BLOCK && !playerBlock.blockedAttack)
+        if (playerCurrentAction != PlayerActions.BLOCK)
         {
-            playerBlock.blockedAttack = true;
-            playerBlock.ShrinkSpellBlock();
+            float finalKnockbackMultiplier = (1 + knockbackMultiplier / 100f);
+            int finalKnockbackIncrease = knockbackIncrease;
 
-            stunDuration = 6; //reduce stun duration to 6 frames (6 frames is least possible stun time)
-            finalKnockbackMultiplier *= 0.5f; //only take 25% of knockback
-            finalKnockbackIncrease /= 2; //only take 50% of knockback increase (rounded down)
+            if (currentFrameBehaviour != null) currentFrameBehaviour.EndAnimation();
+
+            playerCurrentAction = PlayerActions.STUNNED;
+            playerStun.stunDuration = stunDuration;
+
+            currentFrameNum = -1;
+
+            rb.AddForce(finalKnockbackMultiplier * knockbackForce, ForceMode2D.Impulse);
+            knockbackMultiplier += finalKnockbackIncrease;
         }
-
-        if (currentFrameBehaviour != null) currentFrameBehaviour.EndAnimation();
-
-        playerCurrentAction = PlayerActions.STUNNED;
-        playerStun.stunDuration = stunDuration;
-
-        currentFrameNum = -1;
-
-        rb.AddForce(finalKnockbackMultiplier * knockbackForce, ForceMode2D.Impulse);
-        knockbackMultiplier += finalKnockbackIncrease;
     }
 
     public void AddMeter(float value)
