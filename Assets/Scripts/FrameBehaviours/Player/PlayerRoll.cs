@@ -13,8 +13,6 @@ public class PlayerRoll : PlayerFrameBehaviour
 
     public override void GoToFrame()
     {
-        Debug.Log("rolled");
-
         switch (frameNum)
         {
             case 0:
