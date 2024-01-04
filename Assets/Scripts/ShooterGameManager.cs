@@ -427,7 +427,7 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
         //check can move
 
-        bool localCanMove, otherCanMove = false;
+        bool localCanMove, otherCanMove;
 
         if (localPlayerController.IsIdle() || (localPlayerController.IsStunned() && localPlayerController.CanBurst()))
         {

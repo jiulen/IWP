@@ -8,6 +8,11 @@ public class PlayerBlock: PlayerFrameBehaviour
 
     [SerializeField] string blockAnim; //can use same anim as wait
 
+    [SerializeField] int knockbackIncrease = 0;
+    [SerializeField] float knockbackForce = 0;
+    [SerializeField] Vector2 knockbackDirection;
+    [SerializeField] int stunDuration;
+
     public override void GoToFrame()
     {
         switch (frameNum)
@@ -23,10 +28,10 @@ public class PlayerBlock: PlayerFrameBehaviour
                 currentAnimName = blockAnim;
                 AnimatorChangeAnimation(currentAnimName);
                 break;
-            case 59: //end
+            case 29: //end
                 ShrinkSpellBlock();
 
-                EndAnimation();
+                playerController.TakeHit(knockbackIncrease, knockbackForce * knockbackDirection, stunDuration, true, true);
                 break;
         }
 

@@ -21,7 +21,7 @@ public class SpellBlock : SpellFrameBehaviour
                     currentAnimName = blockingAnim;
                     AnimatorChangeAnimation(currentAnimName);
                     break;
-                case 59: //end blocking
+                case 29: //end blocking
                     phase = 1;
                     break;
             }

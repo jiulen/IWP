@@ -339,7 +339,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
         {
             if (currentFrameBehaviour != null) //will only be null the first time
             {
-                //currentFrameBehaviour.EndAnimation();
+                currentFrameBehaviour.EndAnimation();
                 currentFrameBehaviour.DisableBehaviour(); //only disable current behaviour before switching to new one
                 currentFrameBehaviour = null;
             }
@@ -527,6 +527,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
             if (currentFrameBehaviour.IsAnimationDone())
             {
+                Debug.Log("done");
                 playerCurrentAction = PlayerActions.NONE;
             }
         }
@@ -588,14 +589,12 @@ public class PlayerController : MonoBehaviour, IPunObservable
         return playerCurrentAction == PlayerActions.STUNNED;
     }
 
-    public void TakeHit(int knockbackIncrease, Vector2 knockbackForce, int stunDuration)
+    public void TakeHit(int knockbackIncrease, Vector2 knockbackForce, int stunDuration, bool unblockable = false, bool ignoreMultiplier = false)
     {
-        if (playerCurrentAction != PlayerActions.BLOCK)
+        if (playerCurrentAction != PlayerActions.BLOCK || unblockable)
         {
-            float finalKnockbackMultiplier = (1 + knockbackMultiplier / 100f);
-            int finalKnockbackIncrease = knockbackIncrease;
-
-            if (currentFrameBehaviour != null) currentFrameBehaviour.EndAnimation();
+            float finalKnockbackMultiplier = 1;
+            if (!ignoreMultiplier) finalKnockbackMultiplier = (1 + knockbackMultiplier / 100f);
 
             playerCurrentAction = PlayerActions.STUNNED;
             playerStun.stunDuration = stunDuration;
@@ -605,7 +604,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
             rb.velocity = Vector2.zero;
 
             rb.AddForce(finalKnockbackMultiplier * knockbackForce, ForceMode2D.Impulse);
-            knockbackMultiplier += finalKnockbackIncrease;
+            knockbackMultiplier += knockbackIncrease;
         }
     }
 

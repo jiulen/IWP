@@ -479,9 +479,12 @@ MonoBehaviour:
   srSizeY: 1
   lastFrame: 1
   enabledBehaviour: 0
-  blockedAttack: 0
   spellBlock: {fileID: 1289158970875237763}
   blockAnim: Wait
+  knockbackIncrease: 0
+  knockbackForce: 50
+  knockbackDirection: {x: 0, y: 1}
+  stunDuration: 60
 --- !u!114 &7200402000406417111
 MonoBehaviour:
   m_ObjectHideFlags: 0
