@@ -7,6 +7,8 @@ public class PlayerExplosion : PlayerFrameBehaviour
 {
     [SerializeField] string attackAnim;
 
+    [SerializeField] Transform explosionSpawnPoint;
+
     public override void GoToFrame()
     {
         switch (frameNum)
@@ -15,16 +17,23 @@ public class PlayerExplosion : PlayerFrameBehaviour
                 currentAnimName = attackAnim;
                 AnimatorChangeAnimation(currentAnimName);
                 break;
-            case 17: //create explosion + end
+            case 8: //create explosion
                 GameObject explosionObj = ShooterGameManager.Instance.GetPooledSpell("Explosion");
 
                 SpellExplosion spellExplosion = explosionObj.GetComponent<SpellExplosion>();
-                spellExplosion.spawnPos = playerController.oppTransform.position;
+                spellExplosion.spawnPos = explosionSpawnPoint.position;
                 spellExplosion.ownerNum = playerController.playerNum;
                 spellExplosion.owner = playerController;
+                spellExplosion.playerExplosion = this;
 
                 explosionObj.transform.rotation = Quaternion.identity;
 
+                //run frame 0 of explosion
+                ++spellExplosion.frameNum;
+                spellExplosion.GoToFrame();
+
+                break;
+            case 21: //end
                 EndAnimation();
                 break;
         }

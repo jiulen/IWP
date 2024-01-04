@@ -64,7 +64,7 @@ public class SpellFrameBehaviour : FrameBehaviour
 
     protected virtual void GiveMeter(PlayerController attacker, PlayerController defender)
     {
-        attacker.AddMeter(stunDuration * 0.001f);
-        defender.AddMeter(stunDuration * 0.0005f);
+        attacker.AddMeter(stunDuration / 180f);
+        defender.AddMeter(stunDuration / 360f);
     }
 }

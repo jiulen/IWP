@@ -8,6 +8,10 @@ public class SpellExplosion : SpellFrameBehaviour
 
     [SerializeField] string explosionAnim;
 
+    public Transform position0, position1, position2;
+
+    public PlayerExplosion playerExplosion;
+
     public override void GoToFrame()
     {
         switch (frameNum)
@@ -20,13 +24,13 @@ public class SpellExplosion : SpellFrameBehaviour
                 currentAnimName = explosionAnim;
                 AnimatorChangeAnimation(currentAnimName);
                 break;
-            case 17:
+            case 6:
                 explosionCollider.enabled = true;
                 break;
-            case 29:
+            case 7:
                 explosionCollider.enabled = false;
                 break;
-            case 83: //end
+            case 35: //end
                 EndAnimation();
                 break;
         }
@@ -48,5 +52,7 @@ public class SpellExplosion : SpellFrameBehaviour
 
         playerController.TakeHit(knockbackIncrease, knockbackForce * knockbackDirection, stunDuration);
         GiveMeter(owner, playerController);
+
+        playerExplosion.EndAnimation();
     }
 }

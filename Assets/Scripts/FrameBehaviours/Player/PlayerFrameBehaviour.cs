@@ -17,8 +17,9 @@ public class PlayerFrameBehaviour : FrameBehaviour
         animator = playerController.animator;
     }
 
-    public override void EndAnimation() //dont disable behaviour here, do in player controller
+    public override void EndAnimation()
     {
-        lastFrame = true;
+        base.EndAnimation();
+        //cooldown here
     }
 }

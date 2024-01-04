@@ -392,8 +392,8 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
             localPlayerController.RunFrameBehaviour();
             otherPlayerController.RunFrameBehaviour();
 
-            localPlayerController.AddMeter(0.0005f);
-            otherPlayerController.AddMeter(0.0005f);
+            localPlayerController.AddMeter(1f / 360);
+            otherPlayerController.AddMeter(1f / 360);
 
             Physics2D.Simulate(Time.fixedDeltaTime);
 

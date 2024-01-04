@@ -209,11 +209,6 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
     public virtual void EndAnimation()
     {
         lastFrame = true;
-        DisableBehaviour();
-    }
-
-    public void DisableBehaviour()
-    {
         enabledBehaviour = false;
-    }    
+    }  
 }

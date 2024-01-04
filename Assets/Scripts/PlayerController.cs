@@ -340,7 +340,6 @@ public class PlayerController : MonoBehaviour, IPunObservable
             if (currentFrameBehaviour != null) //will only be null the first time
             {
                 currentFrameBehaviour.EndAnimation();
-                currentFrameBehaviour.DisableBehaviour(); //only disable current behaviour before switching to new one
                 currentFrameBehaviour = null;
             }
 
