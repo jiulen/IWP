@@ -255,8 +255,8 @@ MonoBehaviour:
   spawnPos: {x: 0, y: 0, z: 0}
   phase: 0
   targetDir: {x: 0, y: 0}
-  knockbackIncrease: 25
-  knockbackForce: 100
+  knockbackIncrease: 20
+  knockbackForce: 75
   knockbackDirection: {x: 1, y: 0}
   stunDuration: 24
   ownerNum: -1
@@ -270,6 +270,6 @@ MonoBehaviour:
   whirlwindTransform: {fileID: 0}
   hitPlayer: 0
   grabKnockbackIncrease: 0
-  grabStunDuration: 25
+  grabStunDuration: 24
   grabKnockbackForce: 25
   grabKnockbackDirection: {x: 0, y: 0}

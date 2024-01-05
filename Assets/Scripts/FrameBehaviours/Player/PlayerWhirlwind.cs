@@ -17,7 +17,6 @@ public class PlayerWhirlwind : PlayerFrameBehaviour
     //0 is grab, 1 is throw
 
     int phase = 0;
-    bool startPhase_1 = false;
 
     public override void GoToFrame()
     {
@@ -62,26 +61,17 @@ public class PlayerWhirlwind : PlayerFrameBehaviour
                 case 30: //switch to throw if hit grab
                     if (spellWhirlwind.hitPlayer)
                     {
-                        startPhase_1 = true;
                         phase = 1;
                     }
                     break;
                 case 38: //end after miss grab
-                    Debug.Log("huh");
                     EndAnimation();
                     break;
             }
         }
         else if (phase == 1)
         {
-            Debug.Log("phase 1");
-
-            if (startPhase_1)
-            {
-                frameNum = 0;
-
-                startPhase_1 = false;
-            }
+            frameNum -= 31;
 
             switch (frameNum)
             {
@@ -90,7 +80,6 @@ public class PlayerWhirlwind : PlayerFrameBehaviour
                     AnimatorChangeAnimation(currentAnimName);
                     break;
                 case 11: //end
-                    Debug.Log("end");
                     EndAnimation();
                     break;
             }

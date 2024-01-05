@@ -432,7 +432,6 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
                 case PlayerActions.STOP_BLOCK:
                     currentFrameBehaviour = playerCancelBlock;
-                    Debug.Log("cancel block");
                     break;
 
                 case PlayerActions.BURST:
