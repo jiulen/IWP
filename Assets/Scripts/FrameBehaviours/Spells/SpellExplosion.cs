@@ -8,8 +8,6 @@ public class SpellExplosion : SpellFrameBehaviour
 
     [SerializeField] string explosionAnim;
 
-    public Transform position0, position1, position2;
-
     public PlayerExplosion playerExplosion;
 
     public override void GoToFrame()
