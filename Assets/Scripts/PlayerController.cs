@@ -476,6 +476,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     break;
 
                 case PlayerActions.WHIRLWIND:
+                    if (facingLeft) playerWhirlwind.goLeft = true;
+                    else playerWhirlwind.goLeft = false;
                     currentFrameBehaviour = playerWhirlwind;
                     break;
 
@@ -526,7 +528,6 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
             if (currentFrameBehaviour.IsAnimationDone())
             {
-                Debug.Log("done");
                 playerCurrentAction = PlayerActions.NONE;
             }
         }

@@ -55,6 +55,8 @@ public class SpellLightning : SpellFrameBehaviour
                 EndAnimation();
                 break;
         }
+
+        AnimatorSetFrame();
     }
 
     protected override void HitPlayer(PlayerController playerController)

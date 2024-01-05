@@ -30,6 +30,8 @@ public class SpellSeismicStrike : SpellFrameBehaviour
                 EndAnimation();
                 break;
         }
+
+        AnimatorSetFrame();
     }
 
     protected override void HitPlayer(PlayerController playerController)

@@ -33,7 +33,7 @@ public class PlayerExplosion : PlayerFrameBehaviour
                 spellExplosion.GoToFrame();
 
                 break;
-            case 21: //end
+            case 23: //end
                 EndAnimation();
                 break;
         }

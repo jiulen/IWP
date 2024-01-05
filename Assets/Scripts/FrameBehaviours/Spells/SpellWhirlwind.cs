@@ -4,44 +4,102 @@ using UnityEngine;
 
 public class SpellWhirlwind : SpellFrameBehaviour
 {
-    public Transform playerCenter;
-
     [SerializeField] Collider2D whirlwindCollider;
 
-    [SerializeField] string whirlwindAnim;
+    [SerializeField] string grabAnim, throwAnim;
+
+    public Transform whirlwindTransform;
+
+    public bool hitPlayer = false;
+
+    //Phases
+    //0 is grab, 1 is throw
+
+    bool startPhase_1;
+
+    [SerializeField] int grabKnockbackIncrease, grabStunDuration;
+    [SerializeField] float grabKnockbackForce;
+
+    public Vector2 grabKnockbackDirection;
 
     public override void GoToFrame()
     {
-        transform.position = playerCenter.position;
+        transform.position = whirlwindTransform.position;
 
-        switch (frameNum)
+        if (phase == 0)
         {
-            case 0:
-                whirlwindCollider.enabled = true;
+            switch (frameNum)
+            {
+                case 0:
+                    hitPlayer = false;
+                    whirlwindCollider.enabled = true;
 
-                currentAnimName = whirlwindAnim;
-                AnimatorChangeAnimation(currentAnimName);
-                break;
-            case 17:
-                whirlwindCollider.enabled = false;
-                break;
-            case 47: //end
-                EndAnimation();
-                break;
+                    transform.position = spawnPos;
+
+                    currentAnimName = grabAnim;
+                    AnimatorChangeAnimation(currentAnimName);
+                    break;
+                case 2:
+                    whirlwindCollider.enabled = false;
+                    break;
+                case 15: //end
+                    if (hitPlayer)
+                    {
+                        startPhase_1 = true;
+                        phase = 1;
+                    }
+                    else
+                    {
+                        EndAnimation();
+                    }
+                    break;
+            }
         }
+        else if (phase == 1)
+        {
+            if (startPhase_1)
+            {
+                frameNum = 0;
+
+                startPhase_1 = false;
+            }
+
+            switch (frameNum)
+            {
+                case 0:
+                    currentAnimName = throwAnim;
+                    AnimatorChangeAnimation(currentAnimName);
+                    break;
+                case 6:
+                    whirlwindCollider.enabled = true;
+                    break;
+                case 9:
+                    whirlwindCollider.enabled = false;
+                    break;
+                case 20: //end
+                    EndAnimation();
+                    break;
+            }
+        }
+
+        AnimatorSetFrame();
     }
 
     protected override void HitPlayer(PlayerController playerController)
     {
+        hitPlayer = true;
+
         whirlwindCollider.enabled = false;
 
-        knockbackDirection = transform.position - playerController.transform.position;
-        if (knockbackDirection.sqrMagnitude != 0)
+        if (phase == 0) //pull towards player if grabbing
         {
-            knockbackDirection.Normalize();
+            playerController.TakeHit(grabKnockbackIncrease, grabKnockbackForce * grabKnockbackDirection, grabStunDuration, true, true);
+            GiveMeter(owner, playerController);
         }
-
-        playerController.TakeHit(knockbackIncrease, knockbackForce * knockbackDirection, stunDuration);
-        GiveMeter(owner, playerController);
+        else if (phase == 1) //throw away from player
+        {
+            playerController.TakeHit(knockbackIncrease, knockbackForce * knockbackDirection, stunDuration, true);
+            GiveMeter(owner, playerController);
+        }
     }
 }

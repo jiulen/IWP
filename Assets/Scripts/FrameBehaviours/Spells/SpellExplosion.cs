@@ -22,16 +22,18 @@ public class SpellExplosion : SpellFrameBehaviour
                 currentAnimName = explosionAnim;
                 AnimatorChangeAnimation(currentAnimName);
                 break;
-            case 6:
+            case 3:
                 explosionCollider.enabled = true;
                 break;
-            case 7:
+            case 4:
                 explosionCollider.enabled = false;
                 break;
             case 35: //end
                 EndAnimation();
                 break;
         }
+
+        AnimatorSetFrame();
     }
 
     protected override void HitPlayer(PlayerController playerController)
