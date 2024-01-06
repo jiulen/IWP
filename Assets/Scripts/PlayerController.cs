@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
     public SpriteRenderer playerSr;
     public Animator animator;
 
+    bool forceBurst = false;
+
     public bool isGrounded = true;
     [SerializeField] bool facingLeft = false;
     public bool toFlip = false;
@@ -244,7 +246,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
     {
         unavailableActions.Clear();
 
-        bool forceBurst = !IsIdle() && CanBurst();
+        forceBurst = IsStunned() && CanBurst();
 
         if (!forceBurst)
         {
@@ -320,7 +322,6 @@ public class PlayerController : MonoBehaviour, IPunObservable
         if (active)
         {
             //Set ui first
-            bool forceBurst = !IsIdle() && CanBurst();
             controllerUI.SetUI(unavailableActions, forceBurst, playerCurrentAction == PlayerActions.BLOCK);
         }
 
