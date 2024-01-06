@@ -1169,6 +1169,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: PlayerAttackC_2
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b6b678a7a5cb57438aa28f583cb3d85
+      internalID: 2079616751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -1198,6 +1219,7 @@ TextureImporter:
       PlayerJump_3: -708136496
       PlayerWalk_2: 1154621805
       PlayerAttackB_0: 540270776
+      PlayerAttackC_2: 2079616751
       PlayerHurt_2: -2010949733
       PlayerFall_2: -846587987
       PlayerRoll_3: 760986168
