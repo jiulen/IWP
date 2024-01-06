@@ -622,7 +622,7 @@ MonoBehaviour:
   enabledBehaviour: 0
   goLeft: 0
   spiritSpawnPoint: {fileID: 5880970627290093305}
-  attackAnim: Attack
+  attackAnim: AttackA
 --- !u!114 &4274378183740257858
 MonoBehaviour:
   m_ObjectHideFlags: 0

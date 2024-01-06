@@ -1148,6 +1148,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: PlayerAttackA_3
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04bb7a3d0df6b01418deb6427b934427
+      internalID: 1268276394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -1189,6 +1210,7 @@ TextureImporter:
       PlayerAttackA_2: 736767045
       PlayerAttackB_2: 1682465730
       PlayerIdle_0: -18722854
+      PlayerAttackA_3: 1268276394
       PlayerRoll_2: -447086407
       PlayerAttackF_1: 1578611570
       PlayerFall_4: 1050875240

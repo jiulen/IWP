@@ -49,7 +49,7 @@ public class PlayerLingeringSpirit : PlayerFrameBehaviour
                     spiritObj.transform.localScale = new Vector3(1, 1, 1);
                 }
                 break;
-            case 23: //end
+            case 35: //end
                 EndAnimation();
                 break;
         }
