@@ -16,6 +16,6 @@ public class SpellBurst : SpellFrameBehaviour
                 break;
         }
 
-        AnimatorSetFrame();
+        //AnimatorSetFrame();
     }
 }

@@ -593,6 +593,11 @@ public class PlayerController : MonoBehaviour, IPunObservable
     {
         if (playerCurrentAction != PlayerActions.BLOCK || unblockable)
         {
+            if (playerCurrentAction == PlayerActions.BLOCK)
+            {
+                playerBlock.ShrinkSpellBlock();
+            }
+
             float finalKnockbackMultiplier = 1;
             if (!ignoreMultiplier) finalKnockbackMultiplier = (1 + knockbackMultiplier / 100f);
 
