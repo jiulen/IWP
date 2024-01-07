@@ -16,7 +16,7 @@ public class PlayerLightning : PlayerFrameBehaviour
                 currentAnimName = attackAnim;
                 AnimatorChangeAnimation(currentAnimName);
                 break;
-            case 17: //create lightning + end
+            case 19: //create lightning
                 GameObject lightningObj = ShooterGameManager.Instance.GetPooledSpell("Lightning");
 
                 SpellLightning spellLightning = lightningObj.GetComponent<SpellLightning>();
@@ -25,7 +25,8 @@ public class PlayerLightning : PlayerFrameBehaviour
                 spellLightning.owner = playerController;
 
                 lightningObj.transform.rotation = Quaternion.identity;
-
+                break;
+            case 32:
                 EndAnimation();
                 break;
         }

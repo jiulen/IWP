@@ -48,10 +48,10 @@ public class SpellLightning : SpellFrameBehaviour
                 currentAnimName = lightningAnim;
                 AnimatorChangeAnimation(currentAnimName);
                 break;
-            case 17:
+            case 3:
                 lightningCollider.enabled = false;
                 break;
-            case 29: //end
+            case 14: //end
                 EndAnimation();
                 break;
         }
