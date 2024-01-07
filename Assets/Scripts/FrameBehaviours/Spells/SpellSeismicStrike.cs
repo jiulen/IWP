@@ -20,13 +20,13 @@ public class SpellSeismicStrike : SpellFrameBehaviour
                 currentAnimName = seismicStrikeAnim;
                 AnimatorChangeAnimation(currentAnimName);
                 break;
-            case 5:
+            case 6:
                 seismicStrikeCollider.enabled = true;
                 break;
-            case 23:
+            case 9:
                 seismicStrikeCollider.enabled = false;
                 break;
-            case 65: //end
+            case 26: //end
                 EndAnimation();
                 break;
         }

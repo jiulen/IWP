@@ -18,7 +18,7 @@ public class PlayerSeismicStrike : PlayerFrameBehaviour
                 currentAnimName = attackAnim;
                 AnimatorChangeAnimation(currentAnimName);
                 break;
-            case 17: //create lightning + end
+            case 14: //create lightning
                 GameObject seismicStrikeObj = ShooterGameManager.Instance.GetPooledSpell("SeismicStrike");
 
                 SpellSeismicStrike spellSeismicStrike = seismicStrikeObj.GetComponent<SpellSeismicStrike>();
@@ -47,6 +47,11 @@ public class PlayerSeismicStrike : PlayerFrameBehaviour
                     seismicStrikeObj.transform.localScale = new Vector3(1, 1, 1);
                 }
 
+                //run frame 0 of explosion
+                ++spellSeismicStrike.frameNum;
+                spellSeismicStrike.GoToFrame();
+                break;
+            case 32:
                 EndAnimation();
                 break;
         }
