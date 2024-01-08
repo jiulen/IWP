@@ -273,12 +273,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     unavailableActions.Add(PlayerActions.FALL);
                 }
 
-                //Check burst (cant burst without meter)
-                if (!CanBurst())
-                {
-                    unavailableActions.Add(PlayerActions.BURST);
-                }
-                //Add skip (skip only for force burst)
+                //Add skip and burst (only available for force burst)
+                unavailableActions.Add(PlayerActions.BURST);
                 unavailableActions.Add(PlayerActions.SKIP);
 
                 //Check attacks (cant use attacks on cooldown)
@@ -439,9 +435,6 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     burstMeterValue = 0;
 
                     currentFrameBehaviour = playerBurst;
-                    break;
-
-                case PlayerActions.SKIP:
                     break;
 
                 //Attack

@@ -230,10 +230,10 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
                         }
                         else if (currentController.allowMove)
                         {
-                            if (selectedAction != PlayerController.PlayerActions.CONTINUE_BLOCK)
+                            if (selectedAction != PlayerController.PlayerActions.CONTINUE_BLOCK || selectedAction != PlayerController.PlayerActions.SKIP)
                             {
                                 currentController.playerCurrentAction = selectedAction;
-                                if (selectedAction != PlayerController.PlayerActions.SKIP) currentController.currentFrameNum = 0;
+                                currentController.currentFrameNum = 0;
                             }
 
                             if (p.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_FLIP, out object playerFlip))
@@ -427,26 +427,13 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
         //check can move
 
-        bool localCanMove, otherCanMove;
+        bool localIdle, otherIdle;
+        localIdle = localPlayerController.IsIdle();
+        otherIdle = otherPlayerController.IsIdle();
 
-        if (localPlayerController.IsIdle() || (localPlayerController.IsStunned() && localPlayerController.CanBurst()))
-        {
-            localCanMove = true;
-        }
-        else
-        {
-            localCanMove = false;
-        }
-        if (otherPlayerController.IsIdle() || (otherPlayerController.IsStunned() && otherPlayerController.CanBurst()))
-        {
-            otherCanMove = true;
-        }
-        else
-        {
-            otherCanMove = false;
-        }
-
-        if (localCanMove || (localPlayerController.IsInterruptable() && otherCanMove)) //move can be interrupted during opponents turn
+        if (localIdle || 
+            (localPlayerController.IsInterruptable() && otherIdle) || //move can be interrupted during opponents turn
+            (localPlayerController.IsStunned() && localPlayerController.CanBurst() && otherIdle)) //can burst while stunned during opponennts turn
         {
             localPlayerController.allowMove = true;
         }
@@ -455,7 +442,9 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
             localPlayerController.allowMove = false;
         }
 
-        if (otherCanMove || (otherPlayerController.IsInterruptable() && localCanMove)) //move can be interrupted during opponents turn
+        if (otherIdle || 
+            (otherPlayerController.IsInterruptable() && localIdle) ||
+            (otherPlayerController.IsStunned() && otherPlayerController.CanBurst() && localIdle)) //move can be interrupted during opponents turn
         {
             otherPlayerController.allowMove = true;
         }
