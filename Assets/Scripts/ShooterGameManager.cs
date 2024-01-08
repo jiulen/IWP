@@ -209,6 +209,21 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
                 PlayerController currentController;
                 bool stopPause = true;
 
+                //assign selected action
+                PlayerController assigningController;
+
+                if (targetPlayer.IsLocal) assigningController = localPlayerController;
+                else assigningController = otherPlayerController;
+
+                changedProps.TryGetValue(ShooterGameInfo.PLAYER_SELECTED_ACTION, out object assigningAction);
+                PlayerController.PlayerActions assigningAction2 = (PlayerController.PlayerActions)(int)assigningAction;
+
+                if (assigningAction2 != PlayerController.PlayerActions.CONTINUE_BLOCK && assigningAction2 != PlayerController.PlayerActions.SKIP)
+                {
+                    assigningController.playerCurrentAction = assigningAction2;
+                }
+
+                //check selected move
                 foreach (Player p in PhotonNetwork.PlayerList)
                 {
                     if (p.IsLocal)
@@ -230,9 +245,8 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
                         }
                         else if (currentController.allowMove)
                         {
-                            if (selectedAction != PlayerController.PlayerActions.CONTINUE_BLOCK || selectedAction != PlayerController.PlayerActions.SKIP)
+                            if (selectedAction != PlayerController.PlayerActions.CONTINUE_BLOCK && selectedAction != PlayerController.PlayerActions.SKIP)
                             {
-                                currentController.playerCurrentAction = selectedAction;
                                 currentController.currentFrameNum = 0;
                             }
 

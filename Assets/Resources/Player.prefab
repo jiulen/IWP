@@ -652,7 +652,7 @@ MonoBehaviour:
   lastFrame: 1
   enabledBehaviour: 0
   ySpawnPos: 15
-  attackAnim: Attack
+  attackAnim: AttackB
 --- !u!114 &5332357486040211611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -673,7 +673,7 @@ MonoBehaviour:
   enabledBehaviour: 0
   goLeft: 0
   ySpawnPos: -0.5
-  attackAnim: Attack
+  attackAnim: AttackC
 --- !u!114 &5352697439581963250
 MonoBehaviour:
   m_ObjectHideFlags: 0
