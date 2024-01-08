@@ -218,9 +218,12 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
                 changedProps.TryGetValue(ShooterGameInfo.PLAYER_SELECTED_ACTION, out object assigningAction);
                 PlayerController.PlayerActions assigningAction2 = (PlayerController.PlayerActions)(int)assigningAction;
 
-                if (assigningAction2 != PlayerController.PlayerActions.CONTINUE_BLOCK && assigningAction2 != PlayerController.PlayerActions.SKIP)
+                if (assigningAction2 != PlayerController.PlayerActions.NONE)
                 {
-                    assigningController.playerCurrentAction = assigningAction2;
+                    if (assigningAction2 != PlayerController.PlayerActions.CONTINUE_BLOCK && assigningAction2 != PlayerController.PlayerActions.SKIP)
+                    {
+                        assigningController.playerCurrentAction = assigningAction2;
+                    }
                 }
 
                 //check selected move
