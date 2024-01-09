@@ -612,4 +612,60 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
         burstMeterValue = Mathf.Min(burstMeterValue, 1);
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            float intersectDistX = Mathf.Max(0, Mathf.Min(collision.collider.bounds.max.x, collision.otherCollider.bounds.max.x) - Mathf.Max(collision.collider.bounds.min.x, collision.otherCollider.bounds.min.x));
+
+            Debug.Log(intersectDistX);
+
+            if (intersectDistX != 0)
+            {
+                if (collision.collider.transform.position.x > collision.otherCollider.transform.position.x)
+                {
+                    collision.collider.transform.position += 0.3f * intersectDistX * Vector3.right;
+                    collision.otherCollider.transform.position += 0.3f * intersectDistX * Vector3.left;
+                }
+                else if (collision.collider.transform.position.x < collision.otherCollider.transform.position.x)
+                {
+                    collision.collider.transform.position += 0.3f * intersectDistX * Vector3.left;
+                    collision.otherCollider.transform.position += 0.3f * intersectDistX * Vector3.right;
+                }
+                else
+                {
+                    if (collision.collider.attachedRigidbody.velocity.y > 0)
+                    {
+                        collision.collider.transform.position += 0.3f * intersectDistX * Vector3.right;
+                        collision.otherCollider.transform.position += 0.3f * intersectDistX * Vector3.left;
+                    }
+                    else if (collision.collider.attachedRigidbody.velocity.y < 0)
+                    {
+                        collision.collider.transform.position += 0.3f * intersectDistX * Vector3.left;
+                        collision.otherCollider.transform.position += 0.3f * intersectDistX * Vector3.right;
+                    }
+                    else if (collision.otherCollider.attachedRigidbody.velocity.y > 0)
+                    {
+                        collision.collider.transform.position += 0.3f * intersectDistX * Vector3.left;
+                        collision.otherCollider.transform.position += 0.3f * intersectDistX * Vector3.right;
+                    }
+                    else if (collision.otherCollider.attachedRigidbody.velocity.y < 0)
+                    {
+                        collision.collider.transform.position += 0.3f * intersectDistX * Vector3.right;
+                        collision.otherCollider.transform.position += 0.3f * intersectDistX * Vector3.left;
+                    }
+                    else
+                    {
+                        collision.collider.transform.position += 0.3f * intersectDistX * Vector3.right;
+                        collision.otherCollider.transform.position += 0.3f * intersectDistX * Vector3.left;
+                    }
+                }
+            }
+            else
+            {
+                Debug.Log("Players didnt intersect?");
+            }
+        }
+    }
 }
