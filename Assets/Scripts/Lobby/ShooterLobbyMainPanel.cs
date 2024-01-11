@@ -14,14 +14,24 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
 
     public Button playButton;
     public GameObject playButtonDim;
+    public TMP_Text playButtonText;
     public TMP_InputField PlayerNameInput;
+    public GameObject loginLoading;
 
     [Header("Selection Panel")]
     public GameObject SelectionPanel;
     public TMP_Text errorMsg;
     public TMP_InputField roomNameInputField;
+    public Button hostButton;
+    public GameObject hostDim;
+    public TMP_Text hostText;
+    public GameObject hostLoading;
     public Button joinRoomButton;
     public GameObject joinRoomDim;
+    public TMP_Text joinRoomText;
+    public GameObject joinRoomLoading;
+    public Button viewRoomsButton;
+    public GameObject viewRoomsDim;
 
     [Header("Room List Panel")]
     public GameObject RoomListPanel;
@@ -38,6 +48,9 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
 
     public Button StartGameButton;
     public GameObject StartGameDim;
+    public TMP_Text startGameText;
+    public GameObject startGameLoading;
+
     public GameObject PlayerListEntryPrefab;
 
     bool roomPublic = false;
@@ -72,6 +85,13 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsConnected)
         {
             SetActivePanel(SelectionPanel.name);
+        }
+        else
+        {
+            playButton.interactable = true;
+            playButtonDim.SetActive(false);
+            playButtonText.text = "LOGIN";
+            loginLoading.SetActive(false);
         }
     }
 
@@ -232,6 +252,7 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
 
         StartGameButton.interactable = CheckPlayersReady();
         StartGameDim.SetActive(!CheckPlayersReady());
+        startGameLoading.SetActive(false);
 
         if (!PhotonNetwork.IsMasterClient) roomPublicToggle.interactable = false;
         else roomPublicToggle.interactable = true;
@@ -418,6 +439,13 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
         roomPublic = false;
 
         PhotonNetwork.CreateRoom(roomName, options, null);
+
+        hostButton.interactable = false;
+        hostDim.SetActive(true);
+        hostLoading.SetActive(true);
+        hostText.text = "HOSTING...";
+        joinRoomButton.interactable = false;
+        joinRoomDim.SetActive(true);
     }
 
     public void OnRoomCodeInputChanged()
@@ -444,6 +472,13 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
     {
         errorMsg.text = "";
         PhotonNetwork.JoinRoom(roomNameInputField.text);
+
+        hostButton.interactable = false;
+        hostDim.SetActive(true);
+        joinRoomButton.interactable = false;
+        joinRoomDim.SetActive(true);
+        joinRoomLoading.SetActive(true);
+        joinRoomText.text = "Joining...";
     }
 
     public void OnLeaveGameButtonClicked()
@@ -473,6 +508,11 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
         PhotonNetwork.ConnectUsingSettings();
 
         PlayerPrefs.SetString("PlayerName", playerName);
+
+        playButton.interactable = false;
+        playButtonDim.SetActive(true);
+        playButtonText.text = "LOGGING IN...";
+        loginLoading.SetActive(true);
     }
 
     public void OnRoomListButtonClicked()
@@ -485,6 +525,9 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
         }
 
         SetActivePanel(RoomListPanel.name);
+
+        viewRoomsButton.interactable = false;
+        viewRoomsDim.SetActive(true);
     }
 
     public void OnStartGameButtonClicked()
@@ -493,6 +536,10 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
         PhotonNetwork.CurrentRoom.IsVisible = false;
 
         PhotonNetwork.LoadLevel("GameScene");
+        StartGameButton.interactable = false;
+        StartGameDim.SetActive(true);
+        startGameLoading.SetActive(true);
+        startGameText.text = "Starting...";
     }
 
     #endregion
@@ -551,6 +598,30 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
         InsideRoomPanel.SetActive(activePanel.Equals(InsideRoomPanel.name));
 
         errorMsg.text = "";
+
+        if (activePanel.Equals(SelectionPanel.name))
+        {
+            hostButton.interactable = true;
+            hostDim.SetActive(false);
+            hostLoading.SetActive(false);
+            hostText.text = "Host";
+
+            roomNameInputField.text = "";
+            joinRoomButton.interactable = false;
+            joinRoomDim.SetActive(true);
+            joinRoomLoading.SetActive(false);
+            joinRoomText.text = "Join";
+
+            viewRoomsButton.interactable = true;
+            viewRoomsDim.SetActive(false);
+        }
+        else if (activePanel.Equals(InsideRoomPanel.name))
+        {
+            StartGameButton.interactable = false;
+            StartGameDim.SetActive(true);
+            startGameLoading.SetActive(false);
+            startGameText.text = "START";
+        }
     }
 
     private void UpdateCachedRoomList(List<RoomInfo> roomList)
