@@ -18473,11 +18473,13 @@ MonoBehaviour:
     spells.
 
 
+    The goal of the game is to knock the opponent far away from the
+    platform to eliminate them. You have access to a variety of offensive spells
+    to aid your cause, and some mobility and defensive options to stay safe and protect
+    yourself.
 
 
-
-
-    The game starts paused. You are able to choose from a list
+    The game starts paused. You will be able to choose from a list
     of  available moves. Select a move, and lock it in. Once both players have locked
     in their moves, the game continues until any player is able to act. Players can
     then select their moves again, if possible.'
@@ -22613,7 +22615,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1580264787
 RectTransform:
   m_ObjectHideFlags: 0
