@@ -10,6 +10,8 @@ public class PlayerSeismicStrike : PlayerFrameBehaviour
     [SerializeField] float ySpawnPos;
     [SerializeField] string attackAnim;
 
+    Vector3 seismicStrikePos;
+
     public override void GoToFrame()
     {
         switch (frameNum)
@@ -18,11 +20,14 @@ public class PlayerSeismicStrike : PlayerFrameBehaviour
                 currentAnimName = attackAnim;
                 AnimatorChangeAnimation(currentAnimName);
                 break;
-            case 14: //create lightning
+            case 10:
+                seismicStrikePos = new Vector3(playerController.oppTransform.position.x, ySpawnPos, 0);
+                break;
+            case 14: //create seismic strike
                 GameObject seismicStrikeObj = ShooterGameManager.Instance.GetPooledSpell("SeismicStrike");
 
                 SpellSeismicStrike spellSeismicStrike = seismicStrikeObj.GetComponent<SpellSeismicStrike>();
-                spellSeismicStrike.spawnPos = new Vector3(playerController.oppTransform.position.x, ySpawnPos, 0);
+                spellSeismicStrike.spawnPos = seismicStrikePos;
                 if (goLeft)
                 {
                     spellSeismicStrike.knockbackDirection = new Vector2(-0.25f, 1);

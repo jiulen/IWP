@@ -334,7 +334,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.3, y: 1}
+  m_Size: {x: 0.1, y: 1}
   m_EdgeRadius: 0
 --- !u!50 &8284633437816278538
 Rigidbody2D:
@@ -484,10 +484,10 @@ MonoBehaviour:
   stunDuration: 12
   ownerNum: -1
   owner: {fileID: 0}
-  boltRenderer: {fileID: 5202444759862288413}
-  hitRenderer: {fileID: 7513983116071245233}
-  lightningCollider: {fileID: 675636370673681455}
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 128
+  boltRenderer: {fileID: 5202444759862288413}
+  hitRenderer: {fileID: 7513983116071245233}
+  lightningCollider: {fileID: 675636370673681455}
   lightningAnim: Lightning

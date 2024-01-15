@@ -392,7 +392,7 @@ MonoBehaviour:
   goLeft: 0
   forwards: 1
   firstHalf: 1
-  walkForce: 20
+  walkForce: 30
   walkForwardAnim_1: WalkForward1
   walkForwardAnim_2: WalkForward2
   walkBackwordAnim_1: WalkBackward1

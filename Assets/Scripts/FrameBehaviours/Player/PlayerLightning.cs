@@ -8,6 +8,8 @@ public class PlayerLightning : PlayerFrameBehaviour
     [SerializeField] float ySpawnPos;
     [SerializeField] string attackAnim;
 
+    Vector3 lightningPos;
+
     public override void GoToFrame()
     {
         switch (frameNum)
@@ -16,11 +18,14 @@ public class PlayerLightning : PlayerFrameBehaviour
                 currentAnimName = attackAnim;
                 AnimatorChangeAnimation(currentAnimName);
                 break;
+            case 6: //set position
+                lightningPos = new Vector3(playerController.oppTransform.position.x, ySpawnPos, 0);
+                break;
             case 20: //create lightning
                 GameObject lightningObj = ShooterGameManager.Instance.GetPooledSpell("Lightning");
 
                 SpellLightning spellLightning = lightningObj.GetComponent<SpellLightning>();
-                spellLightning.spawnPos = new Vector3(playerController.oppTransform.position.x, ySpawnPos, 0);
+                spellLightning.spawnPos = lightningPos;
                 spellLightning.ownerNum = playerController.playerNum;
                 spellLightning.owner = playerController;
 
