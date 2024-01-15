@@ -58,6 +58,7 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
     public GameObject PlayerListEntryPrefab;
 
     bool roomPublic = false;
+    bool gameStarting = false;
 
     private Dictionary<string, RoomInfo> cachedRoomList;
     private Dictionary<string, GameObject> roomListEntries;
@@ -67,6 +68,7 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
     const int ROOM_CODE_LENGTH = 4;
 
     const string ROOM_PUBLIC = "RoomPublic";
+    const string GAME_STARTING = "GameStarting";
 
     #region UNITY
 
@@ -398,6 +400,15 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
             roomPublic = (bool)isRoomPublic;
             ToggleRoomPublic();
         }
+
+        if (propertiesThatChanged.TryGetValue(GAME_STARTING, out object isGameStarting))
+        {
+            if (!gameStarting)
+            {
+                gameStarting = (bool)isGameStarting;
+                StartLoadingStartGame();
+            }
+        }
     }
 
     #endregion
@@ -539,11 +550,20 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
         PhotonNetwork.CurrentRoom.IsOpen = false;
         PhotonNetwork.CurrentRoom.IsVisible = false;
 
+        Hashtable roomProps = new Hashtable() { { GAME_STARTING, true } };
+        PhotonNetwork.CurrentRoom.SetCustomProperties(roomProps);
+        gameStarting = true;
+
         PhotonNetwork.LoadLevel("GameScene");
         StartGameButton.interactable = false;
         StartGameDim.SetActive(true);
+        StartLoadingStartGame();
+    }
+
+    private void StartLoadingStartGame()
+    {
         startGameLoading.SetActive(true);
-        startGameText.text = "Starting...";
+        startGameText.text = "STARTING...";
     }
 
     #endregion
@@ -622,6 +642,8 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
         }
         else if (activePanel.Equals(InsideRoomPanel.name))
         {
+            gameStarting = false;
+
             StartGameButton.interactable = false;
             StartGameDim.SetActive(true);
             startGameLoading.SetActive(false);
