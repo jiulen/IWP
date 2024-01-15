@@ -51,6 +51,10 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
     public TMP_Text startGameText;
     public GameObject startGameLoading;
 
+    [Header("Tutorial Panel")]
+    public GameObject tutorialPanel;
+    public List<GameObject> tutorialPages;
+
     public GameObject PlayerListEntryPrefab;
 
     bool roomPublic = false;
@@ -596,6 +600,7 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
         SelectionPanel.SetActive(activePanel.Equals(SelectionPanel.name));
         RoomListPanel.SetActive(activePanel.Equals(RoomListPanel.name));    // UI should call OnRoomListButtonClicked() to activate this
         InsideRoomPanel.SetActive(activePanel.Equals(InsideRoomPanel.name));
+        tutorialPanel.SetActive(activePanel.Equals(tutorialPanel.name));
 
         errorMsg.text = "";
 
@@ -621,6 +626,10 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
             StartGameDim.SetActive(true);
             startGameLoading.SetActive(false);
             startGameText.text = "START";
+        }
+        else if (activePanel.Equals(tutorialPanel.name))
+        {
+            GoToTutorialPage(0);
         }
     }
 
@@ -662,6 +671,26 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
             entry.GetComponent<ShooterRoomListEntry>().Initialize(info.Name, (byte)info.PlayerCount, (byte)info.MaxPlayers);
 
             roomListEntries.Add(info.Name, entry);
+        }
+    }
+
+    public void OpenTutorial()
+    {
+        SetActivePanel(tutorialPanel.name);
+    }
+
+    public void GoToTutorialPage(int pageNum)
+    {
+        for (int i = 0; i < tutorialPages.Count; ++i)
+        {
+            if (i == pageNum)
+            {
+                tutorialPages[i].SetActive(true);
+            }
+            else
+            {
+                tutorialPages[i].SetActive(false);
+            }
         }
     }
 }
