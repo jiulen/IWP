@@ -458,7 +458,7 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
         hostButton.interactable = false;
         hostDim.SetActive(true);
         hostLoading.SetActive(true);
-        hostText.text = "HOSTING...";
+        hostText.text = "Hosting...";
         joinRoomButton.interactable = false;
         joinRoomDim.SetActive(true);
     }
