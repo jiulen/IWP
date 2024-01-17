@@ -37,6 +37,8 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
     [SerializeField] Animator gameOverSlide, gameOverFade;
     [SerializeField] TMP_Text winnerText;
 
+    public bool isReplay = false;
+
     public void Awake()
     {
         Instance = this;
@@ -49,31 +51,39 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
     public void Start()
     {
-        //Notify ready
-        Hashtable props = new()
+        if (!isReplay)
         {
-            {ShooterGameInfo.PLAYER_LOADED_LEVEL, true},
-            {ShooterGameInfo.PLAYER_DEAD, false}
-        };
-        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
-
-        //Set local controller for easier access
-        if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_NUMBER, out object playerNumber))
-        {
-            switch (playerNumber)
+            //Notify ready
+            Hashtable props = new()
             {
-                case 1:
-                    localPlayerController = player1;
-                    otherPlayerController = player2;
-                    break;
-                case 2:
-                    localPlayerController = player2;
-                    otherPlayerController = player1;
-                    break;
-            }
-        }
+                { ShooterGameInfo.PLAYER_LOADED_LEVEL, true },
+                { ShooterGameInfo.PLAYER_DEAD, false }
+            };
+            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
 
-        localPlayerController.controllerUI = localControllerUI;
+            //Set local controller for easier access
+            if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_NUMBER, out object playerNumber))
+            {
+                switch (playerNumber)
+                {
+                    case 1:
+                        localPlayerController = player1;
+                        otherPlayerController = player2;
+                        break;
+                    case 2:
+                        localPlayerController = player2;
+                        otherPlayerController = player1;
+                        break;
+                }
+            }
+
+            localPlayerController.controllerUI = localControllerUI;
+        }
+        else
+        {
+            localPlayerController = player1;
+            otherPlayerController = player2;
+        }
     }
 
     public override void OnDisable()
@@ -325,31 +335,53 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         return true;
     }
 
-    private void CheckEndOfGame() //TODO : Fix bug
+    private void CheckEndOfGame()
     {
         bool playerDead = false;
         string winner = ""; //if draw then winner will be ""
 
-        if (PhotonNetwork.PlayerList.Length == 1)
+        if (!isReplay)
         {
-            winner = PhotonNetwork.PlayerList[0].NickName;
-            playerDead = true;
+            if (PhotonNetwork.PlayerList.Length == 1)
+            {
+                winner = PhotonNetwork.PlayerList[0].NickName;
+                playerDead = true;
+            }
+            else
+            {
+                foreach (Player p in PhotonNetwork.PlayerList)
+                {
+                    if (p.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_DEAD, out object isDead))
+                    {
+                        if (!(bool)isDead)
+                        {
+                            winner = p.NickName;
+                        }
+                        else
+                        {
+                            playerDead = true;
+                        }
+                    }
+                }
+            }
         }
         else
         {
-            foreach (Player p in PhotonNetwork.PlayerList)
+            if (!localPlayerController.isDead)
             {
-                if (p.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_DEAD, out object isDead))
-                {
-                    if (!(bool)isDead)
-                    {
-                        winner = p.NickName;
-                    }
-                    else
-                    {
-                        playerDead = true;
-                    }
-                }
+                winner = localPlayerController.playerName;
+            }
+            else
+            {
+                playerDead = true;
+            }
+            if (!otherPlayerController.isDead)
+            {
+                winner = otherPlayerController.playerName;
+            }
+            else
+            {
+                playerDead = true;
             }
         }
 
@@ -374,62 +406,69 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
     private void FixedUpdate()
     {
-        if (!gameStarted)
-            return;
-
-        localPlayerController.UpdateInfoUIAuto();
-        otherPlayerController.UpdateInfoUIAuto();
-
-        if (!PhotonNetwork.IsMasterClient)
-            return;
-
-        if (!gamePaused)
+        if (!isReplay)
         {
-            //spells
-            foreach (SpellFrameBehaviour spell in spellsPool)
-            {
-                if (spell.activeSpell)
-                {
-                    ++spell.frameNum; //add frame first since start is -1
+            if (!gameStarted)
+                return;
 
-                    spell.GoToFrame();
-                    if (spell.IsAnimationDone())
+            localPlayerController.UpdateInfoUIAuto();
+            otherPlayerController.UpdateInfoUIAuto();
+
+            if (!PhotonNetwork.IsMasterClient)
+                return;
+
+            if (!gamePaused)
+            {
+                //spells
+                foreach (SpellFrameBehaviour spell in spellsPool)
+                {
+                    if (spell.activeSpell)
                     {
-                        ReturnPooledObject(spell);
+                        ++spell.frameNum; //add frame first since start is -1
+
+                        spell.GoToFrame();
+                        if (spell.IsAnimationDone())
+                        {
+                            ReturnPooledObject(spell);
+                        }
+                    }
+                }
+
+                //player
+                localPlayerController.RefillAirOptions();
+                otherPlayerController.RefillAirOptions();
+
+                localPlayerController.ApplyResistances();
+                otherPlayerController.ApplyResistances();
+
+                localPlayerController.RunFrameBehaviour();
+                otherPlayerController.RunFrameBehaviour();
+
+                localPlayerController.AddMeter(1f / 360);
+                otherPlayerController.AddMeter(1f / 360);
+
+                Physics2D.Simulate(Time.fixedDeltaTime);
+
+                localPlayerController.CheckIfGrounded();
+                otherPlayerController.CheckIfGrounded();
+
+                ++localPlayerController.currentFrameNum;
+                ++otherPlayerController.currentFrameNum;
+
+                ++currentFrame;
+
+                if (localPlayerController.IsIdle() || otherPlayerController.IsIdle())
+                {
+                    if (!gameOver)
+                    {
+                        OnPauseGame();
                     }
                 }
             }
+        }
+        else
+        {
 
-            //player
-            localPlayerController.RefillAirOptions();
-            otherPlayerController.RefillAirOptions();
-
-            localPlayerController.ApplyResistances();
-            otherPlayerController.ApplyResistances();
-
-            localPlayerController.RunFrameBehaviour();
-            otherPlayerController.RunFrameBehaviour();
-
-            localPlayerController.AddMeter(1f / 360);
-            otherPlayerController.AddMeter(1f / 360);
-
-            Physics2D.Simulate(Time.fixedDeltaTime);
-
-            localPlayerController.CheckIfGrounded();
-            otherPlayerController.CheckIfGrounded();
-
-            ++localPlayerController.currentFrameNum;
-            ++otherPlayerController.currentFrameNum;
-
-            ++currentFrame;
-
-            if (localPlayerController.IsIdle() || otherPlayerController.IsIdle())
-            {
-                if (!gameOver)
-                {
-                    OnPauseGame();
-                }
-            }
         }
     }
 
@@ -524,7 +563,17 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
         for (int i = 0; i < amtToPool; ++i)
         {
-            GameObject newSpellObj = PhotonNetwork.InstantiateRoomObject(spellName, spellsSpawnPoint.position, Quaternion.identity);
+            GameObject newSpellObj;
+
+            if (!isReplay)
+            {
+                newSpellObj = PhotonNetwork.InstantiateRoomObject(spellName, spellsSpawnPoint.position, Quaternion.identity);
+            }
+            else
+            {
+                newSpellObj = Instantiate(Resources.Load<GameObject>(spellName), spellsSpawnPoint.position, Quaternion.identity);
+            }
+            
             newSpellObj.transform.SetParent(spellsPoolTransform);
 
             SpellFrameBehaviour newSpell = newSpellObj.GetComponent<SpellFrameBehaviour>();

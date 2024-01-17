@@ -100,6 +100,10 @@ public class PlayerController : MonoBehaviour, IPunObservable
     //Opponent stuff
     public Transform oppTransform;
 
+    //Replay stuff
+    public bool isDead = false;
+    public string playerName;
+
     #region IPunObservable implementation
 
     //For syncing data via IPunObservable
