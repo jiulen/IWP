@@ -132,9 +132,10 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
             return;
 
         //check if any player dead (out of stage)
-        if (changedProps.ContainsKey(ShooterGameInfo.PLAYER_DEAD))
+        if (changedProps.TryGetValue(ShooterGameInfo.PLAYER_DEAD, out object playerDied))
         {
-            CheckEndOfGame();
+            if ((bool)playerDied)
+                CheckEndOfGame();
         }
 
         //check when to show controls
@@ -324,7 +325,7 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         return true;
     }
 
-    private void CheckEndOfGame() //TODO
+    private void CheckEndOfGame() //TODO : Fix bug
     {
         bool playerDead = false;
         string winner = ""; //if draw then winner will be ""
