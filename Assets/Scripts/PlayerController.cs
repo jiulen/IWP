@@ -220,7 +220,10 @@ public class PlayerController : MonoBehaviour, IPunObservable
                 {
                     photonPlayer = p;
 
-                    playerInfoUI.SetPlayerName(p.NickName);
+                    if (p.IsLocal)
+                        playerInfoUI.SetPlayerName(p.NickName + " (YOU)");
+                    else
+                        playerInfoUI.SetPlayerName(p.NickName);
 
                     if (p.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_SKIN, out object playerSkinID))
                     {
