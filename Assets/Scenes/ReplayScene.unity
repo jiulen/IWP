@@ -4219,6 +4219,7 @@ MonoBehaviour:
   gameOverSlide: {fileID: 1286325667}
   gameOverFade: {fileID: 2125292205}
   winnerText: {fileID: 2125292203}
+  isReplay: 1
 --- !u!114 &547240155
 MonoBehaviour:
   m_ObjectHideFlags: 0
