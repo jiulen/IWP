@@ -75,7 +75,7 @@ public class ReplayManager : MonoBehaviour
         else
         {
             Directory.CreateDirectory(replayFolderPath);
-            return null;
+            return new FileInfo[0];
         }
     }
 }

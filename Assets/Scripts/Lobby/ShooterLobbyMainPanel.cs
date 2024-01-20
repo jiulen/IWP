@@ -759,7 +759,7 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
             GameObject entry = Instantiate(replayListEntryPrefab);
             entry.transform.SetParent(replayListContent.transform);
             entry.transform.localScale = Vector3.one;
-            entry.GetComponent<ReplayListEntry>().Initialize(replayFile.Name, replayFile.FullName);
+            entry.GetComponent<ReplayListEntry>().Initialize(Path.GetFileNameWithoutExtension(replayFile.Name), replayFile.FullName);
 
             replayListEntries.Add(entry);
         }

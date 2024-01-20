@@ -169,7 +169,7 @@ GameObject:
   - component: {fileID: 11481936}
   - component: {fileID: 11466726}
   - component: {fileID: 11460614}
-  - component: {fileID: 4250602583645718993}
+  - component: {fileID: 4526980120379197333}
   m_Layer: 5
   m_Name: ReplayListEntry
   m_TagString: Untagged
@@ -283,7 +283,7 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: 0
   m_LayoutPriority: 1
---- !u!114 &4250602583645718993
+--- !u!114 &4526980120379197333
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -292,12 +292,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 114706}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38a17be4b1cf55c42bf8e657b65ea8b7, type: 3}
+  m_Script: {fileID: 11500000, guid: 90da635e947700c4f882acc523860572, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RoomNameText: {fileID: 6681548272733928843}
-  RoomPlayersText: {fileID: 0}
-  JoinRoomButton: {fileID: 1343692611532928997}
+  replayNameText: {fileID: 6681548272733928843}
+  viewReplayButton: {fileID: 1343692611532928997}
 --- !u!1 &134178
 GameObject:
   m_ObjectHideFlags: 0
