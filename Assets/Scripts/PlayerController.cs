@@ -212,30 +212,37 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
     void SetPlayerInfo()
     {
-        foreach (Player p in PhotonNetwork.PlayerList)
+        if (!ShooterGameManager.Instance.isReplay)
         {
-            if (p.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_NUMBER, out object playerNumber))
+            foreach (Player p in PhotonNetwork.PlayerList)
             {
-                if ((int)playerNumber == playerNum)
+                if (p.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_NUMBER, out object playerNumber))
                 {
-                    photonPlayer = p;
-
-                    if (p.IsLocal)
-                        playerInfoUI.SetPlayerName(p.NickName + " (YOU)");
-                    else
-                        playerInfoUI.SetPlayerName(p.NickName);
-
-                    if (p.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_SKIN, out object playerSkinID))
+                    if ((int)playerNumber == playerNum)
                     {
-                        playerSr.material.SetColor("_PlayerColor", ShooterGameInfo.GetColor((int)playerSkinID));
+                        photonPlayer = p;
 
-                        playerInfoUI.SetUISkin((int)playerSkinID);
+                        if (p.IsLocal)
+                            playerInfoUI.SetPlayerName(p.NickName + " (YOU)");
+                        else
+                            playerInfoUI.SetPlayerName(p.NickName);
+
+                        if (p.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_SKIN, out object playerSkinID))
+                        {
+                            playerSr.material.SetColor("_PlayerColor", ShooterGameInfo.GetColor((int)playerSkinID));
+
+                            playerInfoUI.SetUISkin((int)playerSkinID);
+                        }
+
+                        return;
                     }
 
-                    return;
                 }
-
             }
+        }
+        else
+        {
+
         }
     }
 

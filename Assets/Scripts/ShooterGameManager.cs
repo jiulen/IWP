@@ -33,6 +33,9 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
     const string GAME_STARTED = "GameStarted";
     const string GAME_PAUSED = "GamePaused";
 
+
+    const string REPLAY_TURN = "ReplayTurn";
+
     //Game over stuff
     [SerializeField] Animator gameOverSlide, gameOverFade;
     [SerializeField] TMP_Text winnerText;
