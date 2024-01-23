@@ -375,8 +375,6 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     else
                         playerWalk.firstHalf = true;
 
-                    playerJump.forwardDir = Vector2.left;
-
                     if (facingLeft) playerWalk.forwards = true;
                     else playerWalk.forwards = false;
 
@@ -390,8 +388,6 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     else
                         playerWalk.firstHalf = true;
 
-                    playerJump.forwardDir = Vector2.right;
-
                     if (facingLeft) playerWalk.forwards = false;
                     else playerWalk.forwards = true;
 
@@ -402,12 +398,10 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     if (facingLeft)
                     {
                         playerRoll.goLeft = true;
-                        playerJump.forwardDir = Vector2.left;
                     }
                     else
                     {
                         playerRoll.goLeft = false;
-                        playerJump.forwardDir = Vector2.right;
                     }
 
                     if (!isGrounded) airOptionsAvail -= 1;
@@ -416,18 +410,16 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     break;
 
                 case PlayerActions.JUMP:
-                    if (!isGrounded) airOptionsAvail -= 1;
+                    if (facingLeft)
+                    {
+                        playerJump.goLeft = true;
+                    }
+                    else
+                    {
+                        playerJump.goLeft = false;
+                    }
 
-                    if (isWalking)
-                    {
-                        playerJump.isWalking = true;
-                        playerJump.isRolling = false;
-                    }
-                    else if (isRolling)
-                    {
-                        playerJump.isWalking = false;
-                        playerJump.isRolling = true;
-                    }
+                    if (!isGrounded) airOptionsAvail -= 1;
 
                     currentFrameBehaviour = playerJump;
                     break;

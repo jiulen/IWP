@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class PlayerJump : PlayerFrameBehaviour
 {
-    public bool isWalking, isRolling = false;
-    public Vector2 forwardDir = Vector2.zero;
+    public bool goLeft = false;
 
-    [SerializeField] float jumpForce, walkJumpForce, rollJumpForce;
+    [SerializeField] float jumpForce, forwardForce;
     [SerializeField] string jumpAnim;
 
     public override void GoToFrame()
@@ -22,14 +21,8 @@ public class PlayerJump : PlayerFrameBehaviour
 
                 rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
 
-                if (isWalking)
-                {
-                    rb.AddForce(forwardDir * walkJumpForce, ForceMode2D.Impulse);
-                }
-                else if (isRolling)
-                {
-                    rb.AddForce(forwardDir * rollJumpForce, ForceMode2D.Impulse);
-                }
+                Vector2 forwardDir = Vector2.right * (goLeft ? -1 : 1);
+                rb.AddForce(forwardDir * forwardForce, ForceMode2D.Impulse);
 
                 break;
             case 35: //end
