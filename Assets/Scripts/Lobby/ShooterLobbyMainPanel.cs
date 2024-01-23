@@ -714,7 +714,7 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
             GameObject entry = Instantiate(RoomListEntryPrefab);
             entry.transform.SetParent(RoomListContent.transform);
             entry.transform.localScale = Vector3.one;
-            entry.GetComponent<ShooterRoomListEntry>().Initialize(info.Name, (byte)info.PlayerCount, (byte)info.MaxPlayers);
+            entry.GetComponent<ShooterRoomListEntry>().Initialize(info.Name, info.PlayerCount, info.MaxPlayers);
 
             roomListEntries.Add(info.Name, entry);
         }

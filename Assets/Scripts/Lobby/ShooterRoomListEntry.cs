@@ -24,11 +24,11 @@ public class ShooterRoomListEntry : MonoBehaviour
         });
     }
 
-    public void Initialize(string name, byte currentPlayers, byte maxPlayers)
+    public void Initialize(string name, int currentPlayers, int maxPlayers)
     {
         roomName = name;
 
         RoomNameText.text = name;
-        RoomPlayersText.text = currentPlayers + " / " + maxPlayers;
+        //RoomPlayersText.text = currentPlayers + " / " + maxPlayers; //hardcode to 1/2 everytime for now
     }
 }
