@@ -7172,6 +7172,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 608fcbc026f2a764396a300d08dac62c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  replay:
+    p1:
+      name: 
+      skinID: 0
+      isMe: 0
+    p2:
+      name: 
+      skinID: 0
+      isMe: 0
+    winner: 0
+    lastFrame: 0
+    wrappedTurns:
+      list: []
 --- !u!1 &523789977
 GameObject:
   m_ObjectHideFlags: 0
