@@ -442,7 +442,7 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
                 else if (winner == "")
                     ReplayManager.Instance.replay.winner = 0; //draw
                 else
-                    Debug.Log("HUH? wrong winner name");
+                    Debug.Log("HUH? wrong winner name : " + winner);
 
                 ReplayManager.Instance.replay.lastFrame = currentFrame;
                 ReplayManager.Instance.replay.WrapTurns();

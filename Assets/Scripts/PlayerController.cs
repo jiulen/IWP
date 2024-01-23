@@ -593,7 +593,9 @@ public class PlayerController : MonoBehaviour, IPunObservable
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            float intersectDistX = Mathf.Max(0, Mathf.Min(collision.collider.bounds.max.x, collision.otherCollider.bounds.max.x) - Mathf.Max(collision.collider.bounds.min.x, collision.otherCollider.bounds.min.x));
+            float intersectDistX = Mathf.Max(0, Mathf.Min(collision.collider.bounds.max.x, collision.otherCollider.bounds.max.x) - Mathf.Max(collision.collider.bounds.min.x, collision.otherCollider.bounds.min.x) + 2 * Physics2D.defaultContactOffset);
+
+            Debug.Log(intersectDistX);
 
             if (intersectDistX != 0)
             {
