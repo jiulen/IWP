@@ -152,7 +152,7 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
         errorMsg.text = "Error :\n" + message;
     }
 
-    public override void OnJoinRandomFailed(short returnCode, string message)
+    /*public override void OnJoinRandomFailed(short returnCode, string message)
     {
         int roomNum = Random.Range(0, 65536);
         string roomName = roomNum.ToString("X4");
@@ -162,7 +162,7 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
         roomPublic = false;
 
         PhotonNetwork.CreateRoom(roomName, options, null);
-    }
+    }*/
 
     public override void OnJoinedRoom()
     {

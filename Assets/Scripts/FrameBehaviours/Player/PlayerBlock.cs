@@ -28,7 +28,7 @@ public class PlayerBlock: PlayerFrameBehaviour
                 currentAnimName = blockAnim;
                 AnimatorChangeAnimation(currentAnimName);
                 break;
-            case 29: //end
+            case 59: //end
                 ShrinkSpellBlock();
 
                 playerController.TakeHit(knockbackIncrease, knockbackForce * knockbackDirection, stunDuration, true, true);

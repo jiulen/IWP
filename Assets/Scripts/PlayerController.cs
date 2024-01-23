@@ -324,7 +324,6 @@ public class PlayerController : MonoBehaviour, IPunObservable
     public bool IsInterruptable()
     {
         return (playerCurrentAction == PlayerActions.WAIT) ||
-               (playerCurrentAction == PlayerActions.WALK_LEFT) ||
                (playerCurrentAction == PlayerActions.BLOCK);
     }
 

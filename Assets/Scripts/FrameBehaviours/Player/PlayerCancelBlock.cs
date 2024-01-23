@@ -22,7 +22,7 @@ public class PlayerCancelBlock : PlayerFrameBehaviour
                 //run frame 0 of spellBlock shrinking
                 playerBlock.spellBlock.GoToFrame();
                 break;
-            case 11: //end
+            case 5: //end
                 EndAnimation();
                 break;
         }
