@@ -479,7 +479,7 @@ MonoBehaviour:
   phase: 0
   targetDir: {x: 0, y: 0}
   knockbackIncrease: 15
-  knockbackForce: 60
+  knockbackForce: 50
   knockbackDirection: {x: 0, y: -1}
   stunDuration: 12
   ownerNum: -1

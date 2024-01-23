@@ -35,13 +35,13 @@ public class PlayerWhirlwind : PlayerFrameBehaviour
                     spellWhirlwind.spawnPos = whirlwindSpawnPoint.position;
                     if (goLeft)
                     {
-                        spellWhirlwind.knockbackDirection = Vector2.left;
+                        spellWhirlwind.knockbackDirection = (Vector2.left + Vector2.up * 0.5f).normalized;
                         spellWhirlwind.grabKnockbackDirection = Vector2.right;
                         whirlwindObj.transform.localScale = new Vector3(-1, 1, 1);
                     }
                     else
                     {
-                        spellWhirlwind.knockbackDirection = Vector2.right;
+                        spellWhirlwind.knockbackDirection = (Vector2.right + Vector2.up * 0.5f).normalized;
                         spellWhirlwind.grabKnockbackDirection = Vector2.left;
                         whirlwindObj.transform.localScale = new Vector3(1, 1, 1);
                     }
