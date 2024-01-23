@@ -11,7 +11,7 @@ public class SpellBurst : SpellFrameBehaviour
             case 0:
                 transform.position = spawnPos;
                 break;
-            case 5: //end
+            case 2: //end
                 EndAnimation();
                 break;
         }

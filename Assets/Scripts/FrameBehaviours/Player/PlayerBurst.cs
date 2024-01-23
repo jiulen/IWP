@@ -27,7 +27,7 @@ public class PlayerBurst : PlayerFrameBehaviour
 
                 burstObj.transform.rotation = Quaternion.identity;
                 break;
-            case 5: //end
+            case 2: //end
                 EndAnimation();
                 break;
         }
