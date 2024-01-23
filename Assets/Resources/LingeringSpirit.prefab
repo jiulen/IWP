@@ -248,7 +248,7 @@ MonoBehaviour:
   knockbackIncrease: 5
   knockbackForce: 20
   knockbackDirection: {x: 1, y: 0}
-  stunDuration: 6
+  stunDuration: 12
   ownerNum: -1
   owner: {fileID: 0}
   groundLayerMask:
