@@ -40,9 +40,14 @@ public class Replay
         wrappedTurns = new JSListWrapper<Turn>(turns);
     }
 
-    public void AddTurn(int _frameNum, int _p1Action, bool _p1Flip, int _p2Action, bool _p2Flip)
+    public void UnwrapTurns()
     {
-        Turn newTurn = new Turn(_frameNum, _p1Action, _p1Flip, _p2Action, _p2Flip);
+        turns = wrappedTurns.list;
+    }
+
+    public void AddTurn(int _frameNum, int _playerAction, bool _playerFlip, int _playerNum)
+    {
+        Turn newTurn = new Turn(_frameNum, _playerAction, _playerFlip, _playerNum);
         turns.Add(newTurn);
     }
 }
@@ -66,18 +71,16 @@ public class ReplayPlayer
 public class Turn
 {
     public int frameNum;
-    public int p1Action;
-    public bool p1Flip;
-    public int p2Action;
-    public bool p2Flip;
+    public int playerAction;
+    public bool playerFlip;
+    public int playerNum; // 1 or 2
 
-    public Turn (int _frameNum, int _p1Action, bool _p1Flip, int _p2Action, bool _p2Flip)
+    public Turn (int _frameNum, int _playerAction, bool _playerFlip, int _playerNum)
     {
         frameNum = _frameNum;
-        p1Action = _p1Action;
-        p1Flip = _p1Flip;
-        p2Action = _p2Action;
-        p2Flip = _p2Flip;
+        playerAction = _playerAction;
+        playerFlip = _playerFlip;
+        playerNum = _playerNum;
     }
 }
 
@@ -94,6 +97,7 @@ public class ReplayManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    //Replay file
     public FileInfo[] LoadReplayFiles()
     {
         string replayFolderPath = Application.persistentDataPath + "/Replays";
@@ -101,7 +105,7 @@ public class ReplayManager : MonoBehaviour
         if (Directory.Exists(replayFolderPath))
         {
             DirectoryInfo directoryInfo = new DirectoryInfo(replayFolderPath);
-            return directoryInfo.GetFiles("*.txt");
+            return directoryInfo.GetFiles("*.replay");
         }
         else
         {
@@ -112,14 +116,14 @@ public class ReplayManager : MonoBehaviour
 
     public void AddReplay(string newReplayName, string newReplayText)
     {
-        string newReplayFilePath = Application.persistentDataPath + "/Replays/" + newReplayName + ".txt";
+        string newReplayFilePath = Application.persistentDataPath + "/Replays/" + newReplayName + ".replay";
 
         int dupeCount = 1;
 
         while (File.Exists(newReplayFilePath))
         {
             string tempFileName = string.Format("{0} ({1})", newReplayName, dupeCount++);
-            newReplayFilePath = Application.persistentDataPath + "/Replays/" + tempFileName + ".txt";
+            newReplayFilePath = Application.persistentDataPath + "/Replays/" + tempFileName + ".replay";
         }
 
         File.WriteAllText(newReplayFilePath, newReplayText);
@@ -127,7 +131,7 @@ public class ReplayManager : MonoBehaviour
 
     public void RemoveReplay(string removingReplayname)
     {
-        string removingReplayPath = Application.persistentDataPath + "/Replays/" + removingReplayname + ".txt";
+        string removingReplayPath = Application.persistentDataPath + "/Replays/" + removingReplayname + ".replay";
 
         if (!File.Exists(removingReplayPath))
         {
@@ -136,5 +140,23 @@ public class ReplayManager : MonoBehaviour
         }
 
         File.Delete(removingReplayPath);
+    }
+
+    //Replay writing (only host can write)
+    public void StartRecording(string hostname, int hostID, string clientname, int clientID)
+    {
+        replay = new(new ReplayPlayer(hostname, hostID, true) , new ReplayPlayer(clientname, clientID, false));
+    }
+
+    //Converting to and from JSON
+    public string ReplayToJson()
+    {
+        string replayAsJSON = JsonUtility.ToJson(replay);
+
+        return replayAsJSON;
+    }
+    public void JsonToReplay(string replayJson)
+    {
+        replay = JsonUtility.FromJson<Replay>(replayJson);
     }
 }

@@ -103,6 +103,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
     //Replay stuff
     public bool isDead = false;
     public string playerName;
+    public int playerSkinID;
 
     #region IPunObservable implementation
 
@@ -222,16 +223,20 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     {
                         photonPlayer = p;
 
+                        playerName = p.NickName;
+
                         if (p.IsLocal)
-                            playerInfoUI.SetPlayerName(p.NickName + " (YOU)");
+                            playerInfoUI.SetPlayerName(playerName + " (YOU)");
                         else
-                            playerInfoUI.SetPlayerName(p.NickName);
+                            playerInfoUI.SetPlayerName(playerName);
 
-                        if (p.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_SKIN, out object playerSkinID))
+                        if (p.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_SKIN, out object _playerSkinID))
                         {
-                            playerSr.material.SetColor("_PlayerColor", ShooterGameInfo.GetColor((int)playerSkinID));
+                            playerSkinID = (int)_playerSkinID;
 
-                            playerInfoUI.SetUISkin((int)playerSkinID);
+                            playerSr.material.SetColor("_PlayerColor", ShooterGameInfo.GetColor(playerSkinID));
+
+                            playerInfoUI.SetUISkin(playerSkinID);
                         }
 
                         return;
@@ -633,8 +638,6 @@ public class PlayerController : MonoBehaviour, IPunObservable
         {
             float intersectDistX = Mathf.Max(0, Mathf.Min(collision.collider.bounds.max.x, collision.otherCollider.bounds.max.x) - Mathf.Max(collision.collider.bounds.min.x, collision.otherCollider.bounds.min.x));
 
-            Debug.Log(intersectDistX);
-
             if (intersectDistX != 0)
             {
                 if (collision.collider.transform.position.x > collision.otherCollider.transform.position.x)
@@ -675,10 +678,6 @@ public class PlayerController : MonoBehaviour, IPunObservable
                         collision.otherCollider.transform.position += 0.3f * intersectDistX * Vector3.left;
                     }
                 }
-            }
-            else
-            {
-                Debug.Log("Players didnt intersect?");
             }
         }
     }

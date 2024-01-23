@@ -7,6 +7,7 @@ using Photon.Pun;
 using Photon.Pun.UtilityScripts;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using TMPro;
+using System;
 
 public class ShooterGameManager : MonoBehaviourPunCallbacks
 {
@@ -32,9 +33,8 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
     //Room properties
     const string GAME_STARTED = "GameStarted";
     const string GAME_PAUSED = "GamePaused";
-
-
-    const string REPLAY_TURN = "ReplayTurn";
+    //replay
+    const string REPLAY_FILE = "ReplayFile";
 
     //Game over stuff
     [SerializeField] Animator gameOverSlide, gameOverFade;
@@ -212,6 +212,10 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
                 localPlayerController.allowMove = true;
                 otherPlayerController.allowMove = true;
+
+                //start recording replay
+                ReplayManager.Instance.StartRecording(localPlayerController.playerName, localPlayerController.playerSkinID, 
+                                                      otherPlayerController.playerName, otherPlayerController.playerSkinID);
             }
         }
 
@@ -225,9 +229,18 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
                 //assign selected action
                 PlayerController assigningController;
+                int assigningPlayerNum = 0;
 
-                if (targetPlayer.IsLocal) assigningController = localPlayerController;
-                else assigningController = otherPlayerController;
+                if (targetPlayer.IsLocal)
+                {
+                    assigningController = localPlayerController;
+                    assigningPlayerNum = 1;
+                }
+                else
+                {
+                    assigningController = otherPlayerController;
+                    assigningPlayerNum = 2;
+                }
 
                 changedProps.TryGetValue(ShooterGameInfo.PLAYER_SELECTED_ACTION, out object assigningAction);
                 PlayerController.PlayerActions assigningAction2 = (PlayerController.PlayerActions)(int)assigningAction;
@@ -238,6 +251,15 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
                     {
                         assigningController.playerCurrentAction = assigningAction2;
                     }
+
+                    bool assigningPlayerFlip = false;
+                    if (targetPlayer.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_FLIP, out object playerFlip))
+                    {
+                        assigningPlayerFlip = (bool)playerFlip;
+                    }
+
+                    //add replay turn
+                    ReplayManager.Instance.replay.AddTurn(currentFrame, (int)assigningAction2, assigningPlayerFlip, assigningPlayerNum);
                 }
 
                 //check selected move
@@ -310,6 +332,16 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         if (propertiesThatChanged.TryGetValue(GAME_PAUSED, out object isGamePaused))
         {
             gamePaused = (bool)isGamePaused;
+        }
+        //Sync replay file for client only
+        if (propertiesThatChanged.TryGetValue(REPLAY_FILE, out object replayFile))
+        {
+            //receive replay
+            DateTime timeNow = DateTime.Now;
+            string replayName = timeNow.Year + "-" + timeNow.Month + "-" + timeNow.Day + "-" +
+                                timeNow.Hour + "-" + timeNow.Minute + "-" + timeNow.Second;
+
+            ReplayManager.Instance.AddReplay(replayName, (string)replayFile);
         }
     }
 
@@ -399,6 +431,34 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
             else
             {
                 winnerText.text = "DRAW?";
+            }
+
+            if (PhotonNetwork.IsMasterClient)
+            {
+                if (winner == ReplayManager.Instance.replay.p1.name)
+                    ReplayManager.Instance.replay.winner = 1;
+                else if (winner == ReplayManager.Instance.replay.p2.name)
+                    ReplayManager.Instance.replay.winner = 2;
+                else if (winner == "")
+                    ReplayManager.Instance.replay.winner = 0; //draw
+                else
+                    Debug.Log("HUH? wrong winner name");
+
+                ReplayManager.Instance.replay.lastFrame = currentFrame;
+                ReplayManager.Instance.replay.WrapTurns();
+
+                //save replay
+                DateTime timeNow = DateTime.Now;
+                string replayName = timeNow.Year + "-" + timeNow.Month + "-" + timeNow.Day + "-" +
+                                    timeNow.Hour + "-" + timeNow.Minute + "-" + timeNow.Second;
+
+                string replayContents = ReplayManager.Instance.ReplayToJson();
+
+                ReplayManager.Instance.AddReplay(replayName, replayContents);
+
+                //send replay
+                Hashtable roomProps = new Hashtable() { { REPLAY_FILE, replayContents } };
+                PhotonNetwork.CurrentRoom.SetCustomProperties(roomProps);
             }
 
             StartCoroutine(EndOfGame());
