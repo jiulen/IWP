@@ -28,7 +28,6 @@ public class PlayerController : MonoBehaviour, IPunObservable
     public bool isGrounded = true;
     [SerializeField] bool facingLeft = false;
     public bool toFlip = false;
-    bool isWalking, isRolling;
 
     List<PlayerActions> unavailableActions = new();
 
@@ -36,8 +35,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
     {
         //Movement
         WAIT,
-        WALK_LEFT,
-        WALK_RIGHT,
+        WALK_LEFT, //walks forward instead
+        WALK_RIGHT, //not in use
         ROLL,
         JUMP,
         FALL,
@@ -48,7 +47,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
         SKIP,
 
         //Attack
-        HYDRO_BALL,
+        HYDRO_BALL, //not in use
         ICICLE,
         LINGERING_SPIRIT,
         EXPLOSION,
@@ -276,7 +275,6 @@ public class PlayerController : MonoBehaviour, IPunObservable
                 if (!isGrounded)
                 {
                     unavailableActions.Add(PlayerActions.WALK_LEFT);
-                    unavailableActions.Add(PlayerActions.WALK_RIGHT);
 
                     if (airOptionsAvail <= 0)
                     {
@@ -289,6 +287,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
                 }
                 else
                 {
+                    unavailableActions.Add(PlayerActions.ROLL);
                     unavailableActions.Add(PlayerActions.FALL);
                 }
 
@@ -326,7 +325,6 @@ public class PlayerController : MonoBehaviour, IPunObservable
     {
         return (playerCurrentAction == PlayerActions.WAIT) ||
                (playerCurrentAction == PlayerActions.WALK_LEFT) ||
-               (playerCurrentAction == PlayerActions.WALK_RIGHT) || 
                (playerCurrentAction == PlayerActions.BLOCK);
     }
 
@@ -370,26 +368,14 @@ public class PlayerController : MonoBehaviour, IPunObservable
                 case PlayerActions.WALK_LEFT:
                     playerWalk.goLeft = true;
 
-                    if (isWalking)
-                        playerWalk.firstHalf = !playerWalk.firstHalf;
+                    if (facingLeft)
+                    {
+                        playerWalk.goLeft = true;
+                    }
                     else
-                        playerWalk.firstHalf = true;
-
-                    if (facingLeft) playerWalk.forwards = true;
-                    else playerWalk.forwards = false;
-
-                    currentFrameBehaviour = playerWalk;
-                    break;
-                case PlayerActions.WALK_RIGHT:
-                    playerWalk.goLeft = false;
-
-                    if (isWalking)
-                        playerWalk.firstHalf = !playerWalk.firstHalf;
-                    else
-                        playerWalk.firstHalf = true;
-
-                    if (facingLeft) playerWalk.forwards = false;
-                    else playerWalk.forwards = true;
+                    {
+                        playerWalk.goLeft = false;
+                    }
 
                     currentFrameBehaviour = playerWalk;
                     break;
@@ -494,26 +480,6 @@ public class PlayerController : MonoBehaviour, IPunObservable
             {
                 if (playerCurrentAction != PlayerActions.SKIP)
                 {
-                    //Check if walking
-                    if (playerCurrentAction == PlayerActions.WALK_LEFT || playerCurrentAction == PlayerActions.WALK_RIGHT)
-                    {
-                        isWalking = true;
-                    }
-                    else if (playerCurrentAction != PlayerActions.JUMP)
-                    {
-                        isWalking = false;
-                    }
-
-                    //Check if rolling
-                    if (playerCurrentAction == PlayerActions.ROLL)
-                    {
-                        isRolling = true;
-                    }
-                    else if (playerCurrentAction != PlayerActions.JUMP)
-                    {
-                        isRolling = false;
-                    }
-
                     currentFrameBehaviour.enabledBehaviour = true;
                     currentFrameBehaviour.lastFrame = false;
                     currentFrameBehaviour.currentCooldown = currentFrameBehaviour.maxCooldown;

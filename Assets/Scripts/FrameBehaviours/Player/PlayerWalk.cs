@@ -5,11 +5,9 @@ using UnityEngine;
 public class PlayerWalk : PlayerFrameBehaviour
 {
     public bool goLeft = false;
-    public bool forwards = true;
-    public bool firstHalf = true; //check if walk cycle is first or second half
 
     [SerializeField] float walkForce;
-    [SerializeField] string walkForwardAnim_1, walkForwardAnim_2, walkBackwordAnim_1, walkBackwordAnim_2;
+    [SerializeField] string walkForwardAnim;
 
     public override void GoToFrame()
     {
@@ -18,20 +16,13 @@ public class PlayerWalk : PlayerFrameBehaviour
             case 0:
                 rb.velocity = Vector2.zero;
 
-                if (forwards)
-                {
-                    currentAnimName = firstHalf ? walkForwardAnim_1 : walkForwardAnim_2;
-                }
-                else
-                {
-                    currentAnimName = firstHalf ? walkBackwordAnim_1 : walkBackwordAnim_2;
-                }
+                currentAnimName = walkForwardAnim;
                 AnimatorChangeAnimation(currentAnimName);
 
                 Vector2 walkDir = Vector2.right * (goLeft ? -1 : 1);
                 rb.AddForce(walkDir * walkForce, ForceMode2D.Impulse);
                 break;
-            case 17: //end
+            case 15: //end
                 rb.velocity = new Vector2(0, rb.velocity.y);
 
                 EndAnimation();
