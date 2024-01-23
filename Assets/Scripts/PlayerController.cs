@@ -100,6 +100,11 @@ public class PlayerController : MonoBehaviour, IPunObservable
     //Opponent stuff
     public Transform oppTransform;
 
+    //Replay stuff
+    public bool isDead = false;
+    public string playerName;
+    public int playerSkinID;
+
     #region IPunObservable implementation
 
     //For syncing data via IPunObservable
@@ -208,27 +213,41 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
     void SetPlayerInfo()
     {
-        foreach (Player p in PhotonNetwork.PlayerList)
+        if (!ShooterGameManager.Instance.isReplay)
         {
-            if (p.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_NUMBER, out object playerNumber))
+            foreach (Player p in PhotonNetwork.PlayerList)
             {
-                if ((int)playerNumber == playerNum)
+                if (p.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_NUMBER, out object playerNumber))
                 {
-                    photonPlayer = p;
-
-                    playerInfoUI.SetPlayerName(p.NickName);
-
-                    if (p.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_SKIN, out object playerSkinID))
+                    if ((int)playerNumber == playerNum)
                     {
-                        playerSr.material.SetColor("_PlayerColor", ShooterGameInfo.GetColor((int)playerSkinID));
+                        photonPlayer = p;
 
-                        playerInfoUI.SetUISkin((int)playerSkinID);
+                        playerName = p.NickName;
+
+                        if (p.IsLocal)
+                            playerInfoUI.SetPlayerName(playerName + " (YOU)");
+                        else
+                            playerInfoUI.SetPlayerName(playerName);
+
+                        if (p.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_SKIN, out object _playerSkinID))
+                        {
+                            playerSkinID = (int)_playerSkinID;
+
+                            playerSr.material.SetColor("_PlayerColor", ShooterGameInfo.GetColor(playerSkinID));
+
+                            playerInfoUI.SetUISkin(playerSkinID);
+                        }
+
+                        return;
                     }
 
-                    return;
                 }
-
             }
+        }
+        else
+        {
+
         }
     }
 
@@ -619,8 +638,6 @@ public class PlayerController : MonoBehaviour, IPunObservable
         {
             float intersectDistX = Mathf.Max(0, Mathf.Min(collision.collider.bounds.max.x, collision.otherCollider.bounds.max.x) - Mathf.Max(collision.collider.bounds.min.x, collision.otherCollider.bounds.min.x));
 
-            Debug.Log(intersectDistX);
-
             if (intersectDistX != 0)
             {
                 if (collision.collider.transform.position.x > collision.otherCollider.transform.position.x)
@@ -661,10 +678,6 @@ public class PlayerController : MonoBehaviour, IPunObservable
                         collision.otherCollider.transform.position += 0.3f * intersectDistX * Vector3.left;
                     }
                 }
-            }
-            else
-            {
-                Debug.Log("Players didnt intersect?");
             }
         }
     }

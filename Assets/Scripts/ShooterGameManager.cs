@@ -7,6 +7,7 @@ using Photon.Pun;
 using Photon.Pun.UtilityScripts;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using TMPro;
+using System;
 
 public class ShooterGameManager : MonoBehaviourPunCallbacks
 {
@@ -32,10 +33,14 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
     //Room properties
     const string GAME_STARTED = "GameStarted";
     const string GAME_PAUSED = "GamePaused";
+    //replay
+    const string REPLAY_FILE = "ReplayFile";
 
     //Game over stuff
     [SerializeField] Animator gameOverSlide, gameOverFade;
     [SerializeField] TMP_Text winnerText;
+
+    public bool isReplay = false;
 
     public void Awake()
     {
@@ -49,31 +54,39 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
     public void Start()
     {
-        //Notify ready
-        Hashtable props = new()
+        if (!isReplay)
         {
-            {ShooterGameInfo.PLAYER_LOADED_LEVEL, true},
-            {ShooterGameInfo.PLAYER_DEAD, false}
-        };
-        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
-
-        //Set local controller for easier access
-        if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_NUMBER, out object playerNumber))
-        {
-            switch (playerNumber)
+            //Notify ready
+            Hashtable props = new()
             {
-                case 1:
-                    localPlayerController = player1;
-                    otherPlayerController = player2;
-                    break;
-                case 2:
-                    localPlayerController = player2;
-                    otherPlayerController = player1;
-                    break;
-            }
-        }
+                { ShooterGameInfo.PLAYER_LOADED_LEVEL, true },
+                { ShooterGameInfo.PLAYER_DEAD, false }
+            };
+            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
 
-        localPlayerController.controllerUI = localControllerUI;
+            //Set local controller for easier access
+            if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_NUMBER, out object playerNumber))
+            {
+                switch (playerNumber)
+                {
+                    case 1:
+                        localPlayerController = player1;
+                        otherPlayerController = player2;
+                        break;
+                    case 2:
+                        localPlayerController = player2;
+                        otherPlayerController = player1;
+                        break;
+                }
+            }
+
+            localPlayerController.controllerUI = localControllerUI;
+        }
+        else
+        {
+            localPlayerController = player1;
+            otherPlayerController = player2;
+        }
     }
 
     public override void OnDisable()
@@ -199,6 +212,10 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
                 localPlayerController.allowMove = true;
                 otherPlayerController.allowMove = true;
+
+                //start recording replay
+                ReplayManager.Instance.StartRecording(localPlayerController.playerName, localPlayerController.playerSkinID, 
+                                                      otherPlayerController.playerName, otherPlayerController.playerSkinID);
             }
         }
 
@@ -212,9 +229,18 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
                 //assign selected action
                 PlayerController assigningController;
+                int assigningPlayerNum = 0;
 
-                if (targetPlayer.IsLocal) assigningController = localPlayerController;
-                else assigningController = otherPlayerController;
+                if (targetPlayer.IsLocal)
+                {
+                    assigningController = localPlayerController;
+                    assigningPlayerNum = 1;
+                }
+                else
+                {
+                    assigningController = otherPlayerController;
+                    assigningPlayerNum = 2;
+                }
 
                 changedProps.TryGetValue(ShooterGameInfo.PLAYER_SELECTED_ACTION, out object assigningAction);
                 PlayerController.PlayerActions assigningAction2 = (PlayerController.PlayerActions)(int)assigningAction;
@@ -225,6 +251,15 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
                     {
                         assigningController.playerCurrentAction = assigningAction2;
                     }
+
+                    bool assigningPlayerFlip = false;
+                    if (targetPlayer.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_FLIP, out object playerFlip))
+                    {
+                        assigningPlayerFlip = (bool)playerFlip;
+                    }
+
+                    //add replay turn
+                    ReplayManager.Instance.replay.AddTurn(currentFrame, (int)assigningAction2, assigningPlayerFlip, assigningPlayerNum);
                 }
 
                 //check selected move
@@ -298,6 +333,16 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         {
             gamePaused = (bool)isGamePaused;
         }
+        //Sync replay file for client only
+        if (propertiesThatChanged.TryGetValue(REPLAY_FILE, out object replayFile))
+        {
+            //receive replay
+            DateTime timeNow = DateTime.Now;
+            string replayName = timeNow.Year + "-" + timeNow.Month + "-" + timeNow.Day + "-" +
+                                timeNow.Hour + "-" + timeNow.Minute + "-" + timeNow.Second;
+
+            ReplayManager.Instance.AddReplay(replayName, (string)replayFile);
+        }
     }
 
     private bool CheckAllPlayerLoadedLevel()
@@ -325,31 +370,53 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         return true;
     }
 
-    private void CheckEndOfGame() //TODO : Fix bug
+    private void CheckEndOfGame()
     {
         bool playerDead = false;
         string winner = ""; //if draw then winner will be ""
 
-        if (PhotonNetwork.PlayerList.Length == 1)
+        if (!isReplay)
         {
-            winner = PhotonNetwork.PlayerList[0].NickName;
-            playerDead = true;
+            if (PhotonNetwork.PlayerList.Length == 1)
+            {
+                winner = PhotonNetwork.PlayerList[0].NickName;
+                playerDead = true;
+            }
+            else
+            {
+                foreach (Player p in PhotonNetwork.PlayerList)
+                {
+                    if (p.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_DEAD, out object isDead))
+                    {
+                        if (!(bool)isDead)
+                        {
+                            winner = p.NickName;
+                        }
+                        else
+                        {
+                            playerDead = true;
+                        }
+                    }
+                }
+            }
         }
         else
         {
-            foreach (Player p in PhotonNetwork.PlayerList)
+            if (!localPlayerController.isDead)
             {
-                if (p.CustomProperties.TryGetValue(ShooterGameInfo.PLAYER_DEAD, out object isDead))
-                {
-                    if (!(bool)isDead)
-                    {
-                        winner = p.NickName;
-                    }
-                    else
-                    {
-                        playerDead = true;
-                    }
-                }
+                winner = localPlayerController.playerName;
+            }
+            else
+            {
+                playerDead = true;
+            }
+            if (!otherPlayerController.isDead)
+            {
+                winner = otherPlayerController.playerName;
+            }
+            else
+            {
+                playerDead = true;
             }
         }
 
@@ -366,6 +433,34 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
                 winnerText.text = "DRAW?";
             }
 
+            if (PhotonNetwork.IsMasterClient)
+            {
+                if (winner == ReplayManager.Instance.replay.p1.name)
+                    ReplayManager.Instance.replay.winner = 1;
+                else if (winner == ReplayManager.Instance.replay.p2.name)
+                    ReplayManager.Instance.replay.winner = 2;
+                else if (winner == "")
+                    ReplayManager.Instance.replay.winner = 0; //draw
+                else
+                    Debug.Log("HUH? wrong winner name");
+
+                ReplayManager.Instance.replay.lastFrame = currentFrame;
+                ReplayManager.Instance.replay.WrapTurns();
+
+                //save replay
+                DateTime timeNow = DateTime.Now;
+                string replayName = timeNow.Year + "-" + timeNow.Month + "-" + timeNow.Day + "-" +
+                                    timeNow.Hour + "-" + timeNow.Minute + "-" + timeNow.Second;
+
+                string replayContents = ReplayManager.Instance.ReplayToJson();
+
+                ReplayManager.Instance.AddReplay(replayName, replayContents);
+
+                //send replay
+                Hashtable roomProps = new Hashtable() { { REPLAY_FILE, replayContents } };
+                PhotonNetwork.CurrentRoom.SetCustomProperties(roomProps);
+            }
+
             StartCoroutine(EndOfGame());
         }
     }
@@ -374,62 +469,69 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
     private void FixedUpdate()
     {
-        if (!gameStarted)
-            return;
-
-        localPlayerController.UpdateInfoUIAuto();
-        otherPlayerController.UpdateInfoUIAuto();
-
-        if (!PhotonNetwork.IsMasterClient)
-            return;
-
-        if (!gamePaused)
+        if (!isReplay)
         {
-            //spells
-            foreach (SpellFrameBehaviour spell in spellsPool)
-            {
-                if (spell.activeSpell)
-                {
-                    ++spell.frameNum; //add frame first since start is -1
+            if (!gameStarted)
+                return;
 
-                    spell.GoToFrame();
-                    if (spell.IsAnimationDone())
+            localPlayerController.UpdateInfoUIAuto();
+            otherPlayerController.UpdateInfoUIAuto();
+
+            if (!PhotonNetwork.IsMasterClient)
+                return;
+
+            if (!gamePaused)
+            {
+                //spells
+                foreach (SpellFrameBehaviour spell in spellsPool)
+                {
+                    if (spell.activeSpell)
                     {
-                        ReturnPooledObject(spell);
+                        ++spell.frameNum; //add frame first since start is -1
+
+                        spell.GoToFrame();
+                        if (spell.IsAnimationDone())
+                        {
+                            ReturnPooledObject(spell);
+                        }
+                    }
+                }
+
+                //player
+                localPlayerController.RefillAirOptions();
+                otherPlayerController.RefillAirOptions();
+
+                localPlayerController.ApplyResistances();
+                otherPlayerController.ApplyResistances();
+
+                localPlayerController.RunFrameBehaviour();
+                otherPlayerController.RunFrameBehaviour();
+
+                localPlayerController.AddMeter(1f / 360);
+                otherPlayerController.AddMeter(1f / 360);
+
+                Physics2D.Simulate(Time.fixedDeltaTime);
+
+                localPlayerController.CheckIfGrounded();
+                otherPlayerController.CheckIfGrounded();
+
+                ++localPlayerController.currentFrameNum;
+                ++otherPlayerController.currentFrameNum;
+
+                ++currentFrame;
+
+                if (localPlayerController.IsIdle() || otherPlayerController.IsIdle())
+                {
+                    if (!gameOver)
+                    {
+                        OnPauseGame();
                     }
                 }
             }
+        }
+        else
+        {
 
-            //player
-            localPlayerController.RefillAirOptions();
-            otherPlayerController.RefillAirOptions();
-
-            localPlayerController.ApplyResistances();
-            otherPlayerController.ApplyResistances();
-
-            localPlayerController.RunFrameBehaviour();
-            otherPlayerController.RunFrameBehaviour();
-
-            localPlayerController.AddMeter(1f / 360);
-            otherPlayerController.AddMeter(1f / 360);
-
-            Physics2D.Simulate(Time.fixedDeltaTime);
-
-            localPlayerController.CheckIfGrounded();
-            otherPlayerController.CheckIfGrounded();
-
-            ++localPlayerController.currentFrameNum;
-            ++otherPlayerController.currentFrameNum;
-
-            ++currentFrame;
-
-            if (localPlayerController.IsIdle() || otherPlayerController.IsIdle())
-            {
-                if (!gameOver)
-                {
-                    OnPauseGame();
-                }
-            }
         }
     }
 
@@ -524,7 +626,17 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
         for (int i = 0; i < amtToPool; ++i)
         {
-            GameObject newSpellObj = PhotonNetwork.InstantiateRoomObject(spellName, spellsSpawnPoint.position, Quaternion.identity);
+            GameObject newSpellObj;
+
+            if (!isReplay)
+            {
+                newSpellObj = PhotonNetwork.InstantiateRoomObject(spellName, spellsSpawnPoint.position, Quaternion.identity);
+            }
+            else
+            {
+                newSpellObj = Instantiate(Resources.Load<GameObject>(spellName), spellsSpawnPoint.position, Quaternion.identity);
+            }
+            
             newSpellObj.transform.SetParent(spellsPoolTransform);
 
             SpellFrameBehaviour newSpell = newSpellObj.GetComponent<SpellFrameBehaviour>();

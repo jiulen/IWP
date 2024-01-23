@@ -6,6 +6,8 @@ using UnityEngine.UI;
 using Photon.Pun;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using TMPro;
+using UnityEngine.SceneManagement;
+using System.IO;
 
 public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
 {
@@ -35,7 +37,6 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
 
     [Header("Room List Panel")]
     public GameObject RoomListPanel;
-
     public GameObject RoomListContent;
     public GameObject RoomListEntryPrefab;
 
@@ -54,6 +55,12 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
     [Header("Tutorial Panel")]
     public GameObject tutorialPanel;
     public List<GameObject> tutorialPages;
+
+    [Header("Replay List Panel")]
+    public GameObject replayListPanel;
+    public GameObject replayListContent;
+    public GameObject replayListEntryPrefab;
+    List<GameObject> replayListEntries;
 
     public GameObject PlayerListEntryPrefab;
 
@@ -78,6 +85,7 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
 
         cachedRoomList = new Dictionary<string, RoomInfo>();
         roomListEntries = new Dictionary<string, GameObject>();
+        replayListEntries = new();
 
         if (PlayerPrefs.HasKey("PlayerName"))
         {
@@ -566,6 +574,16 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
         startGameText.text = "STARTING...";
     }
 
+    public void OnReplaysButtonClicked()
+    {
+        SetActivePanel(replayListPanel.name);
+    }
+
+    public void OnReplaySelected()
+    {
+        SceneManager.LoadScene("ReplayScene");
+    }
+
     #endregion
 
     private bool CheckPlayersReady()
@@ -620,6 +638,7 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
         SelectionPanel.SetActive(activePanel.Equals(SelectionPanel.name));
         RoomListPanel.SetActive(activePanel.Equals(RoomListPanel.name));    // UI should call OnRoomListButtonClicked() to activate this
         InsideRoomPanel.SetActive(activePanel.Equals(InsideRoomPanel.name));
+        replayListPanel.SetActive(activePanel.Equals(replayListPanel.name));
         tutorialPanel.SetActive(activePanel.Equals(tutorialPanel.name));
 
         errorMsg.text = "";
@@ -652,6 +671,11 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
         else if (activePanel.Equals(tutorialPanel.name))
         {
             GoToTutorialPage(0);
+        }
+        else if (activePanel.Equals(replayListPanel.name))
+        {
+            ClearReplayList();
+            UpdateReplayList();
         }
     }
 
@@ -713,6 +737,31 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
             {
                 tutorialPages[i].SetActive(false);
             }
+        }
+    }
+
+    private void ClearReplayList()
+    {
+        foreach (GameObject entry in replayListEntries)
+        {
+            Destroy(entry);
+        }
+
+        replayListEntries.Clear();
+    }
+
+    private void UpdateReplayList()
+    {
+        FileInfo[] replayFiles = ReplayManager.Instance.LoadReplayFiles();
+
+        foreach (FileInfo replayFile in replayFiles)
+        {
+            GameObject entry = Instantiate(replayListEntryPrefab);
+            entry.transform.SetParent(replayListContent.transform);
+            entry.transform.localScale = Vector3.one;
+            entry.GetComponent<ReplayListEntry>().Initialize(Path.GetFileNameWithoutExtension(replayFile.Name), replayFile.FullName);
+
+            replayListEntries.Add(entry);
         }
     }
 }
