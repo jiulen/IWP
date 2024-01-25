@@ -92,7 +92,17 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
             localPlayerController = player1;
             otherPlayerController = player2;
 
+            //Advance frames after resetting scene
+            if (ReplayManager.Instance.replayTurn >= 0)
+            {
+                gamePaused = ReplayManager.Instance.replayPaused;
 
+                int turnsToAdvance = ReplayManager.Instance.replayTurn - currentFrame;
+                for (int i = 0; i < turnsToAdvance; ++i)
+                {
+                    NextReplayTurn();
+                }
+            }
         }
     }
 
@@ -696,7 +706,24 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
     public void SkipToTurn()
     {
-        Debug.Log(replaySlider.value);
+        //check if before turn, current turn, or after turn
+        int newTurnNum = (int)replaySlider.value;
+        if (newTurnNum < currentFrame)
+        {
+            //Less than current frame, need reset scene before advancing to target frame
+            ReplayManager.Instance.replayTurn = newTurnNum;
+            ReplayManager.Instance.replayPaused = gamePaused;
+            ResetReplay();
+        }
+        else
+        {
+            //More than current frame, advance to target frame
+            int turnsToAdvance = newTurnNum - currentFrame;
+            for (int i = 0; i < turnsToAdvance; ++i)
+            {
+                NextReplayTurn();
+            }
+        }
     }
 
     public void ResetReplay()

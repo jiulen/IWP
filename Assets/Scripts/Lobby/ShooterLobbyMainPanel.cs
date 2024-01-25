@@ -584,6 +584,8 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
     {
         if (success)
         {
+            ReplayManager.Instance.replayTurn = -1;
+            ReplayManager.Instance.replayPaused = false;
             PhotonNetwork.LoadLevel("ReplayScene");
         }
         else

@@ -90,6 +90,9 @@ public class ReplayManager : MonoBehaviour
 
     public Replay replay;
 
+    public int replayTurn = -1;
+    public bool replayPaused = false;
+
     public void Awake()
     {
         Instance = this;
