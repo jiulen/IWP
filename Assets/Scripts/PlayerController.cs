@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
     public Rigidbody2D rb;
     [SerializeField] Transform spriteTransform;
     [SerializeField] Transform playerCenter;
-    [SerializeField] Collider2D playerCollider;
+    public Collider2D playerCollider;
     [SerializeField] LayerMask groundLayerMask;
 
     [SerializeField] float airResistance = 0;
@@ -59,7 +59,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
         STUNNED,
         CONTINUE_BLOCK,
         STOP_BLOCK,
-        NONE
+        NONE,
+        TELEPORT
     }
 
     public PlayerActions playerCurrentAction = PlayerActions.NONE;
@@ -80,6 +81,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
     PlayerRoll playerRoll;
     PlayerJump playerJump;
     PlayerFall playerFall;
+    PlayerTeleport playerTeleport;
     PlayerStun playerStun;
 
     PlayerIcicle playerIcicle;
@@ -189,6 +191,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
         playerRoll = GetComponent<PlayerRoll>();
         playerJump = GetComponent<PlayerJump>();
         playerFall = GetComponent<PlayerFall>();
+        playerTeleport = GetComponent<PlayerTeleport>();
         playerStun = GetComponent<PlayerStun>();
 
         playerIcicle = GetComponent<PlayerIcicle>();
@@ -415,6 +418,19 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     if (!isGrounded) airOptionsAvail -= 1;
 
                     currentFrameBehaviour = playerFall;
+                    break;
+
+                case PlayerActions.TELEPORT:
+                    if (facingLeft)
+                    {
+                        playerTeleport.goLeft = true;
+                    }
+                    else
+                    {
+                        playerTeleport.goLeft = false;
+                    }
+
+                    currentFrameBehaviour = playerTeleport;
                     break;
 
                 //Defense

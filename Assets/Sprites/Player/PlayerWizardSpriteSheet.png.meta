@@ -1190,6 +1190,69 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: PlayerTP_0
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ed8455504bd59b4f884926b6ceb9490
+      internalID: -1652975067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerTP_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2faec11a9153004ca5054db0a309682
+      internalID: 1193629269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerTP_2
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81d2c824794bb704e808b70f0e463bbc
+      internalID: 145160297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -1220,6 +1283,7 @@ TextureImporter:
       PlayerWalk_2: 1154621805
       PlayerAttackB_0: 540270776
       PlayerAttackC_2: 2079616751
+      PlayerTP_2: 145160297
       PlayerHurt_2: -2010949733
       PlayerFall_2: -846587987
       PlayerRoll_3: 760986168
@@ -1228,6 +1292,7 @@ TextureImporter:
       PlayerAttackF_0: 352589405
       PlayerJump_0: -1112377161
       PlayerWalk_5: 922867508
+      PlayerTP_0: -1652975067
       PlayerJump_4: 851738310
       PlayerAttackA_2: 736767045
       PlayerAttackB_2: 1682465730
@@ -1247,6 +1312,7 @@ TextureImporter:
       PlayerWalk_0: 1495961203
       PlayerJump_2: -596255036
       PlayerJump_1: 1452631380
+      PlayerTP_1: 1193629269
       PlayerAttackG_0: 1728612089
       PlayerAttackG_1: -622817581
       PlayerAttackE_1: 523551268
