@@ -114,6 +114,19 @@ public class ReplayManager : MonoBehaviour
         }
     }
 
+    public bool SetCurrentReplay(string replayFilePath)
+    {
+        if (File.Exists(replayFilePath))
+        {
+            string replayFileContents = File.ReadAllText(replayFilePath);
+            replay = JsonUtility.FromJson<Replay>(replayFileContents);
+
+            return true;
+        }
+
+        return false;
+    }
+
     public void AddReplay(string newReplayName, string newReplayText)
     {
         string newReplayFilePath = Application.persistentDataPath + "/Replays/" + newReplayName + ".replay";

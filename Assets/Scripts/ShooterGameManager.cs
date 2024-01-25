@@ -8,6 +8,7 @@ using Photon.Pun.UtilityScripts;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using TMPro;
 using System;
+using UnityEngine.SceneManagement;
 
 public class ShooterGameManager : MonoBehaviourPunCallbacks
 {
@@ -41,6 +42,10 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
     [SerializeField] TMP_Text winnerText;
 
     public bool isReplay = false;
+
+    //Replay stuff
+    [SerializeField] Slider replaySlider;
+    [SerializeField] TMP_Text replayFrame;
 
     public void Awake()
     {
@@ -86,6 +91,8 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         {
             localPlayerController = player1;
             otherPlayerController = player2;
+
+
         }
     }
 
@@ -433,7 +440,7 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
                 winnerText.text = "DRAW?";
             }
 
-            if (PhotonNetwork.IsMasterClient)
+            if (PhotonNetwork.IsMasterClient && !isReplay)
             {
                 if (winner == ReplayManager.Instance.replay.p1.name)
                     ReplayManager.Instance.replay.winner = 1;
@@ -673,5 +680,27 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         spell.enabledBehaviour = true;
         spell.lastFrame = false;
         spell.frameNum = -1;
+    }
+
+    //Replay stuff
+
+    public void NextReplayTurn()
+    {
+
+    }
+
+    public void PlayReplay(bool play)
+    {
+        gamePaused = !play;
+    }
+
+    public void SkipToTurn()
+    {
+        Debug.Log(replaySlider.value);
+    }
+
+    public void ResetReplay()
+    {
+        PhotonNetwork.LoadLevel(SceneManager.GetActiveScene().buildIndex);
     }
 }
