@@ -53,6 +53,12 @@ public class PlayerIcicle : PlayerFrameBehaviour
 
                 icicleEnded = false;
 
+                rb.velocity = Vector2.zero;
+                rb.gravityScale = 0;
+
+                break;
+            case 20: //resume falling, icicle gone
+                rb.gravityScale = 1;
                 break;
             case 32: //end
                 EndAnimation();
@@ -70,5 +76,7 @@ public class PlayerIcicle : PlayerFrameBehaviour
         {
             ShooterGameManager.Instance.ReturnPooledObject(spellIcicle);
         }
+
+        rb.gravityScale = 1;
     }
 }

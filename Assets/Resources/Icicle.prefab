@@ -105,7 +105,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.03, y: -0.011}
-  m_Size: {x: 0.5, y: 0.15}
+  m_Size: {x: 0.7, y: 0.25}
   m_Direction: 1
 --- !u!50 &8284633437816278538
 Rigidbody2D:
@@ -262,3 +262,6 @@ MonoBehaviour:
   position2: {fileID: 0}
   startAnim: Start
   hitAnim: Hit
+  finalKnockbackIncrease: 6
+  finalStunDuration: 16
+  finalKnockbackForce: 50

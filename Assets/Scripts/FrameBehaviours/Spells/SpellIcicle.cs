@@ -20,15 +20,18 @@ public class SpellIcicle : SpellFrameBehaviour
 
     [SerializeField] string startAnim, hitAnim;
 
+    [SerializeField] int finalKnockbackIncrease, finalStunDuration;
+    [SerializeField] float finalKnockbackForce;
+
     public override void GoToFrame()
     {
         if (phase == 0)
         {
-            if (frameNum < 3)
+            if (frameNum < 2)
             {
                 transform.position = position0.position;
             }
-            else if (frameNum < 9)
+            else if (frameNum < 6)
             {
                 transform.position = position1.position;
             }
@@ -48,6 +51,9 @@ public class SpellIcicle : SpellFrameBehaviour
                     currentAnimName = startAnim;
                     AnimatorChangeAnimation(currentAnimName);
                     break;
+                case 6:
+                    icicleCollider.enabled = true;
+                    break;
                 case 9:
                     icicleCollider.enabled = true;
                     break;
@@ -60,10 +66,7 @@ public class SpellIcicle : SpellFrameBehaviour
                 case 18:
                     icicleCollider.enabled = true;
                     break;
-                case 21:
-                    icicleCollider.enabled = true;
-                    break;
-                case 23: //end start
+                case 20: //end start
                     if (hitPlayer)
                     {
                         startPhase_1 = true;
@@ -107,7 +110,16 @@ public class SpellIcicle : SpellFrameBehaviour
         hitPlayer = true;
         icicleCollider.enabled = false;
 
-        playerController.TakeHit(knockbackIncrease, knockbackForce * knockbackDirection, stunDuration);
+        if (frameNum < 18)
+        {
+            playerController.TakeHit(knockbackIncrease, knockbackForce * knockbackDirection, stunDuration);
+        }
+        else
+        {
+            Vector2 finalKnockbackDirection = knockbackDirection + Vector2.up * 0.5f;
+            finalKnockbackDirection.Normalize();
+            playerController.TakeHit(finalKnockbackIncrease, finalKnockbackForce * finalKnockbackDirection, finalStunDuration);
+        }
         GiveMeter(owner, playerController);
     }
 

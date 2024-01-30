@@ -59,7 +59,7 @@ public class PlayerTeleport : PlayerFrameBehaviour
                     }
                 }
 
-                playerController.playerCollider.attachedRigidbody.position = new Vector2(opponentPos.x + tpOffsetX * tpDir, opponentPos.y);
+                playerController.rb.position = new Vector2(opponentPos.x + tpOffsetX * tpDir, opponentPos.y);
                 break;
             case 10: //reappear
                 playerController.playerCollider.enabled = true;

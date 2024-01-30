@@ -499,6 +499,7 @@ MonoBehaviour:
   srSizeY: 1
   lastFrame: 1
   enabledBehaviour: 0
+  goLeft: 0
   tpOffsetX: 1
   teleportAnim: Teleport
 --- !u!114 &4474947036822240987
