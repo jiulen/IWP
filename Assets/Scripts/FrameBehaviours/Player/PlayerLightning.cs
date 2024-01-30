@@ -19,9 +19,9 @@ public class PlayerLightning : PlayerFrameBehaviour
                 AnimatorChangeAnimation(currentAnimName);
                 break;
             case 6: //set position
-                lightningPos = new Vector3(playerController.oppTransform.position.x, ySpawnPos, 0);
                 break;
             case 20: //create lightning
+                lightningPos = new Vector3(playerController.transform.position.x, ySpawnPos, 0);
                 GameObject lightningObj = ShooterGameManager.Instance.GetPooledSpell("Lightning");
 
                 SpellLightning spellLightning = lightningObj.GetComponent<SpellLightning>();
