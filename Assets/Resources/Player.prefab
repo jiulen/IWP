@@ -599,7 +599,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frameNum: 0
-  maxCooldown: 40
+  maxCooldown: 60
   currentCooldown: -1
   srSizeY: 1
   lastFrame: 1
@@ -623,7 +623,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frameNum: 0
-  maxCooldown: 30
+  maxCooldown: 60
   currentCooldown: -1
   srSizeY: 1
   lastFrame: 1
@@ -664,7 +664,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frameNum: 0
-  maxCooldown: 42
+  maxCooldown: 60
   currentCooldown: -1
   srSizeY: 1
   lastFrame: 1
@@ -684,7 +684,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frameNum: 0
-  maxCooldown: 30
+  maxCooldown: 60
   currentCooldown: -1
   srSizeY: 1
   lastFrame: 1
@@ -692,6 +692,8 @@ MonoBehaviour:
   goLeft: 0
   ySpawnPos: -0.5
   attackAnim: AttackC
+  minX: -4.5
+  maxX: 4.5
 --- !u!114 &5352697439581963250
 MonoBehaviour:
   m_ObjectHideFlags: 0

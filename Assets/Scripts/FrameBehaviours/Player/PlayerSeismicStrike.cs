@@ -12,6 +12,8 @@ public class PlayerSeismicStrike : PlayerFrameBehaviour
 
     Vector3 seismicStrikePos;
 
+    [SerializeField] float minX, maxX;
+
     public override void GoToFrame()
     {
         switch (frameNum)
@@ -21,7 +23,8 @@ public class PlayerSeismicStrike : PlayerFrameBehaviour
                 AnimatorChangeAnimation(currentAnimName);
                 break;
             case 10:
-                seismicStrikePos = new Vector3(playerController.oppTransform.position.x, ySpawnPos, 0);
+                float rockXPos = Mathf.Clamp(playerController.oppTransform.position.x, minX, maxX);
+                seismicStrikePos = new Vector3(rockXPos, ySpawnPos, 0);
                 break;
             case 14: //create seismic strike
                 GameObject seismicStrikeObj = ShooterGameManager.Instance.GetPooledSpell("SeismicStrike");

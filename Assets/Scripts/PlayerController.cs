@@ -312,13 +312,12 @@ public class PlayerController : MonoBehaviour, IPunObservable
                 if (!isGrounded)
                 {
                     unavailableActions.Add(PlayerActions.WALK_LEFT);
+                    unavailableActions.Add(PlayerActions.SEISMIC_STRIKE);
 
                     if (airOptionsAvail <= 0)
                     {
                         unavailableActions.Add(PlayerActions.ROLL);
-
                         unavailableActions.Add(PlayerActions.JUMP);
-
                         unavailableActions.Add(PlayerActions.FALL);
                     }
                 }

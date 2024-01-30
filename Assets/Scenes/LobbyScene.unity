@@ -7174,17 +7174,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   replay:
     p1:
-      name: 
+      playerName: 
       skinID: 0
       isMe: 0
     p2:
-      name: 
+      playerName: 
       skinID: 0
       isMe: 0
     winner: 0
     lastFrame: 0
     wrappedTurns:
       list: []
+  replayTurn: -1
+  replayPaused: 0
 --- !u!1 &523789977
 GameObject:
   m_ObjectHideFlags: 0
@@ -21393,6 +21395,7 @@ MonoBehaviour:
   replayListPanel: {fileID: 1128103604}
   replayListContent: {fileID: 1751650745}
   replayListEntryPrefab: {fileID: 114706, guid: 1768841b36e32d0459eb75ff2239ff80, type: 3}
+  replayError: {fileID: 0}
   PlayerListEntryPrefab: {fileID: 195212, guid: 9228e7a3207ffa345a441710f68118ce, type: 3}
 --- !u!114 &1310044701
 MonoBehaviour:
