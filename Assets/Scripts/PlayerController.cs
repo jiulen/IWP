@@ -7,7 +7,7 @@ using Photon.Realtime;
 public class PlayerController : MonoBehaviour, IPunObservable
 {
     public Rigidbody2D rb;
-    [SerializeField] Transform spriteTransform;
+    public Transform spriteTransform;
     [SerializeField] Transform playerCenter;
     public Collider2D playerCollider;
     [SerializeField] LayerMask groundLayerMask;
@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
     bool forceBurst = false;
 
     public bool isGrounded = true;
-    [SerializeField] bool facingLeft = false;
+    public bool facingLeft = false;
     public bool toFlip = false;
 
     List<PlayerActions> unavailableActions = new();
@@ -303,6 +303,11 @@ public class PlayerController : MonoBehaviour, IPunObservable
             bool blocking = playerCurrentAction == PlayerActions.BLOCK;
             if (!blocking)
             {
+                if (!CanTp())
+                {
+                    unavailableActions.Add(PlayerActions.TELEPORT);
+                }
+
                 //Check movement
                 if (!isGrounded)
                 {
@@ -345,7 +350,12 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
     public bool CanBurst()
     {
-        return burstMeterValue >= 1;
+        return burstMeterValue >= 0.5;
+    }
+
+    public bool CanTp()
+    {
+        return burstMeterValue >= 0.5;
     }
 
     public bool IsIdle()
@@ -450,6 +460,21 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     break;
 
                 case PlayerActions.TELEPORT:
+                    if (facingLeft)
+                    {
+                        playerTeleport.goLeft = true;
+                    }
+                    else
+                    {
+                        playerTeleport.goLeft = false;
+                    }
+
+                    burstMeterValue -= 0.5f;
+                    if (burstMeterValue < 0)
+                    {
+                        burstMeterValue = 0;
+                    }
+
                     currentFrameBehaviour = playerTeleport;
                     break;
 
@@ -464,7 +489,11 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     break;
 
                 case PlayerActions.BURST:
-                    burstMeterValue = 0;
+                    burstMeterValue -= 0.5f;
+                    if (burstMeterValue < 0)
+                    {
+                        burstMeterValue = 0;
+                    }
 
                     currentFrameBehaviour = playerBurst;
                     break;

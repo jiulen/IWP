@@ -17,6 +17,9 @@ public class LevelBounds : MonoBehaviour
             {
                 PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
 
+                if (!playerController.playerCollider.enabled)
+                    return;
+
                 Hashtable playerDieProps = new Hashtable() { { ShooterGameInfo.PLAYER_DEAD, true } };
 
                 playerController.photonPlayer.SetCustomProperties(playerDieProps);
