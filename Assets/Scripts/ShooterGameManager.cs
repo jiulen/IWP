@@ -9,6 +9,7 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 using TMPro;
 using System;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class ShooterGameManager : MonoBehaviourPunCallbacks
 {
@@ -759,7 +760,40 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
     public void CheckInput()
     {
+        var turnList = ReplayManager.Instance.replay.turns;
+        var inputsThisTurn = turnList.Where(turn => turn.frameNum == currentFrame);
 
+        foreach (var input in inputsThisTurn)
+        {
+            PlayerController inputtingController = null;
+
+            switch (input.playerNum)
+            {
+                case 1:
+                    inputtingController = localPlayerController;
+                    break;
+                case 2:
+                    inputtingController = otherPlayerController;
+                    break;
+            }
+
+            if (inputtingController != null)
+            {
+                PlayerController.PlayerActions inputtingAction = (PlayerController.PlayerActions)input.playerAction;
+
+                if (inputtingAction != PlayerController.PlayerActions.CONTINUE_BLOCK && inputtingAction != PlayerController.PlayerActions.SKIP)
+                {
+                    inputtingController.playerCurrentAction = inputtingAction;
+                    inputtingController.currentFrameNum = 0;
+                }
+
+                inputtingController.toFlip = input.playerFlip;
+            }
+            else
+            {
+                Debug.Log("Null inputting controller");
+            }
+        }
     }
 
     public void PlayReplay(bool play)
