@@ -184,6 +184,8 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
         {
             animator.PlayInFixedTime(animationName);
             oldAnimName = animationName;
+
+            Debug.Log(animationName);
         }
     }
 

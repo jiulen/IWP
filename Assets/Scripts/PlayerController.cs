@@ -450,15 +450,6 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     break;
 
                 case PlayerActions.TELEPORT:
-                    if (facingLeft)
-                    {
-                        playerTeleport.goLeft = true;
-                    }
-                    else
-                    {
-                        playerTeleport.goLeft = false;
-                    }
-
                     currentFrameBehaviour = playerTeleport;
                     break;
 

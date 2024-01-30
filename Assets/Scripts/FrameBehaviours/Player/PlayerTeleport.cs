@@ -5,8 +5,6 @@ using Photon.Pun;
 
 public class PlayerTeleport : PlayerFrameBehaviour
 {
-    public bool goLeft = false;
-
     [SerializeField] float tpOffsetX;
 
     [SerializeField] string teleportAnim;
