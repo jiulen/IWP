@@ -46,6 +46,7 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
     //Replay stuff
     [SerializeField] Slider replaySlider;
     [SerializeField] TMP_Text replayFrame;
+    [SerializeField] Toggle playPauseToggle;
 
     public void Awake()
     {
@@ -92,6 +93,9 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
             localPlayerController = player1;
             otherPlayerController = player2;
 
+            gamePaused = false;
+            replaySlider.maxValue = ReplayManager.Instance.replay.lastFrame;
+
             //Advance frames after resetting scene
             if (ReplayManager.Instance.replayTurn >= 0)
             {
@@ -103,6 +107,8 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
                     NextReplayTurn();
                 }
             }
+
+            playPauseToggle.isOn = !gamePaused;
         }
     }
 
@@ -548,7 +554,13 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         }
         else
         {
+            localPlayerController.UpdateInfoUIAuto();
+            otherPlayerController.UpdateInfoUIAuto();
 
+            if (!gamePaused && currentFrame < ReplayManager.Instance.replay.lastFrame)
+            {
+                NextReplayTurn();
+            }
         }
     }
 
@@ -696,6 +708,54 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
     public void NextReplayTurn()
     {
+        CheckInput();
+
+        //normal game logic
+
+        //spells
+        foreach (SpellFrameBehaviour spell in spellsPool)
+        {
+            if (spell.activeSpell)
+            {
+                ++spell.frameNum; //add frame first since start is -1
+
+                spell.GoToFrame();
+                if (spell.IsAnimationDone())
+                {
+                    ReturnPooledObject(spell);
+                }
+            }
+        }
+
+        //player
+        localPlayerController.RefillAirOptions();
+        otherPlayerController.RefillAirOptions();
+
+        localPlayerController.ApplyResistances();
+        otherPlayerController.ApplyResistances();
+
+        localPlayerController.RunFrameBehaviour();
+        otherPlayerController.RunFrameBehaviour();
+
+        localPlayerController.AddMeter(1f / 360);
+        otherPlayerController.AddMeter(1f / 360);
+
+        Physics2D.Simulate(Time.fixedDeltaTime);
+
+        localPlayerController.CheckIfGrounded();
+        otherPlayerController.CheckIfGrounded();
+
+        ++localPlayerController.currentFrameNum;
+        ++otherPlayerController.currentFrameNum;
+
+        ++currentFrame;
+
+        replaySlider.value = currentFrame;
+        replayFrame.text = replaySlider.value.ToString();
+    }
+
+    public void CheckInput()
+    {
 
     }
 
@@ -708,6 +768,7 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
     {
         //check if before turn, current turn, or after turn
         int newTurnNum = (int)replaySlider.value;
+        replayFrame.text = replaySlider.value.ToString();
         if (newTurnNum < currentFrame)
         {
             //Less than current frame, need reset scene before advancing to target frame

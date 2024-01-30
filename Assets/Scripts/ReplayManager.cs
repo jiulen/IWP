@@ -123,6 +123,7 @@ public class ReplayManager : MonoBehaviour
         {
             string replayFileContents = File.ReadAllText(replayFilePath);
             replay = JsonUtility.FromJson<Replay>(replayFileContents);
+            replay.UnwrapTurns();
 
             return true;
         }

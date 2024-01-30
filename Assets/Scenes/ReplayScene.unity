@@ -2352,6 +2352,7 @@ MonoBehaviour:
   isReplay: 1
   replaySlider: {fileID: 1671317286}
   replayFrame: {fileID: 1070187933}
+  playPauseToggle: {fileID: 628773767}
 --- !u!114 &547240155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2798,6 +2799,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 1
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 547240154}
+        m_TargetAssemblyTypeName: ShooterGameManager, Assembly-CSharp
+        m_MethodName: PlayReplay
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 1
@@ -7766,7 +7779,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1671317285}
   - component: {fileID: 1671317286}
-  - component: {fileID: 1671317287}
   - component: {fileID: 1671317288}
   m_Layer: 5
   m_Name: Slider
@@ -7849,20 +7861,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1671317287
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1671317284}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 352c1a4dea8b1404392fab450a499956, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  doneDrag: 0
-  slider: {fileID: 0}
 --- !u!114 &1671317288
 MonoBehaviour:
   m_ObjectHideFlags: 0
