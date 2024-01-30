@@ -48,6 +48,8 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
     [SerializeField] TMP_Text replayFrame;
     [SerializeField] Toggle playPauseToggle;
 
+    bool oldGamePaused = false;
+
     public void Awake()
     {
         Instance = this;
@@ -99,6 +101,7 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
             //Advance frames after resetting scene
             if (ReplayManager.Instance.replayTurn >= 0)
             {
+                replaySlider.value = ReplayManager.Instance.replayTurn;
                 gamePaused = ReplayManager.Instance.replayPaused;
 
                 int turnsToAdvance = ReplayManager.Instance.replayTurn - currentFrame;
@@ -764,8 +767,24 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         gamePaused = !play;
     }
 
+    public void ClickDownReplaySlider()
+    {
+        DragReplaySlider();
+
+        oldGamePaused = gamePaused;
+        gamePaused = true;
+    }
+
+    public void DragReplaySlider()
+    {
+        replayFrame.text = replaySlider.value.ToString();
+    }
+
     public void SkipToTurn()
     {
+        DragReplaySlider();
+        gamePaused = oldGamePaused;
+
         //check if before turn, current turn, or after turn
         int newTurnNum = (int)replaySlider.value;
         replayFrame.text = replaySlider.value.ToString();
@@ -774,6 +793,9 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
             //Less than current frame, need reset scene before advancing to target frame
             ReplayManager.Instance.replayTurn = newTurnNum;
             ReplayManager.Instance.replayPaused = gamePaused;
+
+            gamePaused = true;
+
             ResetReplay();
         }
         else

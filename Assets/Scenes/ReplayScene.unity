@@ -7092,7 +7092,7 @@ PrefabInstance:
       objectReference: {fileID: 2133479840}
     - target: {fileID: 6229377857779737878, guid: b887b57ca02618c42908d77e6cdb00ec, type: 3}
       propertyPath: playerCurrentAction
-      value: 16
+      value: 19
       objectReference: {fileID: 0}
     - target: {fileID: 6281997457829084015, guid: b887b57ca02618c42908d77e6cdb00ec, type: 3}
       propertyPath: sceneViewId
@@ -7881,6 +7881,38 @@ MonoBehaviour:
         - m_Target: {fileID: 547240154}
           m_TargetAssemblyTypeName: ShooterGameManager, Assembly-CSharp
           m_MethodName: SkipToTurn
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 547240154}
+          m_TargetAssemblyTypeName: ShooterGameManager, Assembly-CSharp
+          m_MethodName: ClickDownReplaySlider
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 5
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 547240154}
+          m_TargetAssemblyTypeName: ShooterGameManager, Assembly-CSharp
+          m_MethodName: DragReplaySlider
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

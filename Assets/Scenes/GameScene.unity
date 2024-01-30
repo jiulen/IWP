@@ -4144,6 +4144,9 @@ MonoBehaviour:
   gameOverFade: {fileID: 2125292205}
   winnerText: {fileID: 2125292203}
   isReplay: 0
+  replaySlider: {fileID: 0}
+  replayFrame: {fileID: 0}
+  playPauseToggle: {fileID: 0}
 --- !u!114 &547240155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10317,7 +10320,7 @@ PrefabInstance:
       objectReference: {fileID: 2133479840}
     - target: {fileID: 6229377857779737878, guid: b887b57ca02618c42908d77e6cdb00ec, type: 3}
       propertyPath: playerCurrentAction
-      value: 16
+      value: 19
       objectReference: {fileID: 0}
     - target: {fileID: 6281997457829084015, guid: b887b57ca02618c42908d77e6cdb00ec, type: 3}
       propertyPath: sceneViewId
