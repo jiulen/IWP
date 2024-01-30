@@ -160,7 +160,7 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
 
     private void FixedUpdate()
     {
-        if (ShooterGameManager.Instance.gameStarted && ShooterGameManager.Instance.gamePaused)
+        if ((ShooterGameManager.Instance.gameStarted && ShooterGameManager.Instance.gamePaused) || ShooterGameManager.Instance.isReplay)
         {
             if (enabledBehaviour)
             {

@@ -462,9 +462,9 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
             if (PhotonNetwork.IsMasterClient && !isReplay)
             {
-                if (winner == ReplayManager.Instance.replay.p1.name)
+                if (winner == ReplayManager.Instance.replay.p1.playerName)
                     ReplayManager.Instance.replay.winner = 1;
-                else if (winner == ReplayManager.Instance.replay.p2.name)
+                else if (winner == ReplayManager.Instance.replay.p2.playerName)
                     ReplayManager.Instance.replay.winner = 2;
                 else if (winner == "")
                     ReplayManager.Instance.replay.winner = 0; //draw
@@ -712,6 +712,9 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
     public void NextReplayTurn()
     {
+        if (currentFrame >= ReplayManager.Instance.replay.lastFrame)
+            return;
+
         CheckInput();
 
         //normal game logic

@@ -33,7 +33,7 @@ public class SpellFrameBehaviour : FrameBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!PhotonNetwork.IsMasterClient)
+        if (!PhotonNetwork.IsMasterClient && !ShooterGameManager.Instance.isReplay)
             return;
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))

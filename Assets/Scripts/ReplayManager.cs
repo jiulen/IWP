@@ -55,13 +55,13 @@ public class Replay
 [System.Serializable]
 public class ReplayPlayer
 {
-    public string name;
+    public string playerName;
     public int skinID;
     public bool isMe;
 
     public ReplayPlayer (string _name, int _skinID, bool _isMe)
     {
-        name = _name;
+        playerName = _name;
         skinID = _skinID;
         isMe = _isMe;
     }

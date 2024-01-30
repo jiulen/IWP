@@ -249,7 +249,36 @@ public class PlayerController : MonoBehaviour, IPunObservable
         }
         else
         {
+            ReplayPlayer replayPlayer = null;
+            switch (playerNum)
+            {
+                case 1:
+                    replayPlayer = ReplayManager.Instance.replay.p1;
+                    break;
+                case 2:
+                    replayPlayer = ReplayManager.Instance.replay.p2;
+                    break;
+            }
 
+            if (replayPlayer != null)
+            {
+                playerName = replayPlayer.playerName;
+
+                if (replayPlayer.isMe)
+                    playerInfoUI.SetPlayerName(playerName + " (YOU)");
+                else
+                    playerInfoUI.SetPlayerName(playerName);
+
+                playerSkinID = replayPlayer.skinID;
+
+                playerSr.material.SetColor("_PlayerColor", ShooterGameInfo.GetColor(playerSkinID));
+
+                playerInfoUI.SetUISkin(playerSkinID);
+            }
+            else
+            {
+                Debug.Log("Replay Player is null");
+            }
         }
     }
 
