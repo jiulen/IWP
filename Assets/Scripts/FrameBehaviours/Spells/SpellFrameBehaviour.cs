@@ -31,6 +31,13 @@ public class SpellFrameBehaviour : FrameBehaviour
         animator = GetComponent<Animator>();
     }
 
+    protected override void Start()
+    {
+        base.Start();
+
+        CameraController.Instance.TrackTransform(transform);
+    }
+
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if (!PhotonNetwork.IsMasterClient && !ShooterGameManager.Instance.isReplay)

@@ -158,6 +158,11 @@ public class FrameBehaviour : MonoBehaviour, IPunObservable
         currentCooldown = -1;
     }
 
+    protected virtual void Start()
+    {
+        
+    }
+
     private void FixedUpdate()
     {
         if ((ShooterGameManager.Instance.gameStarted && ShooterGameManager.Instance.gamePaused) || ShooterGameManager.Instance.isReplay)

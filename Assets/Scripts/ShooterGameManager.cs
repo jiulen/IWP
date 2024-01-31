@@ -24,7 +24,7 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
     [SerializeField] List<SpellFrameBehaviour> spellsPool = new();
     [SerializeField] Transform spellsPoolTransform;
-    [SerializeField] Transform spellsSpawnPoint;
+    public Transform spellsSpawnPoint;
     const int amtToPool = 5;
 
     public bool gameStarted = false;

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    public static CameraController Instance = null;
+
     [SerializeField] BoxCollider2D levelBounds;
     [SerializeField] List<Transform> targetsTransforms;
 
@@ -22,6 +24,8 @@ public class CameraController : MonoBehaviour
 
     private void Awake()
     {
+        Instance = this;
+
         controlledCamera = GetComponent<Camera>();
 
         CalculateCameraLocations();
@@ -87,6 +91,22 @@ public class CameraController : MonoBehaviour
         {
             Vector2 targetPosition = targetTransform.position;
 
+            if (ShooterGameManager.Instance.spellsSpawnPoint == null)
+            {
+                Debug.Log("hi");
+            }
+
+            if (targetPosition == null)
+            {
+                Debug.Log("hi2");
+            }
+
+            //Check if target is spell that got disabled
+            if (targetPosition == (Vector2)ShooterGameManager.Instance.spellsSpawnPoint.position)
+            {
+                continue;
+            }
+
             float targetX, targetY;
 
             targetX = Mathf.Clamp(targetPosition.x, levelBounds.bounds.min.x, levelBounds.bounds.max.x);
@@ -118,5 +138,13 @@ public class CameraController : MonoBehaviour
         nextCameraSize *= 1 + paddingPercentAll;
 
         nextCameraPosition = new Vector3(averageCenter.x, averageCenter.y);
+    }
+
+    public void TrackTransform(Transform trackedTransform)
+    {
+        if (!targetsTransforms.Contains(trackedTransform))
+        {
+            targetsTransforms.Add(trackedTransform);
+        }
     }
 }
