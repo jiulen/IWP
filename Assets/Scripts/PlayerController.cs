@@ -406,29 +406,19 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     break;
 
                 case PlayerActions.WALK_LEFT:
-                    playerWalk.goLeft = true;
-
                     if (facingLeft)
-                    {
                         playerWalk.goLeft = true;
-                    }
                     else
-                    {
                         playerWalk.goLeft = false;
-                    }
 
                     currentFrameBehaviour = playerWalk;
                     break;
 
                 case PlayerActions.ROLL:
                     if (facingLeft)
-                    {
                         playerRoll.goLeft = true;
-                    }
                     else
-                    {
                         playerRoll.goLeft = false;
-                    }
 
                     if (!isGrounded) airOptionsAvail -= 1;
 
@@ -437,13 +427,9 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
                 case PlayerActions.JUMP:
                     if (facingLeft)
-                    {
                         playerJump.goLeft = true;
-                    }
                     else
-                    {
                         playerJump.goLeft = false;
-                    }
 
                     if (!isGrounded) airOptionsAvail -= 1;
 
@@ -460,13 +446,9 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
                 case PlayerActions.TELEPORT:
                     if (facingLeft)
-                    {
                         playerTeleport.goLeft = true;
-                    }
                     else
-                    {
                         playerTeleport.goLeft = false;
-                    }
 
                     burstMeterValue -= 0.5f;
                     if (burstMeterValue < 0)
@@ -514,6 +496,9 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     break;
 
                 case PlayerActions.EXPLOSION:
+                    if (facingLeft) playerExplosion.goLeft = true;
+                    else playerExplosion.goLeft = false;
+
                     currentFrameBehaviour = playerExplosion;
                     break;
 

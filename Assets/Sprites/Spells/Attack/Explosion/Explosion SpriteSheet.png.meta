@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -141,13 +141,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Explosion SpriteSheet_0
+      name: Explosion_0
       rect:
         serializedVersion: 2
-        x: 64
-        y: 192
-        width: 64
-        height: 64
+        x: 32
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -162,13 +162,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Explosion SpriteSheet_1
+      name: Explosion_1
       rect:
         serializedVersion: 2
-        x: 128
-        y: 192
-        width: 64
-        height: 64
+        x: 64
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -183,13 +183,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Explosion SpriteSheet_2
+      name: Explosion_2
       rect:
         serializedVersion: 2
-        x: 192
-        y: 192
-        width: 64
-        height: 64
+        x: 96
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -204,13 +204,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Explosion SpriteSheet_3
+      name: Explosion_3
       rect:
         serializedVersion: 2
         x: 0
-        y: 128
-        width: 64
-        height: 64
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -225,13 +225,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Explosion SpriteSheet_4
+      name: Explosion_4
       rect:
         serializedVersion: 2
-        x: 64
-        y: 128
-        width: 64
-        height: 64
+        x: 32
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -246,13 +246,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Explosion SpriteSheet_5
+      name: Explosion_5
       rect:
         serializedVersion: 2
-        x: 128
-        y: 128
-        width: 64
-        height: 64
+        x: 64
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -267,13 +267,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Explosion SpriteSheet_6
+      name: Explosion_6
       rect:
         serializedVersion: 2
-        x: 192
-        y: 128
-        width: 64
-        height: 64
+        x: 96
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -288,13 +288,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Explosion SpriteSheet_7
+      name: Explosion_7
       rect:
         serializedVersion: 2
         x: 0
-        y: 64
-        width: 64
-        height: 64
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -309,13 +309,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Explosion SpriteSheet_8
+      name: Explosion_8
       rect:
         serializedVersion: 2
-        x: 64
-        y: 64
-        width: 64
-        height: 64
+        x: 32
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -330,13 +330,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Explosion SpriteSheet_9
+      name: Explosion_9
       rect:
         serializedVersion: 2
-        x: 128
-        y: 64
-        width: 64
-        height: 64
+        x: 64
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -351,13 +351,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Explosion SpriteSheet_10
+      name: Explosion_10
       rect:
         serializedVersion: 2
-        x: 192
-        y: 64
-        width: 64
-        height: 64
+        x: 96
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -372,13 +372,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Explosion SpriteSheet_11
+      name: Explosion_11
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
-        height: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -393,13 +393,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Explosion SpriteSheet_12
+      name: Explosion_12
       rect:
         serializedVersion: 2
-        x: 64
+        x: 32
         y: 0
-        width: 64
-        height: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -424,19 +424,19 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Explosion SpriteSheet_6: -995443634
-      Explosion SpriteSheet_7: 533747616
-      Explosion SpriteSheet_9: -57881480
-      Explosion SpriteSheet_11: 1020352911
-      Explosion SpriteSheet_0: -1786653931
-      Explosion SpriteSheet_2: -289650340
-      Explosion SpriteSheet_4: -1867593800
-      Explosion SpriteSheet_1: -1922108157
-      Explosion SpriteSheet_5: -109387194
-      Explosion SpriteSheet_10: 1572610831
-      Explosion SpriteSheet_8: 1730737720
-      Explosion SpriteSheet_3: -246861110
-      Explosion SpriteSheet_12: 149318240
+      Explosion_6: -995443634
+      Explosion_7: 533747616
+      Explosion_10: 1572610831
+      Explosion_1: -1922108157
+      Explosion_4: -1867593800
+      Explosion_2: -289650340
+      Explosion_0: -1786653931
+      Explosion_8: 1730737720
+      Explosion_12: 149318240
+      Explosion_5: -109387194
+      Explosion_11: 1020352911
+      Explosion_3: -246861110
+      Explosion_9: -57881480
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -4,18 +4,26 @@ using UnityEngine;
 
 public class SpellExplosion : SpellFrameBehaviour
 {
-    [SerializeField] Collider2D explosionCollider;
+    Collider2D[] explosionColliders;
 
     [SerializeField] string explosionAnim;
 
-    public PlayerExplosion playerExplosion;
+    protected override void Awake()
+    {
+        base.Awake();
+
+        explosionColliders = GetComponents<Collider2D>();
+    }
 
     public override void GoToFrame()
     {
         switch (frameNum)
         {
             case 0:
-                explosionCollider.enabled = false;
+                foreach (var collider in explosionColliders)
+                {
+                    collider.enabled = false;
+                }
 
                 transform.position = spawnPos;
 
@@ -23,12 +31,30 @@ public class SpellExplosion : SpellFrameBehaviour
                 AnimatorChangeAnimation(currentAnimName);
                 break;
             case 3:
-                explosionCollider.enabled = true;
+                explosionColliders[0].enabled = true;
                 break;
             case 4:
-                explosionCollider.enabled = false;
+                explosionColliders[0].enabled = false;
                 break;
-            case 35: //end
+            case 15:
+                explosionColliders[1].enabled = true;
+                break;
+            case 16:
+                explosionColliders[1].enabled = false;
+                break;
+            case 27:
+                explosionColliders[2].enabled = true;
+                break;
+            case 28:
+                explosionColliders[2].enabled = false;
+                break;
+            case 39:
+                explosionColliders[3].enabled = true;
+                break;
+            case 40:
+                explosionColliders[3].enabled = false;
+                break;
+            case 71: //end
                 EndAnimation();
                 break;
         }
@@ -38,21 +64,12 @@ public class SpellExplosion : SpellFrameBehaviour
 
     protected override void HitPlayer(PlayerController playerController)
     {
-        explosionCollider.enabled = false;
-
-        knockbackDirection = playerController.transform.position - transform.position;
-        if (knockbackDirection.sqrMagnitude == 0)
+        foreach (var collider in explosionColliders)
         {
-            knockbackDirection = Vector2.up;
-        }
-        else
-        {
-            knockbackDirection.Normalize();
+            collider.enabled = false;
         }
 
         playerController.TakeHit(knockbackIncrease, knockbackForce * knockbackDirection, stunDuration);
         GiveMeter(owner, playerController);
-
-        playerExplosion.EndAnimation();
     }
 }

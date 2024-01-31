@@ -5,6 +5,8 @@ using Photon.Pun;
 
 public class PlayerExplosion : PlayerFrameBehaviour
 {
+    public bool goLeft = false;
+
     [SerializeField] string attackAnim;
 
     [SerializeField] Transform explosionSpawnPoint;
@@ -17,14 +19,25 @@ public class PlayerExplosion : PlayerFrameBehaviour
                 currentAnimName = attackAnim;
                 AnimatorChangeAnimation(currentAnimName);
                 break;
-            case 8: //create explosion
+            case 17: //create explosion
                 GameObject explosionObj = ShooterGameManager.Instance.GetPooledSpell("Explosion");
 
                 SpellExplosion spellExplosion = explosionObj.GetComponent<SpellExplosion>();
                 spellExplosion.spawnPos = explosionSpawnPoint.position;
+
+                if (goLeft)
+                {
+                    spellExplosion.knockbackDirection = Vector2.left;
+                    spellExplosion.transform.localScale = new Vector3(-1, 1, 1);
+                }
+                else
+                {
+                    spellExplosion.knockbackDirection = Vector2.right;
+                    spellExplosion.transform.localScale = new Vector3(1, 1, 1);
+                }
+
                 spellExplosion.ownerNum = playerController.playerNum;
                 spellExplosion.owner = playerController;
-                spellExplosion.playerExplosion = this;
 
                 explosionObj.transform.rotation = Quaternion.identity;
 
@@ -33,7 +46,7 @@ public class PlayerExplosion : PlayerFrameBehaviour
                 spellExplosion.GoToFrame();
 
                 break;
-            case 23: //end
+            case 36: //end
                 EndAnimation();
                 break;
         }
