@@ -21,10 +21,16 @@ public class SpellLightning : SpellFrameBehaviour
         switch (frameNum)
         {
             case 0:
-                lightningCollider.enabled = true;
-
+                lightningCollider.enabled = false;
                 transform.position = spawnPos;
-                RaycastHit2D hit = Physics2D.Raycast(spawnPos, Vector2.down, 30, groundLayerMask);
+
+                currentAnimName = lightningAnim;
+                AnimatorChangeAnimation(currentAnimName);
+                break;
+            case 20:
+                lightningCollider.enabled = true;
+                
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 30, groundLayerMask);
                 float hitDistance;
                 if (hit)
                 {
@@ -44,19 +50,26 @@ public class SpellLightning : SpellFrameBehaviour
 
                 lightningCollider.offset = new Vector2(0, -hitDistance / 2);
                 lightningCollider.GetComponent<BoxCollider2D>().size = new Vector2(0.15f, hitDistance);
-
-                currentAnimName = lightningAnim;
-                AnimatorChangeAnimation(currentAnimName);
                 break;
-            case 3:
+            case 23:
                 lightningCollider.enabled = false;
                 break;
-            case 14: //end
+            case 85: //end
                 EndAnimation();
                 break;
         }
 
         AnimatorSetFrame();
+    }
+
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
+
+        if (sr != null)
+        {
+            sr.size = new Vector2(1, srSizeY);
+        }
     }
 
     protected override void HitPlayer(PlayerController playerController)

@@ -5,7 +5,7 @@ using Photon.Pun;
 
 public class PlayerLightning : PlayerFrameBehaviour
 {
-    [SerializeField] float ySpawnPos;
+    [SerializeField] float ySpawnOffset;
     [SerializeField] string attackAnim;
 
     Vector3 lightningPos;
@@ -14,14 +14,11 @@ public class PlayerLightning : PlayerFrameBehaviour
     {
         switch (frameNum)
         {
-            case 0:
+            case 0: //create lightning
                 currentAnimName = attackAnim;
                 AnimatorChangeAnimation(currentAnimName);
-                break;
-            case 6: //set position
-                break;
-            case 20: //create lightning
-                lightningPos = new Vector3(playerController.transform.position.x, ySpawnPos, 0);
+
+                lightningPos = new Vector3(playerController.transform.position.x, playerController.transform.position.y + ySpawnOffset, 0);
                 GameObject lightningObj = ShooterGameManager.Instance.GetPooledSpell("Lightning");
 
                 SpellLightning spellLightning = lightningObj.GetComponent<SpellLightning>();
@@ -34,7 +31,6 @@ public class PlayerLightning : PlayerFrameBehaviour
                 //run frame 0 of explosion
                 ++spellLightning.frameNum;
                 spellLightning.GoToFrame();
-
                 break;
             case 32:
                 EndAnimation();
