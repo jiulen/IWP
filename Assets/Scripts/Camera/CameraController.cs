@@ -91,16 +91,6 @@ public class CameraController : MonoBehaviour
         {
             Vector2 targetPosition = targetTransform.position;
 
-            if (ShooterGameManager.Instance.spellsSpawnPoint == null)
-            {
-                Debug.Log("hi");
-            }
-
-            if (targetPosition == null)
-            {
-                Debug.Log("hi2");
-            }
-
             //Check if target is spell that got disabled
             if (targetPosition == (Vector2)ShooterGameManager.Instance.spellsSpawnPoint.position)
             {
