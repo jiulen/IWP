@@ -561,7 +561,7 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
             localPlayerController.UpdateInfoUIAuto();
             otherPlayerController.UpdateInfoUIAuto();
 
-            if (!gamePaused && currentFrame < ReplayManager.Instance.replay.lastFrame)
+            if (!gamePaused)
             {
                 NextReplayTurn();
             }
@@ -712,9 +712,6 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
     public void NextReplayTurn()
     {
-        if (currentFrame >= ReplayManager.Instance.replay.lastFrame)
-            return;
-
         CheckInput();
 
         //normal game logic
@@ -756,6 +753,9 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         ++otherPlayerController.currentFrameNum;
 
         ++currentFrame;
+
+        if (currentFrame > ReplayManager.Instance.replay.lastFrame)
+            return;
 
         replaySlider.value = currentFrame;
         replayFrame.text = replaySlider.value.ToString();

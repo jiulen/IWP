@@ -6,15 +6,19 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class LevelBounds : MonoBehaviour
 {
+    [SerializeField] GameObject boundsExplosionObj;
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (!ShooterGameManager.Instance.isReplay)
         {
-            if (!PhotonNetwork.IsMasterClient)
-                return;
-
             if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
+                Instantiate(boundsExplosionObj, collision.transform.position, Quaternion.identity);
+
+                if (!PhotonNetwork.IsMasterClient)
+                    return;
+
                 PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
 
                 if (!playerController.playerCollider.enabled)
@@ -29,6 +33,8 @@ public class LevelBounds : MonoBehaviour
         {
             if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
+                Instantiate(boundsExplosionObj, collision.transform.position, Quaternion.identity);
+
                 PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
 
                 playerController.isDead = true;
