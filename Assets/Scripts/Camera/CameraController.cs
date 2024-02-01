@@ -127,16 +127,16 @@ public class CameraController : MonoBehaviour
         nextCameraSize = Mathf.Max(nextCameraSize, minYSize);
         nextCameraSize *= 1 + paddingPercentAll;
 
-        Bounds cameraBounds = new();
-        cameraBounds.min = new Vector3(levelBounds.bounds.min.x + nextCameraSize / 2 / screenRatio,
-                                       levelBounds.bounds.min.y + nextCameraSize / 2);
-        cameraBounds.max = new Vector3(levelBounds.bounds.max.x - nextCameraSize / 2 / screenRatio,
-                                       levelBounds.bounds.max.y - nextCameraSize / 2);
+        float finalCamPosX = averageCenter.x, finalCamPosY = averageCenter.y;
 
-        float finalCamPosX, finalCamPosY;
+        //Bounds cameraBounds = new();
+        //cameraBounds.min = new Vector3(levelBounds.bounds.min.x + nextCameraSize / 2 / screenRatio,
+        //                               levelBounds.bounds.min.y + nextCameraSize / 2);
+        //cameraBounds.max = new Vector3(levelBounds.bounds.max.x - nextCameraSize / 2 / screenRatio,
+        //                               levelBounds.bounds.max.y - nextCameraSize / 2);
 
-        finalCamPosX = Mathf.Clamp(averageCenter.x, cameraBounds.min.x, cameraBounds.max.x);
-        finalCamPosY = Mathf.Clamp(averageCenter.y, cameraBounds.min.y, cameraBounds.max.y);
+        //finalCamPosX = Mathf.Clamp(averageCenter.x, cameraBounds.min.x, cameraBounds.max.x);
+        //finalCamPosY = Mathf.Clamp(averageCenter.y, cameraBounds.min.y, cameraBounds.max.y);
 
         nextCameraPosition = new Vector3(finalCamPosX, finalCamPosY);
     }
