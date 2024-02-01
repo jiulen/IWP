@@ -127,7 +127,18 @@ public class CameraController : MonoBehaviour
         nextCameraSize = Mathf.Max(nextCameraSize, minYSize);
         nextCameraSize *= 1 + paddingPercentAll;
 
-        nextCameraPosition = new Vector3(averageCenter.x, averageCenter.y);
+        Bounds cameraBounds = new();
+        cameraBounds.min = new Vector3(levelBounds.bounds.min.x + nextCameraSize / 2 / screenRatio,
+                                       levelBounds.bounds.min.y + nextCameraSize / 2);
+        cameraBounds.max = new Vector3(levelBounds.bounds.max.x - nextCameraSize / 2 / screenRatio,
+                                       levelBounds.bounds.max.y - nextCameraSize / 2);
+
+        float finalCamPosX, finalCamPosY;
+
+        finalCamPosX = Mathf.Clamp(averageCenter.x, cameraBounds.min.x, cameraBounds.max.x);
+        finalCamPosY = Mathf.Clamp(averageCenter.y, cameraBounds.min.y, cameraBounds.max.y);
+
+        nextCameraPosition = new Vector3(finalCamPosX, finalCamPosY);
     }
 
     public void TrackTransform(Transform trackedTransform)
