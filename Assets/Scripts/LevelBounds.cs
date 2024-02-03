@@ -6,22 +6,26 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class LevelBounds : MonoBehaviour
 {
-    [SerializeField] GameObject boundsExplosionObj;
-
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (!ShooterGameManager.Instance.isReplay)
         {
             if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
-                Instantiate(boundsExplosionObj, collision.transform.position, Quaternion.identity);
-
                 if (!PhotonNetwork.IsMasterClient)
                     return;
 
                 PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
 
                 if (!playerController.playerCollider.enabled)
+                    return;
+
+                GameObject particleObj = ShooterGameManager.Instance.GetPooledSpell("BoundsExplosion");
+
+                SpellFrameBehaviour spellParticle = particleObj.GetComponent<SpellFrameBehaviour>();
+                spellParticle.spawnPos = collision.transform.position;
+
+                if (ShooterGameManager.Instance.gameOver)
                     return;
 
                 Hashtable playerDieProps = new Hashtable() { { ShooterGameInfo.PLAYER_DEAD, true } };
@@ -33,7 +37,10 @@ public class LevelBounds : MonoBehaviour
         {
             if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
-                Instantiate(boundsExplosionObj, collision.transform.position, Quaternion.identity);
+                GameObject particleObj = ShooterGameManager.Instance.GetPooledSpell("BoundsExplosion");
+
+                SpellFrameBehaviour spellParticle = particleObj.GetComponent<SpellLightning>();
+                spellParticle.spawnPos = collision.transform.position;
 
                 PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
 
@@ -41,4 +48,6 @@ public class LevelBounds : MonoBehaviour
             }
         }
     }
+
+
 }

@@ -89,6 +89,9 @@ public class CameraController : MonoBehaviour
 
         foreach (Transform targetTransform in targetsTransforms)
         {
+            if (targetTransform == null)
+                continue;
+
             Vector2 targetPosition = targetTransform.position;
 
             //Check if target is spell that got disabled

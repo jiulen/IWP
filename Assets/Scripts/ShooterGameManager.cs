@@ -850,4 +850,12 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.LoadLevel(SceneManager.GetActiveScene().buildIndex);
     }
+
+    public void InstantiateParticleEffect(string effectName, Vector3 effectPos)
+    {
+        if (!isReplay)
+            PhotonNetwork.InstantiateRoomObject(effectName, effectPos, Quaternion.identity);
+        else
+            Instantiate(Resources.Load<GameObject>(effectName), effectPos, Quaternion.identity);
+    }
 }

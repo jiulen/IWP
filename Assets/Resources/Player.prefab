@@ -705,7 +705,7 @@ MonoBehaviour:
   srSizeY: 1
   lastFrame: 1
   enabledBehaviour: 0
-  ySpawnOffset: 5
+  ySpawnOffset: 4
   attackAnim: AttackB
 --- !u!114 &5332357486040211611
 MonoBehaviour:
