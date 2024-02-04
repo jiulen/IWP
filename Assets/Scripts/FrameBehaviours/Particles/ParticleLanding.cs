@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ParticleOut : SpellFrameBehaviour
+public class ParticleLanding : SpellFrameBehaviour
 {
     public override void GoToFrame()
     {
@@ -12,7 +12,7 @@ public class ParticleOut : SpellFrameBehaviour
                 AnimatorChangeAnimation("particleAnim");
                 transform.position = spawnPos;
                 break;
-            case 30: //end
+            case 19: //end
                 EndAnimation();
                 break;
         }

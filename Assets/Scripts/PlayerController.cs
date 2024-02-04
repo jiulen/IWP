@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
     public SpriteRenderer playerSr;
     public Animator animator;
 
+    [SerializeField] Transform landingSmokeSpawn;
+
     bool forceBurst = false;
 
     public bool isGrounded = true;
@@ -584,7 +586,17 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
     public bool CheckIfGrounded()
     {
+        bool wasGrounded = isGrounded;
+
         isGrounded = Physics2D.BoxCast(playerCollider.bounds.center, playerCollider.bounds.size, 0, Vector2.down, 0.025f, groundLayerMask);
+
+        if (!wasGrounded && isGrounded)
+        {
+            GameObject particleObj = ShooterGameManager.Instance.GetPooledSpell("LandingSmoke");
+
+            SpellFrameBehaviour spellParticle = particleObj.GetComponent<SpellFrameBehaviour>();
+            spellParticle.spawnPos = landingSmokeSpawn.position;
+        }
 
         return isGrounded;
     }

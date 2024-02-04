@@ -39,7 +39,7 @@ public class LevelBounds : MonoBehaviour
             {
                 GameObject particleObj = ShooterGameManager.Instance.GetPooledSpell("BoundsExplosion");
 
-                SpellFrameBehaviour spellParticle = particleObj.GetComponent<SpellLightning>();
+                SpellFrameBehaviour spellParticle = particleObj.GetComponent<SpellFrameBehaviour>();
                 spellParticle.spawnPos = collision.transform.position;
 
                 PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();

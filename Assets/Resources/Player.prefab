@@ -33,6 +33,7 @@ Transform:
   - {fileID: 7898226761416662973}
   - {fileID: 7481419589976823938}
   - {fileID: 1047588147415398463}
+  - {fileID: 7494751701188360697}
   m_Father: {fileID: 6281997457829084021}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -128,6 +129,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6502589514095023719}
   m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4029907974146147152
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7494751701188360697}
+  m_Layer: 0
+  m_Name: LandingSmokeSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7494751701188360697
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4029907974146147152}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.5325, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6502589514095023719}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5515439448353626641
 GameObject:
@@ -398,6 +430,7 @@ MonoBehaviour:
   playerNum: 1
   playerSr: {fileID: 6281997458381316372}
   animator: {fileID: 371803126}
+  landingSmokeSpawn: {fileID: 7494751701188360697}
   isGrounded: 1
   facingLeft: 0
   toFlip: 0
