@@ -700,6 +700,7 @@ GameObject:
   - component: {fileID: 136446212936522152}
   - component: {fileID: 7291032408280014576}
   - component: {fileID: 1343692611532928997}
+  - component: {fileID: 6990901528569433500}
   m_Layer: 5
   m_Name: JoinRoomButton
   m_TagString: Untagged
@@ -810,3 +811,15 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6990901528569433500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5123524579134368142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef6f06365845f7a44b41700bbf09ae39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

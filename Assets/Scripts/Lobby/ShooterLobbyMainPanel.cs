@@ -110,6 +110,11 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
         }
     }
 
+    private void Start()
+    {
+        AudioManager.Instance.PlayBGMLoop("BackgroundMusic", false);
+    }
+
     #endregion
 
     #region PUN CALLBACKS
