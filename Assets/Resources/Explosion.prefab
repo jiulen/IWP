@@ -467,10 +467,10 @@ MonoBehaviour:
   spawnPos: {x: 0, y: 0, z: 0}
   phase: 0
   targetDir: {x: 0, y: 0}
-  knockbackIncrease: 5
-  knockbackForce: 40
+  knockbackIncrease: 10
+  knockbackForce: 50
   knockbackDirection: {x: 1, y: 0}
-  stunDuration: 12
+  stunDuration: 14
   ownerNum: -1
   owner: {fileID: 0}
   groundLayerMask:

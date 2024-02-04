@@ -23,8 +23,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
     public SpriteRenderer playerSr;
     public Animator animator;
 
-    [SerializeField] Transform landingSmokeSpawn;
-    [SerializeField] Transform hitEffectSpawn;
+    [SerializeField] Transform landingSmokeSpawn, hitEffectSpawn, blockEffectSpawn;
 
     bool forceBurst = false;
 
@@ -357,7 +356,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
     public bool CanTp()
     {
-        return burstMeterValue >= 0.5;
+        return burstMeterValue >= 1;
     }
 
     public bool IsIdle()
@@ -453,7 +452,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     else
                         playerTeleport.goLeft = false;
 
-                    burstMeterValue -= 0.5f;
+                    burstMeterValue -= 1;
                     if (burstMeterValue < 0)
                     {
                         burstMeterValue = 0;
@@ -647,6 +646,14 @@ public class PlayerController : MonoBehaviour, IPunObservable
             ParticleHit spellParticle = particleObj.GetComponent<ParticleHit>();
             spellParticle.spawnPos = hitEffectSpawn.position;
             spellParticle.transform.right = knockbackForce.normalized;
+            spellParticle.followTransform = hitEffectSpawn;
+        }
+        else
+        {
+            GameObject particleObj = ShooterGameManager.Instance.GetPooledSpell("BlockEffect");
+
+            ParticleBlock spellParticle = particleObj.GetComponent<ParticleBlock>();
+            spellParticle.spawnPos = blockEffectSpawn.position;
             spellParticle.followTransform = hitEffectSpawn;
         }
     }

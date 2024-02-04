@@ -245,7 +245,7 @@ MonoBehaviour:
   spawnPos: {x: 0, y: 0, z: 0}
   phase: 0
   targetDir: {x: 0, y: 0}
-  knockbackIncrease: 5
+  knockbackIncrease: 10
   knockbackForce: 40
   knockbackDirection: {x: 1, y: 0}
   stunDuration: 12

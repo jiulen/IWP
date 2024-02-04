@@ -245,8 +245,8 @@ MonoBehaviour:
   spawnPos: {x: 0, y: 0, z: 0}
   phase: 0
   targetDir: {x: 0, y: 0}
-  knockbackIncrease: 1
-  knockbackForce: 4
+  knockbackIncrease: 2
+  knockbackForce: 10
   knockbackDirection: {x: 1, y: 0}
   stunDuration: 4
   ownerNum: -1
@@ -262,6 +262,6 @@ MonoBehaviour:
   position2: {fileID: 0}
   startAnim: Start
   hitAnim: Hit
-  finalKnockbackIncrease: 6
-  finalStunDuration: 16
-  finalKnockbackForce: 50
+  finalKnockbackIncrease: 7
+  finalStunDuration: 18
+  finalKnockbackForce: 60
