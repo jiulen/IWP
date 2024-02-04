@@ -37,12 +37,15 @@ public class LevelBounds : MonoBehaviour
         {
             if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
+                PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
+
+                if (!playerController.playerCollider.enabled)
+                    return;
+
                 GameObject particleObj = ShooterGameManager.Instance.GetPooledSpell("BoundsExplosion");
 
                 SpellFrameBehaviour spellParticle = particleObj.GetComponent<SpellFrameBehaviour>();
                 spellParticle.spawnPos = collision.transform.position;
-
-                PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
 
                 playerController.isDead = true;
             }

@@ -475,9 +475,11 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
                 ReplayManager.Instance.replay.WrapTurns();
 
                 //save replay
-                DateTime timeNow = DateTime.Now;
-                string replayName = timeNow.Year + "-" + timeNow.Month + "-" + timeNow.Day + "-" +
-                                    timeNow.Hour + "-" + timeNow.Minute + "-" + timeNow.Second;
+                //DateTime timeNow = DateTime.Now;
+                //string replayName = timeNow.Year + "-" + timeNow.Month + "-" + timeNow.Day + "-" +
+                //                    timeNow.Hour + "-" + timeNow.Minute + "-" + timeNow.Second;
+
+                string replayName = localPlayerController.playerName + "_v_" + otherPlayerController.playerName;
 
                 string replayContents = ReplayManager.Instance.ReplayToJson();
 

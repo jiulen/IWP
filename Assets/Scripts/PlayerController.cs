@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
     public Animator animator;
 
     [SerializeField] Transform landingSmokeSpawn;
+    [SerializeField] Transform hitEffectSpawn;
 
     bool forceBurst = false;
 
@@ -640,6 +641,13 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
             rb.AddForce(finalKnockbackMultiplier * knockbackForce, ForceMode2D.Impulse);
             knockbackMultiplier += knockbackIncrease;
+
+            GameObject particleObj = ShooterGameManager.Instance.GetPooledSpell("HitEffect");
+
+            ParticleHit spellParticle = particleObj.GetComponent<ParticleHit>();
+            spellParticle.spawnPos = hitEffectSpawn.position;
+            spellParticle.transform.right = knockbackForce.normalized;
+            spellParticle.followTransform = hitEffectSpawn;
         }
     }
 
