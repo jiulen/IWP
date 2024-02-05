@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 157278825740125871}
   - component: {fileID: 526362842750759702}
+  - component: {fileID: 473134811}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -49,40 +50,44 @@ MonoBehaviour:
   bgmSounds:
   - name: BackgroundMusic
     clip: {fileID: 8300000, guid: c650245a095673c42b6d28f9a6bfb35a, type: 3}
-    volume: 100
+    volume: 5
     loop: 1
   sfxSounds:
   - name: ButtonHover
     clip: {fileID: 8300000, guid: 0e44f1efb8296dc40a5c088af569188b, type: 3}
-    volume: 100
+    volume: 50
     loop: 0
   - name: ButtonClick
     clip: {fileID: 8300000, guid: 47de3ad52c8893b41ba3176643b5b85f, type: 3}
-    volume: 100
+    volume: 50
     loop: 0
-  - name: Attack
-    clip: {fileID: 8300000, guid: 4bac31cc59d29e24a9c8fadde7df6017, type: 3}
-    volume: 100
+  - name: Attack1
+    clip: {fileID: 8300000, guid: daeac93e795810f4e99fcf2281e5b231, type: 3}
+    volume: 30
+    loop: 0
+  - name: Attack2
+    clip: {fileID: 8300000, guid: 1408cc83d8fb16742a4f0ce41534c4a0, type: 3}
+    volume: 30
     loop: 0
   - name: Block
     clip: {fileID: 8300000, guid: 3286ce03ccd7f50408ebe4ba8dd21e4e, type: 3}
-    volume: 100
-    loop: 0
-  - name: BlockedHit
-    clip: {fileID: 8300000, guid: 30770c927970483459d9ae79730782b8, type: 3}
-    volume: 100
+    volume: 70
     loop: 0
   - name: Burst
     clip: {fileID: 8300000, guid: 014c599fc55a477469602b6e422f5d5b, type: 3}
-    volume: 100
+    volume: 25
     loop: 0
   - name: Hit
     clip: {fileID: 8300000, guid: 1e1db818da8e8734787a24d16c3a3645, type: 3}
-    volume: 100
+    volume: 20
     loop: 0
   - name: Move
     clip: {fileID: 8300000, guid: 2ccc5e35976608b41a173cbcee38da85, type: 3}
-    volume: 100
+    volume: 20
+    loop: 0
+  - name: Landing
+    clip: {fileID: 8300000, guid: 2d0120fe658f0164cad479fb0226897e, type: 3}
+    volume: 15
     loop: 0
   bgSounds: []
   bgmSource: {fileID: 8931480589475583108}
@@ -91,6 +96,14 @@ MonoBehaviour:
   sfx: {fileID: 2574542489031398796, guid: 778726c12235e78458796be57355d8e5, type: 3}
   audioMixerGroup: {fileID: 24100000, guid: 6abb39b001f50d241aa362df92ffb562, type: 2}
   masterVol: 100
+--- !u!81 &473134811
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5271091217395222493}
+  m_Enabled: 1
 --- !u!1 &5513055324224018652
 GameObject:
   m_ObjectHideFlags: 0
@@ -263,7 +276,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.1
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0

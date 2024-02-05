@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
     [SerializeField] PlayerInfoUI playerInfoUI;
     public ControllerUI controllerUI;
 
+    PhotonView photonView;
+
     public Player photonPlayer;
     public int playerNum;
 
@@ -186,6 +188,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
     private void Awake()
     {
+        photonView = GetComponent<PhotonView>();
+
         SetPlayerInfo();
 
         playerWait = GetComponent<PlayerWait>();
@@ -414,6 +418,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
                         playerWalk.goLeft = false;
 
                     currentFrameBehaviour = playerWalk;
+
+                    PlayAmSFX("Move");
                     break;
 
                 case PlayerActions.ROLL:
@@ -425,6 +431,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     if (!isGrounded) airOptionsAvail -= 1;
 
                     currentFrameBehaviour = playerRoll;
+
+                    PlayAmSFX("Move");
                     break;
 
                 case PlayerActions.JUMP:
@@ -436,6 +444,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     if (!isGrounded) airOptionsAvail -= 1;
 
                     currentFrameBehaviour = playerJump;
+
+                    PlayAmSFX("Move");
                     break;
 
                 case PlayerActions.FALL:
@@ -444,6 +454,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     if (!isGrounded) airOptionsAvail -= 1;
 
                     currentFrameBehaviour = playerFall;
+
+                    PlayAmSFX("Move");
                     break;
 
                 case PlayerActions.TELEPORT:
@@ -459,12 +471,16 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     }
 
                     currentFrameBehaviour = playerTeleport;
+
+                    PlayAmSFX("Move");
                     break;
 
                 //Defense
 
                 case PlayerActions.BLOCK:
                     currentFrameBehaviour = playerBlock;
+
+                    PlayAmSFX("Block");
                     break;
 
                 case PlayerActions.STOP_BLOCK:
@@ -479,6 +495,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     }
 
                     currentFrameBehaviour = playerBurst;
+
+                    PlayAmSFX("Burst");
                     break;
 
                 //Attack
@@ -488,6 +506,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     else playerIcicle.goLeft = false;
 
                     currentFrameBehaviour = playerIcicle;
+
+                    PlayAmSFX("Attack2");
                     break;
 
                 case PlayerActions.LINGERING_SPIRIT:
@@ -495,6 +515,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     else playerLingeringSpirit.goLeft = false;
 
                     currentFrameBehaviour = playerLingeringSpirit;
+
+                    PlayAmSFX("Attack1");
                     break;
 
                 case PlayerActions.EXPLOSION:
@@ -502,10 +524,14 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     else playerExplosion.goLeft = false;
 
                     currentFrameBehaviour = playerExplosion;
+
+                    PlayAmSFX("Attack1");
                     break;
 
                 case PlayerActions.LIGHTNING:
                     currentFrameBehaviour = playerLightning;
+
+                    PlayAmSFX("Attack2");
                     break;
 
                 case PlayerActions.SEISMIC_STRIKE:
@@ -513,12 +539,17 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     else playerSeismicStrike.goLeft = false;
 
                     currentFrameBehaviour = playerSeismicStrike;
+
+                    PlayAmSFX("Attack1");
                     break;
 
                 case PlayerActions.WHIRLWIND:
                     if (facingLeft) playerWhirlwind.goLeft = true;
                     else playerWhirlwind.goLeft = false;
+
                     currentFrameBehaviour = playerWhirlwind;
+
+                    PlayAmSFX("Attack2");
                     break;
 
                 case PlayerActions.STUNNED:
@@ -596,6 +627,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
             SpellFrameBehaviour spellParticle = particleObj.GetComponent<SpellFrameBehaviour>();
             spellParticle.spawnPos = landingSmokeSpawn.position;
+
+            PlayAmSFX("Landing");
         }
 
         return isGrounded;
@@ -647,6 +680,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
             spellParticle.spawnPos = hitEffectSpawn.position;
             spellParticle.transform.right = knockbackForce.normalized;
             spellParticle.followTransform = hitEffectSpawn;
+
+            PlayAmSFX("Hit");
         }
         else
         {
@@ -655,6 +690,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
             ParticleBlock spellParticle = particleObj.GetComponent<ParticleBlock>();
             spellParticle.spawnPos = blockEffectSpawn.position;
             spellParticle.followTransform = hitEffectSpawn;
+
+            PlayAmSFX("Block");
         }
     }
 
@@ -713,5 +750,19 @@ public class PlayerController : MonoBehaviour, IPunObservable
                 }
             }
         }
+    }
+
+    [PunRPC]
+    public void PlayAmSFXRpc(string soundName)
+    {
+        AudioManager.Instance.PlaySFX(soundName);
+    }
+
+    public void PlayAmSFX(string soundName)
+    {
+        AudioManager.Instance.PlaySFX(soundName);
+
+        if (!ShooterGameManager.Instance.isReplay)
+            photonView.RPC(nameof(PlayAmSFXRpc), RpcTarget.Others, soundName);
     }
 }

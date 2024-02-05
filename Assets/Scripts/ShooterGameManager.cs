@@ -37,6 +37,7 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
     const string GAME_PAUSED = "GamePaused";
     //replay
     const string REPLAY_FILE = "ReplayFile";
+    const string REPLAY_NAME = "ReplayName";
 
     //Game over stuff
     [SerializeField] Animator gameOverSlide, gameOverFade;
@@ -364,9 +365,19 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         if (propertiesThatChanged.TryGetValue(REPLAY_FILE, out object replayFile))
         {
             //receive replay
-            DateTime timeNow = DateTime.Now;
-            string replayName = timeNow.Year + "-" + timeNow.Month + "-" + timeNow.Day + "-" +
-                                timeNow.Hour + "-" + timeNow.Minute + "-" + timeNow.Second;
+
+            string replayName;
+
+            if (propertiesThatChanged.TryGetValue(REPLAY_NAME, out object replayNameObj))
+            {
+                replayName = (string)replayNameObj;
+            }
+            else
+            {
+                DateTime timeNow = DateTime.Now;
+                replayName = timeNow.Year + "-" + timeNow.Month + "-" + timeNow.Day + "-" +
+                             timeNow.Hour + "-" + timeNow.Minute + "-" + timeNow.Second;
+            }
 
             ReplayManager.Instance.AddReplay(replayName, (string)replayFile);
         }
@@ -486,7 +497,7 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
                 ReplayManager.Instance.AddReplay(replayName, replayContents);
 
                 //send replay
-                Hashtable roomProps = new Hashtable() { { REPLAY_FILE, replayContents } };
+                Hashtable roomProps = new Hashtable() { { REPLAY_FILE, replayContents }, { REPLAY_NAME, replayName} };
                 PhotonNetwork.CurrentRoom.SetCustomProperties(roomProps);
             }
 

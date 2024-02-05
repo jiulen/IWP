@@ -70,6 +70,7 @@ public class AudioManager : MonoBehaviour
         else
         {
             bgmSource.clip = s.clip;
+            bgmSource.volume = (s.volume * 0.01f) * bgmSource.volume;
 
             if (bgmSource != null)
                 if (!bgmSource.isPlaying)
