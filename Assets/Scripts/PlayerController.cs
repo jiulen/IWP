@@ -678,6 +678,10 @@ public class PlayerController : MonoBehaviour, IPunObservable
             spellParticle.transform.right = knockbackForce.normalized;
             spellParticle.followTransform = hitEffectSpawn;
 
+            //run frame 0 of particle
+            ++spellParticle.frameNum;
+            spellParticle.GoToFrame();
+
             PlayAmSFX("Hit");
         }
         else

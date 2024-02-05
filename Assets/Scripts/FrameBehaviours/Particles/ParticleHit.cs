@@ -14,7 +14,7 @@ public class ParticleHit : SpellFrameBehaviour
                 AnimatorChangeAnimation("particleAnim");
                 transform.position = spawnPos;
                 break;
-            case 14: //end
+            case 11: //end
                 EndAnimation();
                 break;
         }
