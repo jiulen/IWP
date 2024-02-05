@@ -715,10 +715,21 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         spell.frameNum = -1;
     }
 
+    public void InstantiateParticleEffect(string effectName, Vector3 effectPos)
+    {
+        if (!isReplay)
+            PhotonNetwork.InstantiateRoomObject(effectName, effectPos, Quaternion.identity);
+        else
+            Instantiate(Resources.Load<GameObject>(effectName), effectPos, Quaternion.identity);
+    }
+
     //Replay stuff
 
     public void NextReplayTurn()
     {
+        if (currentFrame == ReplayManager.Instance.replay.lastFrame)
+            ReplayEndOfGame();
+
         CheckInput();
 
         //normal game logic
@@ -761,6 +772,7 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
         ++currentFrame;
 
+        //check end
         if (currentFrame > ReplayManager.Instance.replay.lastFrame)
             return;
 
@@ -853,17 +865,32 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         }
     }
 
+    public void ReplayEndOfGame()
+    {
+        replaySaveProg.text = "";
+
+        switch (ReplayManager.Instance.replay.winner)
+        {
+            case 0: //draw
+                winnerText.text = "DRAW?";
+                break;
+            case 1: //host wins
+                winnerText.text = ReplayManager.Instance.replay.p1.playerName + " WINS";
+                break;
+            case 2: //client wins
+                winnerText.text = ReplayManager.Instance.replay.p2.playerName + " WINS";
+                break;
+            default: //undefined winner
+                winnerText.text = "UNDEFINED WINNER";
+                break;
+        }
+
+        StartCoroutine(EndOfGame());
+    }
+
     public void ResetReplay()
     {
         PhotonNetwork.LoadLevel(SceneManager.GetActiveScene().buildIndex);
-    }
-
-    public void InstantiateParticleEffect(string effectName, Vector3 effectPos)
-    {
-        if (!isReplay)
-            PhotonNetwork.InstantiateRoomObject(effectName, effectPos, Quaternion.identity);
-        else
-            Instantiate(Resources.Load<GameObject>(effectName), effectPos, Quaternion.identity);
     }
 
     public void QuitGame()
