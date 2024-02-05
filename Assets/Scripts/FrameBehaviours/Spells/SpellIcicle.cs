@@ -27,11 +27,11 @@ public class SpellIcicle : SpellFrameBehaviour
     {
         if (phase == 0)
         {
-            if (frameNum < 2)
+            if (frameNum < 3)
             {
                 transform.position = position0.position;
             }
-            else if (frameNum < 6)
+            else if (frameNum < 9)
             {
                 transform.position = position1.position;
             }

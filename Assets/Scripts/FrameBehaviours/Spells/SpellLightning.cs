@@ -49,7 +49,7 @@ public class SpellLightning : SpellFrameBehaviour
                 hitRenderer.transform.localPosition = new Vector3(0, -hitDistance, 0);
 
                 lightningCollider.offset = new Vector2(0, -hitDistance / 2);
-                lightningCollider.GetComponent<BoxCollider2D>().size = new Vector2(0.15f, hitDistance);
+                lightningCollider.GetComponent<BoxCollider2D>().size = new Vector2(1, hitDistance);
                 break;
             case 23:
                 lightningCollider.enabled = false;

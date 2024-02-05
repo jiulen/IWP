@@ -63,7 +63,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1471018152880141083}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.25, y: -0.0625, z: 0}
+  m_LocalPosition: {x: 0.383, y: -0.0625, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -125,7 +125,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3848572286726039159}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.65, y: 0.1, z: 0}
+  m_LocalPosition: {x: 1, y: 0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -218,7 +218,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5515439448353626641}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.639, y: -0.0035, z: 0}
+  m_LocalPosition: {x: 1.09, y: -0.0035, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -498,7 +498,7 @@ MonoBehaviour:
   lastFrame: 36
   enabledBehaviour: 0
   goLeft: 0
-  walkForce: 30
+  walkForce: 55
   walkForwardAnim: WalkForward1
 --- !u!114 &8764503897903537587
 MonoBehaviour:
@@ -539,7 +539,7 @@ MonoBehaviour:
   enabledBehaviour: 0
   goLeft: 0
   rollGravScale: 0
-  rollForce: 50
+  rollForce: 60
   rollAnim: Roll
 --- !u!114 &6855151038211201459
 MonoBehaviour:
@@ -726,7 +726,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frameNum: 0
-  maxCooldown: 60
+  maxCooldown: 90
   currentCooldown: -1
   srSizeY: 1
   lastFrame: 1
@@ -747,7 +747,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frameNum: 0
-  maxCooldown: 60
+  maxCooldown: 120
   currentCooldown: -1
   srSizeY: 1
   lastFrame: 1
@@ -768,7 +768,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frameNum: 0
-  maxCooldown: 120
+  maxCooldown: 90
   currentCooldown: -1
   srSizeY: 1
   lastFrame: 1
@@ -788,7 +788,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frameNum: 0
-  maxCooldown: 60
+  maxCooldown: 120
   currentCooldown: -1
   srSizeY: 1
   lastFrame: 1
@@ -1167,7 +1167,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7238648568186339963}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.125, y: -0.0625, z: 0}
+  m_LocalPosition: {x: 0.19, y: -0.0625, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

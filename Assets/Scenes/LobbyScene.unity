@@ -692,7 +692,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Walks forward. Only usable when grounded.
+  m_text: 'Walks forward.
+
+
+    Cost: 100% mana meter
+
+    Condition: Grounded'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
   m_sharedMaterial: {fileID: 6242511542146253578, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
@@ -6823,7 +6828,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Jumps foward.
+  m_text: 'Jumps foward.
+
+
+    Cost: 1 air option (midair)
+
+    Condition: None'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
   m_sharedMaterial: {fileID: 6242511542146253578, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
@@ -6958,7 +6968,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Does nothing. Ends early if opponent can act.
+  m_text: 'Does nothing. Ends early if opponent can act.
+
+
+    Cost: None
+
+    Condition:
+    None'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
   m_sharedMaterial: {fileID: 6242511542146253578, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
@@ -9919,7 +9935,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Pulls opponent in front with wind. Chains into a throw if pulled opponent.
+  m_text: 'Pulls opponent in front with wind. Chains into a throw if pulled opponent.
+
+
+    Cooldown:
+    60 frames
+
+    Condition: None'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
   m_sharedMaterial: {fileID: 6242511542146253578, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
@@ -14790,7 +14812,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Unleashes a chain of 4 explosions fowards.
+  m_text: 'Unleashes a chain of 4 explosions fowards.
+
+
+    Cooldown: 90 frames
+
+    Condition:
+    None'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
   m_sharedMaterial: {fileID: 6242511542146253578, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
@@ -17512,7 +17540,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Stabs foward with a icicle that hits 5 times. Ends early if 5th hit lands.
+  m_text: 'Stabs foward with a icicle that hits 5 times. Ends early if 5th hit lands.
+
+
+    Cooldown:
+    60 frames
+
+    Condition: None'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
   m_sharedMaterial: {fileID: 6242511542146253578, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
@@ -18861,8 +18895,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Blocks most attacks. Interruptable on opponent's turn. Self-stuns if shield
-    up for too long.
+  m_text: 'Blocks most attacks. Can stop on opponent''s turn. Self-stuns at the end.
+
+
+    Condition:
+    None
+
+    Cost: None'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
   m_sharedMaterial: {fileID: 6242511542146253578, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
@@ -19471,7 +19510,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Continues blocking.
+  m_text: 'Continues blocking.
+
+
+    Condition: Blocking
+
+    Cost: None'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
   m_sharedMaterial: {fileID: 6242511542146253578, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
@@ -20192,7 +20236,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Falls straight down. Only usable when midair. Cancels sideways momentum.
+  m_text: 'Falls straight down. Cancels sideways momentum.
+
+
+    Cost: None
+
+    Condition:
+    Midair'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
   m_sharedMaterial: {fileID: 6242511542146253578, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
@@ -21380,7 +21430,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Teleports towards opponent. Only usable with mana meter fully filled.
+  m_text: 'Teleports towards opponent.
+
+
+    Cost: 100% mana meter
+
+    Condition:
+    None'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
   m_sharedMaterial: {fileID: 6242511542146253578, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
@@ -25138,7 +25194,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Rolls forward. Ignores gravity. Only usable when midair.
+  m_text: 'Rolls forward. Ignores gravity.
+
+
+    Cost: 1 air option (midair)
+
+    Condtion:
+    Midair'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
   m_sharedMaterial: {fileID: 6242511542146253578, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
@@ -29169,7 +29231,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Raises a piece of rock from the earth beneath the opponent.
+  m_text: 'Raises a piece of rock from the earth beneath the opponent.
+
+
+    Cooldown:
+    120 frames
+
+    Condition: Grounded'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
   m_sharedMaterial: {fileID: 6242511542146253578, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
@@ -31155,7 +31223,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Does nothing. Only usable when burst is available.
+  m_text: 'Does nothing.
+
+
+    Condition: Can burst
+
+    Cost: None'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
   m_sharedMaterial: {fileID: 6242511542146253578, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
@@ -31753,7 +31826,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Stops blocking.
+  m_text: 'Stops blocking.
+
+
+    Condition: Blocking
+
+    Cost: 50% mana meter'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
   m_sharedMaterial: {fileID: 6242511542146253578, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
@@ -32514,7 +32592,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Calls down a bolt of lightning from a storm cloud above.
+  m_text: 'Calls down a bolt of lightning from a storm cloud above.
+
+
+    Cooldown:
+    90 frames
+
+    Condition: None'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
   m_sharedMaterial: {fileID: 6242511542146253578, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
@@ -32995,7 +33079,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Fires a homing missile forward. Missile's homing ability weakens over time.
+  m_text: 'Fires a homing missile forward. Missile''s homing ability weakens over
+    time.
+
+
+    Cooldown: 120 frames
+
+    Condition: None'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
   m_sharedMaterial: {fileID: 6242511542146253578, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
@@ -33130,7 +33220,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Cancels all momentum. Only usable with 50% of mana meter filled.
+  m_text: 'Cancels all momentum.
+
+
+    Condition: None
+
+    Cost: 50% mana meter'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
   m_sharedMaterial: {fileID: 6242511542146253578, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}

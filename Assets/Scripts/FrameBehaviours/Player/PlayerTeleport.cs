@@ -31,14 +31,14 @@ public class PlayerTeleport : PlayerFrameBehaviour
                 {
                     tpDir = -1;
 
-                    playerController.spriteTransform.localScale = new Vector3(Mathf.Abs(playerController.spriteTransform.localScale.x) * -1, 1, 1);
+                    playerController.spriteTransform.localScale = new Vector3(Mathf.Abs(playerController.spriteTransform.localScale.x), 1, 1);
                     playerController.facingLeft = false;
                 }
                 else if (myPos.x > opponentPos.x)
                 {
                     tpDir = 1;
 
-                    playerController.spriteTransform.localScale = new Vector3(Mathf.Abs(playerController.spriteTransform.localScale.x), 1, 1);
+                    playerController.spriteTransform.localScale = new Vector3(Mathf.Abs(playerController.spriteTransform.localScale.x) * -1, 1, 1);
                     playerController.facingLeft = true;
                 }
                 else
@@ -47,14 +47,14 @@ public class PlayerTeleport : PlayerFrameBehaviour
                     {
                         tpDir = 1;
 
-                        playerController.spriteTransform.localScale = new Vector3(Mathf.Abs(playerController.spriteTransform.localScale.x), 1, 1);
+                        playerController.spriteTransform.localScale = new Vector3(Mathf.Abs(playerController.spriteTransform.localScale.x) * -1, 1, 1);
                         playerController.facingLeft = true;
                     }
                     else
                     {
                         tpDir = -1;
 
-                        playerController.spriteTransform.localScale = new Vector3(Mathf.Abs(playerController.spriteTransform.localScale.x) * -1, 1, 1);
+                        playerController.spriteTransform.localScale = new Vector3(Mathf.Abs(playerController.spriteTransform.localScale.x), 1, 1);
                         playerController.facingLeft = false;
                     }
                 }
