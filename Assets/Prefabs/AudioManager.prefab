@@ -63,15 +63,15 @@ MonoBehaviour:
     loop: 0
   - name: Attack1
     clip: {fileID: 8300000, guid: daeac93e795810f4e99fcf2281e5b231, type: 3}
-    volume: 30
+    volume: 15
     loop: 0
   - name: Attack2
     clip: {fileID: 8300000, guid: 1408cc83d8fb16742a4f0ce41534c4a0, type: 3}
-    volume: 30
+    volume: 15
     loop: 0
   - name: Block
     clip: {fileID: 8300000, guid: 3286ce03ccd7f50408ebe4ba8dd21e4e, type: 3}
-    volume: 70
+    volume: 60
     loop: 0
   - name: Burst
     clip: {fileID: 8300000, guid: 014c599fc55a477469602b6e422f5d5b, type: 3}
@@ -79,7 +79,7 @@ MonoBehaviour:
     loop: 0
   - name: Hit
     clip: {fileID: 8300000, guid: 1e1db818da8e8734787a24d16c3a3645, type: 3}
-    volume: 20
+    volume: 15
     loop: 0
   - name: Move
     clip: {fileID: 8300000, guid: 2ccc5e35976608b41a173cbcee38da85, type: 3}
@@ -87,7 +87,7 @@ MonoBehaviour:
     loop: 0
   - name: Landing
     clip: {fileID: 8300000, guid: 2d0120fe658f0164cad479fb0226897e, type: 3}
-    volume: 15
+    volume: 5
     loop: 0
   bgSounds: []
   bgmSource: {fileID: 8931480589475583108}
