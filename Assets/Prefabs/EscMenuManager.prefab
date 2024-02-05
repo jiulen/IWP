@@ -1717,9 +1717,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ShooterLobbyMainPanel, Assembly-CSharp
-        m_MethodName: OnLoginButtonClicked
+      - m_Target: {fileID: 3349669906713138007}
+        m_TargetAssemblyTypeName: EscapeMenuManager, Assembly-CSharp
+        m_MethodName: Quit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2506,6 +2506,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   escapeMenuObj: {fileID: 3349669906729637580}
+  inGame: 1
 --- !u!114 &535850436880894193
 MonoBehaviour:
   m_ObjectHideFlags: 0

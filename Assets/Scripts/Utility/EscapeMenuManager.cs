@@ -8,6 +8,8 @@ public class EscapeMenuManager : MonoBehaviour
 
     [SerializeField] GameObject escapeMenuObj;
 
+    [SerializeField] bool inGame = true;
+
     private void Awake()
     {
         ShowEscapeMenu(menuShown = false);
@@ -23,6 +25,15 @@ public class EscapeMenuManager : MonoBehaviour
 
     public void ShowEscapeMenu(bool showMenu)
     {
-        escapeMenuObj.SetActive(showMenu);
+        menuShown = showMenu;
+        escapeMenuObj.SetActive(menuShown);
+    }
+
+    public void Quit()
+    {
+        if (inGame)
+            ShooterGameManager.Instance.QuitGame();
+        else
+            Application.Quit();
     }
 }

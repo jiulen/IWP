@@ -144,12 +144,12 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
     public override void OnDisconnected(DisconnectCause cause)
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("LobbyScene");
+        SceneManager.LoadScene("LobbyScene");
     }
 
     public override void OnLeftRoom()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("LobbyScene");
+        PhotonNetwork.LoadLevel("LobbyScene");
     }
 
     public override void OnMasterClientSwitched(Player newMasterClient)
@@ -460,6 +460,11 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
         if (playerDead)
         {
+            if (!isReplay)
+            {
+                localPlayerController.ShowControls(false);
+            }
+
             gameOver = true;
 
             if (winner != "")
@@ -870,5 +875,13 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
             PhotonNetwork.InstantiateRoomObject(effectName, effectPos, Quaternion.identity);
         else
             Instantiate(Resources.Load<GameObject>(effectName), effectPos, Quaternion.identity);
+    }
+
+    public void QuitGame()
+    {
+        if (!isReplay)
+            PhotonNetwork.LeaveRoom(false);
+        else
+            PhotonNetwork.LoadLevel("LobbyScene");
     }
 }

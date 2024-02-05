@@ -14,7 +14,7 @@ public class AudioOptionsManager : MonoBehaviour
 
     [SerializeField] Slider masterSlider, musicSlider, soundEffectsSlider;
 
-    private void OnEnable()
+    private void Start()
     {
         SetVolumeSliders();
     }
@@ -61,6 +61,12 @@ public class AudioOptionsManager : MonoBehaviour
         soundEffectsVolume = PlayerPrefs.GetFloat("FXVol", 1);
         soundEffectsSlider.value = soundEffectsVolume;
         soundEffectsSliderText.text = ((int)(soundEffectsVolume * 100)).ToString();
+
+        AudioManager.Instance.UpdateMixerVolume();
+
+        Debug.Log("master vol: " + masterVolume);
+        Debug.Log("music vol: " + musicVolume);
+        Debug.Log("fx vol: " + soundEffectsVolume);
     }
 
     public void SaveVolumes()
