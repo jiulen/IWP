@@ -29,33 +29,33 @@ public class PlayerTeleport : PlayerFrameBehaviour
                 int tpDir = 1;
                 if (myPos.x < opponentPos.x)
                 {
-                    tpDir = 1;
+                    tpDir = -1;
 
                     playerController.spriteTransform.localScale = new Vector3(Mathf.Abs(playerController.spriteTransform.localScale.x) * -1, 1, 1);
-                    playerController.facingLeft = true;
+                    playerController.facingLeft = false;
                 }
                 else if (myPos.x > opponentPos.x)
                 {
-                    tpDir = -1;
+                    tpDir = 1;
 
                     playerController.spriteTransform.localScale = new Vector3(Mathf.Abs(playerController.spriteTransform.localScale.x), 1, 1);
-                    playerController.facingLeft = false;
+                    playerController.facingLeft = true;
                 }
                 else
                 {
                     if (goLeft)
                     {
-                        tpDir = -1;
+                        tpDir = 1;
 
                         playerController.spriteTransform.localScale = new Vector3(Mathf.Abs(playerController.spriteTransform.localScale.x), 1, 1);
-                        playerController.facingLeft = false;
+                        playerController.facingLeft = true;
                     }
                     else
                     {
-                        tpDir = 1;
+                        tpDir = -1;
 
                         playerController.spriteTransform.localScale = new Vector3(Mathf.Abs(playerController.spriteTransform.localScale.x) * -1, 1, 1);
-                        playerController.facingLeft = true;
+                        playerController.facingLeft = false;
                     }
                 }
 

@@ -8,6 +8,11 @@ public class EscapeMenuManager : MonoBehaviour
 
     [SerializeField] GameObject escapeMenuObj;
 
+    private void Awake()
+    {
+        ShowEscapeMenu(menuShown = false);
+    }
+
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
