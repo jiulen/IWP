@@ -72,7 +72,7 @@ public class AudioManager : MonoBehaviour
         else
         {
             bgmSource.clip = s.clip;
-            bgmSource.volume = (s.volume * 0.01f) * bgmSource.volume;
+            bgmSource.volume = (s.volume * 0.01f);
 
             if (bgmSource != null)
                 if (!bgmSource.isPlaying)
@@ -103,7 +103,7 @@ public class AudioManager : MonoBehaviour
             GameObject go = Instantiate(sfx, position, Quaternion.identity);
             AudioSource tempSource = go.GetComponent<AudioSource>();
             tempSource.clip = s.clip;
-            tempSource.volume = (s.volume * 0.01f) * sfxSource.volume;
+            tempSource.volume = (s.volume * 0.01f);
             go.name = name + "_AudioClip";
             go.GetComponent<PlayOnAwake>().Play();
         }
