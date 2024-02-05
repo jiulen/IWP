@@ -41,7 +41,7 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
 
     //Game over stuff
     [SerializeField] Animator gameOverSlide, gameOverFade;
-    [SerializeField] TMP_Text winnerText;
+    [SerializeField] TMP_Text winnerText, replaySaveProg;
 
     public bool isReplay = false;
 
@@ -129,17 +129,6 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(0.5f);
 
         gameOverFade.Play("GameOverFade");
-
-        float timer = 3.5f;
-
-        while (timer > 0.0f)
-        {
-            yield return new WaitForEndOfFrame();
-
-            timer -= Time.deltaTime;
-        }
-
-        PhotonNetwork.LeaveRoom(false);
     }
 
     public override void OnDisconnected(DisconnectCause cause)
@@ -380,6 +369,7 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
             }
 
             ReplayManager.Instance.AddReplay(replayName, (string)replayFile);
+            replaySaveProg.text = "Replay saved!";
         }
     }
 
@@ -491,15 +481,14 @@ public class ShooterGameManager : MonoBehaviourPunCallbacks
                 ReplayManager.Instance.replay.WrapTurns();
 
                 //save replay
-                //DateTime timeNow = DateTime.Now;
-                //string replayName = timeNow.Year + "-" + timeNow.Month + "-" + timeNow.Day + "-" +
-                //                    timeNow.Hour + "-" + timeNow.Minute + "-" + timeNow.Second;
 
                 string replayName = localPlayerController.playerName + "_v_" + otherPlayerController.playerName;
 
                 string replayContents = ReplayManager.Instance.ReplayToJson();
 
                 ReplayManager.Instance.AddReplay(replayName, replayContents);
+
+                replaySaveProg.text = "Replay saved!";
 
                 //send replay
                 Hashtable roomProps = new Hashtable() { { REPLAY_FILE, replayContents }, { REPLAY_NAME, replayName} };
