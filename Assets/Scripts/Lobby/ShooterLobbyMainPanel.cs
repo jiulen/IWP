@@ -216,10 +216,10 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
                 switch (thisPlayerNumber)
                 {
                     case 1:
-                        entry.transform.SetParent(transformP_1);
+                        entry.transform.SetParent(transformP_1, false);
                         break;
                     case 2:
-                        entry.transform.SetParent(transformP_2);
+                        entry.transform.SetParent(transformP_2, false);
                         entry.GetComponent<ShooterPlayerListEntry>().PlayerImage.transform.localScale = new Vector3(-1, 1, 1);
                         break;
                     default:
@@ -238,10 +238,10 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
                     switch ((int)playerNumber)
                     {
                         case 1:
-                            entry.transform.SetParent(transformP_1);
+                            entry.transform.SetParent(transformP_1, false);
                             break;
                         case 2:
-                            entry.transform.SetParent(transformP_2);
+                            entry.transform.SetParent(transformP_2, false);
                             entry.GetComponent<ShooterPlayerListEntry>().PlayerImage.transform.localScale = new Vector3(-1, 1, 1);
                             break;
                         default:
@@ -315,13 +315,13 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
                 case 1:
                     newPlayerNumber = 2;
 
-                    entry.transform.SetParent(transformP_2);
+                    entry.transform.SetParent(transformP_2, false);
                     entry.GetComponent<ShooterPlayerListEntry>().PlayerImage.transform.localScale = new Vector3(-1, 1, 1);
                     break;
                 case 2:
                     newPlayerNumber = 1;
 
-                    entry.transform.SetParent(transformP_1);
+                    entry.transform.SetParent(transformP_1, false);
                     break;
                 default:
                     Debug.Log("Wrong player number");
@@ -727,7 +727,7 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
         foreach (RoomInfo info in cachedRoomList.Values)
         {
             GameObject entry = Instantiate(RoomListEntryPrefab);
-            entry.transform.SetParent(RoomListContent.transform);
+            entry.transform.SetParent(RoomListContent.transform, false);
             entry.transform.localScale = Vector3.one;
             entry.GetComponent<ShooterRoomListEntry>().Initialize(info.Name, info.PlayerCount, info.MaxPlayers);
 
@@ -772,7 +772,7 @@ public class ShooterLobbyMainPanel : MonoBehaviourPunCallbacks
         foreach (FileInfo replayFile in replayFiles)
         {
             GameObject entry = Instantiate(replayListEntryPrefab);
-            entry.transform.SetParent(replayListContent.transform);
+            entry.transform.SetParent(replayListContent.transform, false);
             entry.transform.localScale = Vector3.one;
             entry.GetComponent<ReplayListEntry>().Initialize(Path.GetFileNameWithoutExtension(replayFile.Name), replayFile.FullName, this);
 

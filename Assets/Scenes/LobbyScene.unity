@@ -21380,7 +21380,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Teleports behind opponent. Only usable with 50% of mana meter filled.
+  m_text: Teleports towards opponent. Only usable with mana meter fully filled.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
   m_sharedMaterial: {fileID: 6242511542146253578, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
