@@ -19,6 +19,11 @@ public class AudioOptionsManager : MonoBehaviour
         SetVolumeSliders();
     }
 
+    private void OnDisable()
+    {
+        SaveVolumes();
+    }
+
     public void OnMasterSliderValueChange(float value)
     {
         masterVolume = value;
@@ -45,16 +50,23 @@ public class AudioOptionsManager : MonoBehaviour
 
     public void SetVolumeSliders()
     {
-        AudioManager.Instance.musicMixerGroup.audioMixer.GetFloat("MasterVolume", out float masterVolume);
+        masterVolume = PlayerPrefs.GetFloat("MasterVol", 1);
         masterSlider.value = masterVolume;
         masterSliderText.text = ((int)(masterVolume * 100)).ToString();
 
-        AudioManager.Instance.musicMixerGroup.audioMixer.GetFloat("MusicVolume", out float musicVolume);
-        musicSliderText.text = ((int)(musicVolume * 100)).ToString();
+        musicVolume = PlayerPrefs.GetFloat("MusicVol", 1);
         musicSlider.value = musicVolume;
+        musicSliderText.text = ((int)(musicVolume * 100)).ToString();
 
-        AudioManager.Instance.musicMixerGroup.audioMixer.GetFloat("SoundEffectsVolume", out float soundEffectsVolume);
-        soundEffectsSliderText.text = ((int)(soundEffectsVolume * 100)).ToString();
+        soundEffectsVolume = PlayerPrefs.GetFloat("FXVol", 1);
         soundEffectsSlider.value = soundEffectsVolume;
+        soundEffectsSliderText.text = ((int)(soundEffectsVolume * 100)).ToString();
+    }
+
+    public void SaveVolumes()
+    {
+        PlayerPrefs.SetFloat("MasterVol", masterVolume);
+        PlayerPrefs.SetFloat("MusicVol", musicVolume);
+        PlayerPrefs.SetFloat("FXVol", soundEffectsVolume);
     }
 }
