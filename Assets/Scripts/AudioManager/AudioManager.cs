@@ -107,17 +107,7 @@ public class AudioManager : MonoBehaviour
     }
     public void PlaySFX(string name)
     {
-        SoundScript s = Array.Find(sfxSounds, x => x.name == name);
-
-        if (s == null)
-        {
-            Debug.Log("Sound not found : " + name);
-        }
-        else
-        {
-            sfxSource.clip = s.clip;
-            sfxSource.PlayOneShot(s.clip);
-        }
+        PlaySFX(name, Vector3.zero);
     }
 
     public void PlaySFXLoop(string name, bool stop)

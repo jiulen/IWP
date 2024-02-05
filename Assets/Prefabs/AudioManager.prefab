@@ -60,6 +60,30 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 47de3ad52c8893b41ba3176643b5b85f, type: 3}
     volume: 100
     loop: 0
+  - name: Attack
+    clip: {fileID: 8300000, guid: 4bac31cc59d29e24a9c8fadde7df6017, type: 3}
+    volume: 100
+    loop: 0
+  - name: Block
+    clip: {fileID: 8300000, guid: 3286ce03ccd7f50408ebe4ba8dd21e4e, type: 3}
+    volume: 100
+    loop: 0
+  - name: BlockedHit
+    clip: {fileID: 8300000, guid: 30770c927970483459d9ae79730782b8, type: 3}
+    volume: 100
+    loop: 0
+  - name: Burst
+    clip: {fileID: 8300000, guid: 014c599fc55a477469602b6e422f5d5b, type: 3}
+    volume: 100
+    loop: 0
+  - name: Hit
+    clip: {fileID: 8300000, guid: 1e1db818da8e8734787a24d16c3a3645, type: 3}
+    volume: 100
+    loop: 0
+  - name: Move
+    clip: {fileID: 8300000, guid: 2ccc5e35976608b41a173cbcee38da85, type: 3}
+    volume: 100
+    loop: 0
   bgSounds: []
   bgmSource: {fileID: 8931480589475583108}
   sfxSource: {fileID: 6614053612962105283}

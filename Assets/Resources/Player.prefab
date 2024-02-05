@@ -796,8 +796,8 @@ MonoBehaviour:
   goLeft: 0
   ySpawnPos: -0.5
   attackAnim: AttackC
-  minX: -7.3
-  maxX: 7.3
+  minX: -5.5
+  maxX: 5.5
 --- !u!114 &5352697439581963250
 MonoBehaviour:
   m_ObjectHideFlags: 0
