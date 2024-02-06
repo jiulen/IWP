@@ -22,7 +22,7 @@ public class PlayerSeismicStrike : PlayerFrameBehaviour
                 currentAnimName = attackAnim;
                 AnimatorChangeAnimation(currentAnimName);
                 break;
-            case 10:
+            case 8:
                 float rockXPos = Mathf.Clamp(playerController.oppTransform.position.x, minX, maxX);
                 seismicStrikePos = new Vector3(rockXPos, ySpawnPos, 0);
                 break;

@@ -695,7 +695,7 @@ MonoBehaviour:
   m_text: 'Walks forward.
 
 
-    Cost: 100% mana meter
+    Cost: None
 
     Condition: Grounded'
   m_isRightToLeft: 0
@@ -8686,7 +8686,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: 'Knockback multiplier: Increases whenever the player gets hit. Amplifies
-    all knockback received/'
+    all knockback received'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
   m_sharedMaterial: {fileID: 6242511542146253578, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
@@ -9936,10 +9936,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: 'Pulls opponent in front with wind. Chains into a throw if pulled opponent.
+    Cannot be blocked.
 
 
-    Cooldown:
-    60 frames
+    Cooldown: 60 frames
 
     Condition: None'
   m_isRightToLeft: 0
@@ -15030,8 +15030,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: This is a section of the controls panel. It contains all of the player's
-    available skills. It is located at the bottom of the screen.
+  m_text: This is the controls panel. It contains all of the player's available skills.
+    It is located at the bottom of the screen.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
   m_sharedMaterial: {fileID: 6242511542146253578, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
@@ -17540,7 +17540,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Stabs foward with a icicle that hits 5 times. Ends early if 5th hit lands.
+  m_text: 'Stabs forward with an icicle, hitting 5 times. Ends early if 5th hit lands.
 
 
     Cooldown:
@@ -17609,7 +17609,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -14.26892, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -25197,7 +25197,7 @@ MonoBehaviour:
   m_text: 'Rolls forward. Ignores gravity.
 
 
-    Cost: 1 air option (midair)
+    Cost: 1 air option
 
     Condtion:
     Midair'
@@ -31831,7 +31831,7 @@ MonoBehaviour:
 
     Condition: Blocking
 
-    Cost: 50% mana meter'
+    Cost: None'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
   m_sharedMaterial: {fileID: 6242511542146253578, guid: 01e71298ab553e84eb0bd654e0d5d2e6, type: 2}
@@ -33223,7 +33223,7 @@ MonoBehaviour:
   m_text: 'Cancels all momentum.
 
 
-    Condition: None
+    Condition: Stunned
 
     Cost: 50% mana meter'
   m_isRightToLeft: 0

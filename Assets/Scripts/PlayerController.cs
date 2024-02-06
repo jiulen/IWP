@@ -324,6 +324,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
                     {
                         unavailableActions.Add(PlayerActions.ROLL);
                         unavailableActions.Add(PlayerActions.JUMP);
+                        unavailableActions.Add(PlayerActions.FALL);
                     }
                 }
                 else
@@ -449,6 +450,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
                 case PlayerActions.FALL:
                     playerFall.startFall = true;
+
+                    if (!isGrounded) airOptionsAvail -= 1;
 
                     currentFrameBehaviour = playerFall;
 
